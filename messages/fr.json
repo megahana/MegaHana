@@ -1,0 +1,802 @@
+{
+  "Navigation": {
+    "home": "Accueil",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "about": "À propos",
+    "contact": "Contact",
+    "cta": "Voir les offres",
+    "switchToFr": "Passer en français",
+    "switchToEn": "Passer en anglais",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "theme": "Changer de thème"
+  },
+  "Common": {
+    "newTab": "(ouvre un nouvel onglet)",
+    "viewSite": "Voir le site",
+    "lastUpdated": "Dernière mise à jour : {date}",
+    "skipIntro": "Passer l'intro",
+    "gallery": {
+      "region": "Captures d'écran du projet",
+      "slide": "Capture {current} sur {total} : {label}. Flèches gauche et droite pour naviguer.",
+      "expand": "Agrandir",
+      "prev": "Précédent",
+      "next": "Suivant",
+      "view": "Voir : {label}",
+      "close": "Fermer"
+    }
+  },
+  "Home": {
+    "meta": {
+      "title": "Création de sites vitrines",
+      "description": "Création de sites vitrines modernes, rapides et adaptés à l'identité des indépendants et petites entreprises."
+    },
+    "hero": {
+      "badge": "✦ Sites vitrines à votre image",
+      "titleLead": "Votre site vitrine,",
+      "titleHighlight": "pensé pour votre univers",
+      "subheadline": "Des sites vitrines modernes, rapides et responsive, conçus avec Next.js et livrés avec les fichiers sources complets, prêts à être déployés.",
+      "perks": [
+        "Délais définis avant le démarrage",
+        "Design taillé pour votre activité",
+        "Fichiers sources complets"
+      ],
+      "ctaPrimary": "Découvrir les offres",
+      "ctaSecondary": "Voir le portfolio",
+      "scrollCue": "Explorer"
+    },
+    "galerie": {
+      "eyebrow": "✦ La Galerie",
+      "titleLead": "Huit univers,",
+      "titleHighlight": "une signature par secteur",
+      "description": "Chaque secteur a sa propre direction artistique — seize démos en ligne, deux exemples par univers.",
+      "inProgress": "En travail",
+      "placeholderTag": "Texte provisoire",
+      "real": {
+        "hint": "Voir l'exemple"
+      },
+      "sectors": {
+        "restaurant": "Restaurant",
+        "artisans": "Artisans",
+        "artistes": "Artistes",
+        "startup": "Startup",
+        "architecte": "Architecte",
+        "musicien": "Musicien",
+        "mode": "Mode",
+        "bien-etre": "Bien-être"
+      },
+      "teasers": {
+        "restaurant": "Une salle pensée pour l'accueil, une carte pensée pour l'assiette.",
+        "artisans": "Un univers artisanal, brut et sincère — direction artistique à venir.",
+        "artistes": "Une vitrine pensée pour donner à voir le geste créatif.",
+        "startup": "Une image claire et directe pour porter un projet naissant.",
+        "architecte": "Une mise en espace sobre, au service du travail présenté.",
+        "musicien": "Une scène numérique pensée pour l'écoute autant que pour l'image.",
+        "mode": "Une allure épurée, fidèle à l'exigence du geste couture.",
+        "bien-etre": "Un espace apaisé, à l'image d'une pratique du soin."
+      },
+      "pauseScroll": "Mettre en pause le défilement",
+      "resumeScroll": "Reprendre le défilement"
+    },
+    "offers": {
+      "eyebrow": "Offres",
+      "titleLead": "Des formules pour",
+      "titleHighlight": "votre site vitrine",
+      "description": "Choisissez une landing page, un site professionnel ou un site bilingue selon vos besoins.",
+      "landingDescription": "Une page unique pour présenter votre activité.",
+      "businessDescription": "Un site professionnel jusqu'à 4 pages.",
+      "bilingualDescription": "Un site bilingue jusqu'à 6 pages.",
+      "cta": "Voir les formules"
+    },
+    "portfolio": {
+      "eyebrow": "Portfolio",
+      "titleLead": "La preuve par",
+      "titleHighlight": "le projet",
+      "description": "Un exemple concret de ce que je suis capable de concevoir et déployer.",
+      "badge": "Projet phare",
+      "viewAll": "Voir le portfolio complet",
+      "imageAlt": "Aperçu du projet {name}",
+      "carouselRegion": "Projets en vedette"
+    },
+    "howItWorks": {
+      "eyebrow": "Comment ça marche",
+      "titleLead": "Simple,",
+      "titleHighlight": "en 4 étapes",
+      "description": "De votre demande à la livraison, un processus clair et sans surprise.",
+      "steps": [
+        {
+          "title": "Choix de la formule",
+          "description": "Consultez les trois formules et choisissez celle qui correspond au nombre de pages et aux langues nécessaires."
+        },
+        {
+          "title": "Commande sur Upwork",
+          "description": "Commandez la formule adaptée directement sur Upwork ; le périmètre est confirmé au démarrage."
+        },
+        {
+          "title": "Création",
+          "description": "Je conçois et développe votre site selon le périmètre confirmé, puis je vous présente le résultat pour les révisions prévues."
+        },
+        {
+          "title": "Livraison",
+          "description": "Vous recevez le site et les fichiers sources complets, prêts à être utilisés ou déployés."
+        }
+      ]
+    },
+    "whyUs": {
+      "eyebrow": "Pourquoi Megahana",
+      "titleLead": "Ce qui fait",
+      "titleHighlight": "la différence",
+      "description": "Pas d'agence, pas d'intermédiaire. Un développeur, un interlocuteur, un site livré.",
+      "items": [
+        {
+          "title": "Un interlocuteur unique",
+          "description": "Vous échangez directement avec le développeur qui conçoit et réalise votre site, sans agence ni intermédiaire."
+        },
+        {
+          "title": "Technologies modernes",
+          "description": "Next.js et Tailwind CSS pour des sites rapides, fiables et faciles à faire évoluer."
+        },
+        {
+          "title": "Un site conçu pour évoluer",
+          "description": "Votre site peut évoluer avec votre activité sans devoir être entièrement reconstruit."
+        }
+      ]
+    },
+    "cta": {
+      "badge": "Disponible pour de nouveaux projets",
+      "titleLead": "Prêt à créer",
+      "titleHighlight": "votre site vitrine ?",
+      "subtitle": "Découvrez les formules proposées et choisissez celle qui correspond à votre projet.",
+      "button": "Voir les offres"
+    }
+  },
+  "Footer": {
+    "description": "Création de sites vitrines modernes, rapides et responsive pour les indépendants et les petites entreprises.",
+    "navHeading": "Navigation",
+    "contactHeading": "Contact",
+    "linkedin": "Megahana sur LinkedIn",
+    "rights": "© {year} Megahana. Tous droits réservés.",
+    "madeWith": "Fait avec Next.js et Tailwind CSS.",
+    "version": "Megahana v{version} · Dernière mise à jour : {date}",
+    "legal": {
+      "notice": "Mentions légales",
+      "privacy": "Politique de confidentialité",
+      "terms": "Conditions de vente"
+    },
+    "upwork": "Voir les formules sur Upwork"
+  },
+  "MobileCta": {
+    "default": "Voir les offres"
+  },
+  "Projects": {
+    "megareco": {
+      "shortDescription": "Application web full-stack permettant aux utilisateurs de découvrir, noter, commenter et sauvegarder leurs œuvres favorites."
+    },
+    "megataste": {
+      "shortDescription": "Site vitrine d'un restaurant méditerranéen : menu, ambiance et prise de contact."
+    }
+  },
+  "Services": {
+    "meta": {
+      "title": "Services",
+      "description": "Création de sites vitrines : landing page, site professionnel ou site bilingue. Responsive, optimisé, avec fichiers sources complets."
+    },
+    "hero": {
+      "eyebrow": "Services",
+      "titleLead": "Des sites vitrines",
+      "titleHighlight": "clés en main",
+      "description": "Une landing page, un site professionnel ou un site bilingue, au design adapté à votre activité."
+    },
+    "intro": "Megahana conçoit des sites vitrines modernes, rapides et responsive, développés avec Next.js. Le contenu et le design sont adaptés à votre identité, et chaque formule est livrée avec les fichiers sources complets.",
+    "commonLine": "Toutes les formules incluent un site vitrine moderne et responsive, l'ajout des contenus fournis, l'optimisation des performances et la remise des fichiers sources complets.",
+    "externalFeesLine": "Les frais externes ne sont pas inclus dans les formules : nom de domaine, hébergement payant, email professionnel, abonnements tiers et dépassements éventuels liés aux outils externes.",
+    "packages": {
+      "eyebrow": "Formules",
+      "titleLead": "Des formules disponibles",
+      "titleHighlight": "sur Upwork",
+      "description": "Choisissez le niveau adapté à votre projet et commandez directement via Upwork.",
+      "notice": "Chaque formule inclut un site vitrine moderne et responsive, livré avec les fichiers sources complets. Le détail de chaque niveau est disponible sur Upwork.",
+      "currencyNote": "Tarifs affichés en dollars américains. Le montant final est confirmé sur Upwork. Nom de domaine, hébergement payant, email professionnel et abonnements externes non inclus.",
+      "orderCta": "Commander sur Upwork",
+      "deliveryDays": "{count} jours",
+      "revisions": "{count} révisions",
+      "bilingualBadge": "Bilingue",
+      "items": {
+        "starter": {
+          "pages": "1 page",
+          "language": "1 langue",
+          "features": [
+            "Site une page responsive",
+            "Design moderne adapté à votre activité",
+            "Ajout des contenus fournis",
+            "Optimisation des performances",
+            "Fichiers sources complets",
+            "Icônes réseaux sociaux"
+          ]
+        },
+        "standard": {
+          "pages": "jusqu'à 4 pages",
+          "language": "1 langue",
+          "features": [
+            "Site responsive jusqu'à 4 pages",
+            "Design moderne adapté à votre activité",
+            "Ajout des contenus fournis",
+            "Optimisation des performances",
+            "Fichiers sources complets",
+            "Icônes réseaux sociaux"
+          ]
+        },
+        "advanced": {
+          "pages": "jusqu'à 6 pages",
+          "language": "jusqu'à 2 langues",
+          "features": [
+            "Site responsive jusqu'à 6 pages",
+            "Structure jusqu'à 2 langues",
+            "Ajout des contenus fournis",
+            "Optimisation des performances",
+            "Fichiers sources complets",
+            "Icônes réseaux sociaux"
+          ]
+        }
+      }
+    },
+    "tech": {
+      "eyebrow": "La technique",
+      "titleLead": "Une base technique",
+      "titleHighlight": "moderne",
+      "subtitle": "Des technologies modernes pour un site rapide, fiable et facile à faire évoluer.",
+      "common": [
+        {
+          "name": "Next.js, React & TypeScript",
+          "description": "Une base moderne, fiable et durable pour votre site."
+        },
+        {
+          "name": "Tailwind CSS",
+          "description": "Une interface soignée, cohérente et facile à faire évoluer."
+        },
+        {
+          "name": "Design responsive",
+          "description": "Un affichage parfait sur ordinateur, tablette et mobile."
+        },
+        {
+          "name": "Images optimisées",
+          "description": "Des visuels légers pour un chargement rapide."
+        },
+        {
+          "name": "SEO & métadonnées de base",
+          "description": "Une structure prête pour les moteurs de recherche."
+        },
+        {
+          "name": "Fichiers sources complets",
+          "description": "Vous recevez tout le code du site — il est à vous."
+        }
+      ],
+      "compare": {
+        "heading": "Comparatif des formules",
+        "delivery": "Délai de livraison",
+        "revisions": "Révisions",
+        "pages": "Pages",
+        "features": [
+          "Personnalisation du design",
+          "Intégration des contenus",
+          "Design responsive",
+          "Code source complet"
+        ]
+      },
+      "addons": {
+        "heading": "Options supplémentaires",
+        "items": [
+          "Livraison rapide : +50 $ à +150 $",
+          "Révision supplémentaire : +30 $",
+          "Page supplémentaire (+2 jours) : +75 $"
+        ]
+      },
+      "note": "Le nom de domaine, l'hébergement payant, l'email professionnel et les abonnements externes ne sont pas inclus, sauf accord spécifique."
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "titleLead": "Questions",
+      "titleHighlight": "fréquentes",
+      "description": "Tout ce qu'il faut savoir avant de se lancer.",
+      "items": [
+        {
+          "question": "Quelle formule choisir ?",
+          "answer": "Starter pour un site d'une page, Standard pour un site jusqu'à 4 pages, Advanced pour un site bilingue jusqu'à 6 pages.\n\nLe détail de chaque niveau est disponible sur Upwork."
+        },
+        {
+          "question": "Comment commander ?",
+          "answer": "La commande se fait directement via Upwork, sur la formule correspondant à votre projet."
+        },
+        {
+          "question": "Que dois-je fournir avant le démarrage ?",
+          "answer": "Vos textes, votre logo, vos images, les liens vers vos réseaux, vos couleurs et préférences visuelles, ainsi que vos informations légales si nécessaire."
+        },
+        {
+          "question": "Le nom de domaine et l'hébergement sont-ils inclus ?",
+          "answer": "Non. Le nom de domaine, l'hébergement payant, l'email professionnel et les abonnements externes ne sont pas inclus, sauf accord spécifique."
+        },
+        {
+          "question": "Le déploiement est-il inclus ?",
+          "answer": "Non, le déploiement n'est pas inclus par défaut. Vous recevez les fichiers sources complets, prêts à être déployés. Un accompagnement au déploiement est possible sur accord spécifique."
+        },
+        {
+          "question": "Vais-je recevoir les fichiers sources ?",
+          "answer": "Oui. Chaque formule est livrée avec les fichiers sources complets du site."
+        },
+        {
+          "question": "Combien de langues sont incluses ?",
+          "answer": "Les formules Starter et Standard incluent une seule langue. La formule Advanced inclut une structure jusqu'à 2 langues."
+        },
+        {
+          "question": "Comment se passe le contenu multilingue et la traduction ?",
+          "answer": "Vous fournissez les textes dans chaque langue souhaitée. La traduction n'est pas incluse par défaut : si elle est nécessaire, elle est discutée séparément ou ajoutée au périmètre."
+        },
+        {
+          "question": "Les formulaires avancés ou l'emailing sont-ils inclus ?",
+          "answer": "Non. Les formulaires avancés, newsletters, automatisations email ou intégrations externes ne sont pas inclus et nécessitent un accord séparé."
+        },
+        {
+          "question": "Quels sont les délais et le nombre de révisions ?",
+          "answer": "Les délais et révisions sont indiqués pour chaque formule et confirmés sur Upwork. Ils commencent après réception des éléments nécessaires au projet."
+        }
+      ]
+    }
+  },
+  "Portfolio": {
+    "meta": {
+      "title": "Portfolio",
+      "description": "MegaReco : application web full-stack complète. Étude de cas : authentification, admin, profils, notation."
+    },
+    "header": {
+      "eyebrow": "Portfolio",
+      "titleLead": "Mes",
+      "titleHighlight": "réalisations",
+      "description": "Sites vitrines modernes et projets web complets, conçus et déployés par Megahana."
+    },
+    "showcaseHeading": "Sites vitrines",
+    "captureSoon": "Capture à venir",
+    "nextProjectTitle": "Prochain projet",
+    "nextProjectStatus": "Bientôt disponible",
+    "comingSoonHeading": "Projets en préparation",
+    "comingSoonBadge": "Bientôt disponible",
+    "comingSoonComing": "À venir",
+    "comingSoonTags": [
+      "Site vitrine",
+      "Next.js",
+      "Responsive",
+      "UX/UI"
+    ],
+    "caseStudyHeading": "Étude de cas",
+    "showcase": {
+      "megataste": {
+        "description": "Site vitrine d'un restaurant méditerranéen : menu, ambiance et prise de contact."
+      },
+      "atelier-cendre-chene": {
+        "description": "Site vitrine d'un atelier de menuiserie artisanale : pièces sur mesure, matière brute et prise de contact."
+      },
+      "maison-trait-juste": {
+        "description": "Site vitrine d'un atelier de création artisanale : savoir-faire, portfolio de pièces et devis sur mesure."
+      },
+      "liora-venn-studio": {
+        "description": "Site vitrine d'un studio d'artiste : portfolio d'œuvres, expositions et prise de contact."
+      },
+      "atelier-noemie-aster": {
+        "description": "Site vitrine d'un atelier d'artiste : galerie d'œuvres, démarche créative et contact."
+      },
+      "velune": {
+        "description": "Site vitrine d'une startup : présentation du produit, argumentaire et prise de contact."
+      },
+      "kerno-systems": {
+        "description": "Site vitrine d'une startup technologique : offre, cas d'usage et prise de contact."
+      },
+      "maison-sepia": {
+        "description": "Site vitrine d'un restaurant : carte, ambiance et réservation."
+      },
+      "les-trois-aulnes": {
+        "description": "Site vitrine d'un restaurant : menu, salle et prise de réservation."
+      },
+      "atelier-monolithe": {
+        "description": "Site vitrine d'un cabinet d'architecture : projets, démarche et prise de contact."
+      },
+      "studio-trame-27": {
+        "description": "Site vitrine d'un studio d'architecture d'intérieur : portfolio de projets et prise de contact."
+      },
+      "kairo-nocturne": {
+        "description": "Site vitrine d'un artiste musicien : sets, dates de concerts et booking."
+      },
+      "sillon-88": {
+        "description": "Site vitrine d'un label musical : catalogue, artistes et contact."
+      },
+      "maison-elyra": {
+        "description": "Site vitrine d'une maison de mode : collections, lookbook et boutique."
+      },
+      "nomae-studio": {
+        "description": "Site vitrine d'un studio de mode : collections, silhouettes et contact."
+      },
+      "studio-souffle": {
+        "description": "Site vitrine d'un studio de bien-être : soins, pratiques et prise de rendez-vous."
+      },
+      "source-canopee": {
+        "description": "Site vitrine d'une retraite bien-être : soins, cadre naturel et réservation."
+      }
+    },
+    "coming": {
+      "megabuild": {
+        "tagline": "Site vitrine Artisan",
+        "description": "Plombier, électricien, menuisier, chauffagiste..."
+      },
+      "megacoach": {
+        "tagline": "Site vitrine Coach / Consultant",
+        "description": "Présentation, accompagnement, prise de rendez-vous."
+      }
+    },
+    "caseStudy": {
+      "labels": {
+        "project": "Le projet",
+        "visualOverview": "Aperçu visuel ({count} captures)",
+        "mobileVersion": "Version mobile",
+        "features": "Fonctionnalités principales",
+        "challenges": "Défis techniques",
+        "architecture": "Architecture et technologies",
+        "techMain": "Technologies principales",
+        "skills": "Compétences mises en œuvre",
+        "problem": "Problème",
+        "solution": "Solution",
+        "result": "Résultat",
+        "mobileTitle": "Pensé pour tous les écrans",
+        "viewOnline": "Voir {name} en ligne",
+        "sourceCode": "Voir le code source",
+        "finalTitle": "Découvrez {name} en conditions réelles",
+        "finalText": "Explorez la plateforme, créez un compte et découvrez les différentes fonctionnalités développées pour ce projet.",
+        "finalSource": "Consulter le code source"
+      },
+      "tagline": "Une plateforme web permettant de découvrir, sauvegarder, noter et commenter des mangas, manhwas et webtoons.",
+      "badges": [
+        "Projet phare",
+        "Full-stack",
+        "Développé en solo",
+        "En production"
+      ],
+      "highlights": [
+        "Développé en solo",
+        "Responsive",
+        "En production",
+        "Développement actif"
+      ],
+      "intro": "MegaReco est né avec l'objectif de centraliser la découverte et le suivi d'œuvres dans une interface moderne, claire et accessible. La plateforme permet aux utilisateurs d'explorer de nouvelles œuvres, de gérer leurs favoris, de suivre leur activité et de participer à la communauté.",
+      "role": "J'ai conçu et développé l'ensemble du projet en solo, de la réflexion produit et du design de l'interface jusqu'au développement full-stack, à la base de données, au déploiement et à la maintenance.",
+      "meta": [
+        {
+          "label": "Rôle",
+          "value": "Conception UI/UX et développement full-stack"
+        },
+        {
+          "label": "Statut",
+          "value": "En ligne et en développement actif"
+        },
+        {
+          "label": "Compatibilité",
+          "value": "Ordinateur, tablette et mobile"
+        }
+      ],
+      "responsiveNote": "Une interface adaptée aux ordinateurs, tablettes et smartphones.",
+      "mobileBullets": [
+        "Grilles et cartes adaptatives",
+        "Menu et navigation mobile",
+        "Formulaires optimisés",
+        "Carrousels tactiles",
+        "Tableaux d'administration",
+        "Pagination responsive"
+      ],
+      "galleryCaptions": [
+        {
+          "label": "Page d'accueil",
+          "description": "Découvrez des œuvres grâce à la recherche, aux filtres et aux sélections proposées."
+        },
+        {
+          "label": "Fiche d'une œuvre",
+          "description": "Synopsis, note moyenne, avis de la communauté et ajout aux favoris."
+        },
+        {
+          "label": "Profil utilisateur",
+          "description": "Niveau, titres, achievements, historique et favoris personnalisés."
+        },
+        {
+          "label": "Interface d'administration",
+          "description": "Gestion des œuvres, validation des suggestions et modération du contenu."
+        },
+        {
+          "label": "Authentification",
+          "description": "Connexion sécurisée avec vérification d'email et récupération de mot de passe."
+        }
+      ],
+      "featureGroups": [
+        {
+          "title": "Découverte",
+          "items": [
+            "Recherche",
+            "Filtres",
+            "Fiches détaillées",
+            "Ajouts récents",
+            "Suggestions d'œuvres"
+          ]
+        },
+        {
+          "title": "Compte utilisateur",
+          "items": [
+            "Authentification",
+            "Vérification de l'adresse email",
+            "Profils personnalisés",
+            "Favoris",
+            "Historique utilisateur"
+          ]
+        },
+        {
+          "title": "Communauté",
+          "items": [
+            "Notes",
+            "Commentaires",
+            "Suggestions",
+            "Interactions avec les œuvres"
+          ]
+        },
+        {
+          "title": "Progression et gestion",
+          "items": [
+            "Niveaux",
+            "Titres",
+            "Achievements",
+            "Interface d'administration",
+            "Modération"
+          ]
+        }
+      ],
+      "challenges": [
+        {
+          "title": "Authentification et sécurité",
+          "problem": "Permettre la création de comptes tout en protégeant les accès et en vérifiant les adresses email.",
+          "solution": "Mise en place d'un système d'authentification avec vérification d'email, récupération de mot de passe, gestion des sessions et limitation des tentatives abusives.",
+          "result": "Une expérience de connexion fiable et adaptée à une application en production."
+        },
+        {
+          "title": "Gamification et progression",
+          "problem": "Récompenser l'activité des utilisateurs sans attribuer plusieurs fois les mêmes récompenses.",
+          "solution": "Création d'un système de niveaux, d'XP, de titres et d'achievements capable de vérifier automatiquement les conditions déjà validées.",
+          "result": "Une progression cohérente qui encourage l'utilisation régulière de la plateforme."
+        },
+        {
+          "title": "Administration et modération",
+          "problem": "Gérer les œuvres, les suggestions et les contenus communautaires sans intervenir directement dans la base de données.",
+          "solution": "Développement d'une interface d'administration dédiée avec des outils de validation, de modification et de modération.",
+          "result": "Une gestion plus rapide, plus sûre et plus autonome de la plateforme."
+        },
+        {
+          "title": "Responsive et expérience utilisateur",
+          "problem": "Conserver une navigation claire sur ordinateur comme sur mobile.",
+          "solution": "Adaptation des grilles, menus, carrousels, formulaires, tableaux et systèmes de pagination aux différents formats d'écran.",
+          "result": "Une expérience cohérente sur ordinateur, tablette et smartphone."
+        }
+      ],
+      "architecture": {
+        "flow": [
+          "Interface Vue.js",
+          "API Node.js / Express",
+          "Base de données PostgreSQL"
+        ],
+        "deployment": "Frontend déployé sur Vercel, API hébergée sur Render et base de données gérée avec Neon."
+      }
+    }
+  },
+  "About": {
+    "meta": {
+      "title": "À propos",
+      "description": "Développeur web indépendant et fondateur de Megahana, je crée des sites vitrines modernes, rapides et responsive."
+    },
+    "eyebrow": "À propos",
+    "role": "Développeur web indépendant, fondateur de Megahana.",
+    "linkedinPerso": "LinkedIn perso",
+    "intro": [
+      "Je suis développeur web indépendant, fondateur de Megahana. Le nom vient d'une idée simple : chaque site est un pétale, et chaque client sa propre couleur — pas un template simplement recoloré, mais une direction pensée pour votre activité, votre ton, votre public.",
+      "Mon objectif est simple : concevoir des sites clairs, adaptés à votre identité, agréables à utiliser aussi bien sur ordinateur que sur mobile.",
+      "J'accorde une grande importance à la qualité du code, aux performances et à l'expérience utilisateur."
+    ],
+    "whyMe": {
+      "eyebrow": "Pourquoi travailler avec moi",
+      "titleLead": "Des avantages",
+      "titleHighlight": "concrets",
+      "items": [
+        {
+          "title": "Communication directe",
+          "description": "Vous échangez directement avec la personne qui conçoit et développe votre site."
+        },
+        {
+          "title": "Qualité technique",
+          "description": "Un code propre et maintenable, pensé pour faciliter les futures mises à jour du site."
+        },
+        {
+          "title": "Performance",
+          "description": "Des sites rapides, responsive et vérifiés avec des outils comme Lighthouse."
+        },
+        {
+          "title": "Site conçu pour évoluer",
+          "description": "Votre site peut évoluer avec de nouvelles pages, de nouveaux contenus ou une version bilingue."
+        }
+      ]
+    },
+    "tech": {
+      "eyebrow": "Stack technique",
+      "title": "Technologies et outils utilisés",
+      "subtitle": "Des technologies modernes et des outils fiables pour concevoir des sites rapides, maintenables et adaptés à chaque écran."
+    }
+  },
+  "Contact": {
+    "meta": {
+      "title": "Contact",
+      "description": "Découvrez les formules de sites vitrines Megahana sur Upwork, ou contactez-moi sur LinkedIn pour une question générale."
+    },
+    "eyebrow": "Contact",
+    "titleLead": "Parlons de votre",
+    "titleHighlight": "site vitrine",
+    "description": "Pour commander une landing page, un site professionnel ou un site bilingue, consultez les formules disponibles sur Upwork. Pour une question générale ou un partenariat, vous pouvez également me contacter sur LinkedIn.",
+    "generalLabel": "Pour une question générale ou un partenariat :",
+    "linkedin": "Megahana sur LinkedIn",
+    "upworkCta": "Voir les formules sur Upwork"
+  },
+  "Legal": {
+    "notice": {
+      "meta": {
+        "title": "Mentions légales",
+        "description": "Mentions légales du site Megahana : éditeur, hébergeur, propriété intellectuelle et contact."
+      },
+      "eyebrow": "Informations légales",
+      "title": "Mentions légales",
+      "sections": [
+        {
+          "heading": "Éditeur du site",
+          "body": "Le présent site est édité par Ahmed OMEROVIC, entrepreneur individuel (EI).\nNom commercial : Megahana.\nAdresse professionnelle : 17 rue Raymond Poincaré, 74300 Cluses, France.\nSIREN : 942 659 954.\nSIRET (siège social) : 942 659 954 00013.\nTVA : TVA non applicable, article 293 B du CGI. Numéro de TVA intracommunautaire : non applicable, sauf attribution ultérieure.\nEmail : omerovic.ahmed.work@gmail.com.\nTéléphone : 06 74 55 92 46."
+        },
+        {
+          "heading": "Responsable de publication",
+          "body": "Responsable de la publication : Ahmed OMEROVIC."
+        },
+        {
+          "heading": "Hébergeur",
+          "body": "Le site est hébergé par Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis.\nSite web : https://vercel.com. Support : https://vercel.com/help."
+        },
+        {
+          "heading": "Propriété intellectuelle",
+          "body": "L'ensemble des contenus présents sur ce site (textes, visuels, logo, structure et design) sont la propriété de Megahana ou de leurs titulaires respectifs, sauf mention contraire.\nToute reproduction, représentation, modification ou exploitation, totale ou partielle, sans autorisation préalable écrite, est interdite.\nLes marques, logos et contenus de tiers (projets présentés, captures d'écran, technologies citées) restent la propriété de leurs titulaires respectifs."
+        },
+        {
+          "heading": "Responsabilité",
+          "body": "Megahana s'efforce d'assurer l'exactitude des informations publiées sur ce site, sans pouvoir garantir qu'elles soient exemptes d'erreurs ou d'omissions.\nLe site peut contenir des liens vers des sites externes (Upwork, LinkedIn, projets présentés) sur le contenu desquels Megahana n'exerce aucun contrôle et ne saurait être tenu responsable."
+        },
+        {
+          "heading": "Contact",
+          "body": "Pour toute question relative au site, vous pouvez nous contacter à : omerovic.ahmed.work@gmail.com, ou via les liens présents en pied de page."
+        }
+      ]
+    },
+    "privacy": {
+      "meta": {
+        "title": "Politique de confidentialité",
+        "description": "Politique de confidentialité du site Megahana : données traitées, services externes, droits des utilisateurs et cookies."
+      },
+      "eyebrow": "Informations légales",
+      "title": "Politique de confidentialité",
+      "sections": [
+        {
+          "heading": "Introduction",
+          "body": "La présente politique décrit la manière dont les données peuvent être traitées dans le cadre de l'utilisation du site Megahana.\nElle s'applique à la version actuelle du site, qui est un site vitrine de présentation des services."
+        },
+        {
+          "heading": "Données collectées",
+          "body": "Le site est un site vitrine et ne propose pas de création de compte.\nEn l'absence de formulaire de contact sur le site, aucune donnée personnelle n'est collectée directement via le site.\nSeules des données techniques (par exemple adresse IP, type de navigateur, journaux de connexion) peuvent être traitées automatiquement par l'hébergeur ou les services externes utilisés, afin d'assurer le fonctionnement et la sécurité du site."
+        },
+        {
+          "heading": "Finalités du traitement",
+          "body": "Les données techniques éventuellement traitées servent uniquement à :\n• assurer le bon fonctionnement du site ;\n• garantir sa sécurité ;\n• établir, le cas échéant, des statistiques techniques de fonctionnement.\nLes échanges commerciaux et la relation client se déroulent en dehors du site."
+        },
+        {
+          "heading": "Services externes utilisés",
+          "body": "Les échanges commerciaux peuvent se faire via Upwork, LinkedIn ou email selon le cas.\nCes services disposent de leurs propres politiques de confidentialité, que nous vous invitons à consulter.\nLe site est déployé sur Vercel ou une plateforme adaptée, susceptible de traiter des données techniques en tant qu'hébergeur."
+        },
+        {
+          "heading": "Durée de conservation",
+          "body": "Les données techniques traitées par l'hébergeur ou les services externes sont conservées selon les durées définies par ces prestataires.\nLes échanges réalisés via Upwork, LinkedIn ou email sont conservés selon les politiques propres à ces services et les obligations légales applicables (notamment comptables pour les documents de facturation)."
+        },
+        {
+          "heading": "Partage des données",
+          "body": "Megahana ne vend pas vos données.\nLes seules données traitées le sont par les prestataires techniques et commerciaux mentionnés ci-dessus, dans la limite nécessaire à la fourniture de leurs services."
+        },
+        {
+          "heading": "Droits des utilisateurs",
+          "body": "Conformément à la réglementation applicable en matière de protection des données (notamment le RGPD pour les résidents de l'Union européenne), vous disposez de droits d'accès, de rectification, d'effacement, d'opposition et de limitation concernant vos données.\nPour exercer ces droits, vous pouvez nous contacter à : omerovic.ahmed.work@gmail.com.\nSelon le service concerné (Upwork, LinkedIn…), certaines demandes devront être adressées directement au prestataire."
+        },
+        {
+          "heading": "Contact",
+          "body": "Pour toute question relative à la présente politique de confidentialité : omerovic.ahmed.work@gmail.com."
+        },
+        {
+          "heading": "Cookies et traceurs",
+          "body": "En l'état, le site n'utilise pas de cookies publicitaires ni d'outils d'analyse d'audience (analytics) nécessitant votre consentement.\nSeuls des cookies ou traceurs strictement nécessaires au fonctionnement technique du site peuvent être utilisés.\nSi des outils de mesure d'audience ou de marketing (par exemple Google Analytics, Meta Pixel, Hotjar) étaient ajoutés ultérieurement, un mécanisme de gestion du consentement serait mis en place."
+        }
+      ]
+    },
+    "terms": {
+      "meta": {
+        "title": "Conditions de vente",
+        "description": "Conditions de vente de Megahana : formules disponibles sur Upwork, paiement, livraison et frais externes."
+      },
+      "eyebrow": "Informations légales",
+      "title": "Conditions de vente",
+      "sections": [
+        {
+          "heading": "Objet",
+          "body": "Les présentes conditions régissent les prestations de création de sites vitrines proposées par Ahmed OMEROVIC, entrepreneur individuel exerçant sous le nom commercial Megahana.\nElles s'appliquent à toute commande d'une prestation, sauf accord particulier écrit."
+        },
+        {
+          "heading": "Services proposés",
+          "body": "Megahana propose la création de sites vitrines sous forme de formules standardisées (Starter, Standard, Advanced), livrées avec les fichiers sources complets."
+        },
+        {
+          "heading": "Commande des prestations",
+          "body": "Les formules de création de site sont commandées via la plateforme Upwork.\nLe périmètre du projet (pages, fonctionnalités, contenus, langues) est confirmé au démarrage."
+        },
+        {
+          "heading": "Prix",
+          "body": "Les formules sont affichées en dollars américains (USD). Les tarifs indiqués sur le site sont donnés à titre indicatif ; le montant final est confirmé sur Upwork."
+        },
+        {
+          "heading": "Paiement",
+          "body": "Le paiement des formules s'effectue via Upwork, selon les conditions de la plateforme."
+        },
+        {
+          "heading": "Délais de réalisation",
+          "body": "Les délais de réalisation sont indiqués pour chaque formule et confirmés sur Upwork.\nIls commencent à courir après réception des éléments nécessaires (contenus, accès, validations) et selon les conditions de la plateforme."
+        },
+        {
+          "heading": "Obligations du client",
+          "body": "Le client s'engage à fournir les éléments nécessaires à la réalisation de la prestation : textes, images, logo, accès aux outils, informations légales, et accès au domaine / DNS si nécessaire.\nLe respect des délais dépend notamment de la transmission de ces éléments."
+        },
+        {
+          "heading": "Révisions et modifications",
+          "body": "Le nombre de révisions inclus est précisé pour chaque formule.\nToute demande dépassant le périmètre convenu peut faire l'objet d'un devis ou d'un ajustement, confirmé avant réalisation."
+        },
+        {
+          "heading": "Frais externes non inclus",
+          "body": "Le nom de domaine, l'hébergement payant, l'email professionnel, les outils externes, les abonnements tiers et les dépassements liés aux services externes ne sont pas inclus dans les formules, sauf accord spécifique écrit.\nCes frais restent à la charge du client."
+        },
+        {
+          "heading": "Livraison",
+          "body": "La prestation est considérée comme livrée lorsque le site, dans le périmètre convenu, et les fichiers sources complets sont mis à disposition du client."
+        },
+        {
+          "heading": "Droit de rétractation",
+          "body": "Conformément à la réglementation applicable, le droit de rétractation peut ne pas s'appliquer aux prestations de services pleinement exécutées ou personnalisées à la demande du client.\nLes commandes passées via Upwork sont par ailleurs soumises aux conditions et à la politique de la plateforme."
+        },
+        {
+          "heading": "Responsabilité",
+          "body": "Megahana s'engage à réaliser les prestations avec soin et professionnalisme, dans le cadre d'une obligation de moyens.\nMegahana ne saurait être tenu responsable des interruptions, dysfonctionnements ou dommages liés aux services externes (hébergeur, domaine, outils tiers) ou à un usage non conforme par le client."
+        },
+        {
+          "heading": "Propriété intellectuelle",
+          "body": "Sauf accord contraire, le client dispose des droits d'utilisation sur le site livré une fois la prestation intégralement réglée.\nLes contenus fournis par le client restent sa propriété. Le savoir-faire et les éléments techniques réutilisables de Megahana restent la propriété de Megahana.\nLes technologies, bibliothèques et contenus de tiers restent soumis à leurs licences respectives."
+        },
+        {
+          "heading": "Données personnelles",
+          "body": "Le traitement des données personnelles est décrit dans la Politique de confidentialité du site."
+        },
+        {
+          "heading": "Litiges et droit applicable",
+          "body": "Les présentes conditions sont soumises au droit français.\nEn cas de litige, les parties s'efforceront de trouver une solution amiable avant toute action ; à défaut, les tribunaux français seront compétents, sous réserve des règles impératives applicables aux consommateurs.\nLes prestations commandées via Upwork sont également soumises aux conditions de la plateforme."
+        },
+        {
+          "heading": "Contact",
+          "body": "Pour toute question relative aux présentes conditions : omerovic.ahmed.work@gmail.com."
+        }
+      ]
+    }
+  }
+}

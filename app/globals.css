@@ -1,0 +1,789 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design tokens (canaux RGB "R G B") ─────────────────────────────
+   Système de marque Megahana. :root = LIGHT (défaut) · .dark = DARK (option
+   secondaire — valeurs dérivées, le système de marque ne fournit que le light). */
+:root {
+  --bg: 250 247 242;
+  --surface: 255 255 255;
+  --surface-2: 243 240 233;
+  --border: 216 210 196;
+  --border-strong: 196 188 168;
+  --text: 28 27 24;
+  --text-2: 90 88 82;
+  --text-muted: 140 137 127;
+
+  /* Accent — terracotta, seule couleur "cliquable" (boutons, liens, CTA) */
+  --accent: 193 98 46;
+  --accent-strong: 156 78 36;
+  --accent-light: 217 135 87;
+  --accent-contrast: 250 247 242;
+  /* Variante accessible du terracotta — WCAG AA (~4.8:1 sur ivoire), usage
+     ciblé là où --accent seul échoue le contraste (voir tailwind.config.ts). */
+  --accent-accessible: 176 82 38;
+
+  /* Accents décoratifs de marque — jamais en fond plein sur de grandes surfaces */
+  --sakura: 232 160 168;
+  --gold: 201 168 118;
+  /* Nuances de sakura/or réservées au texte du dégradé animé du Hero
+     (--sakura/--gold seuls ne passent pas le contraste AA en tant que texte
+     sur fond clair — mesuré : 1,96:1 et 2,10:1, sous le seuil 3:1 "grand
+     texte"). Ces nuances-ci visent ≥4,5:1. Jamais utilisées pour la déco
+     existante (glow, accents) — seulement pour .hero-gradient plus bas. */
+  --sakura-accessible: 207 57 74;
+  --gold-accessible: 141 107 56;
+}
+
+.dark {
+  --bg: 28 27 24;
+  --surface: 38 37 33;
+  --surface-2: 50 48 42;
+  --border: 58 54 47;
+  --border-strong: 74 69 60;
+  --text: 250 247 242;
+  --text-2: 201 196 184;
+  --text-muted: 143 138 126;
+
+  --accent: 193 98 46;
+  --accent-strong: 156 78 36;
+  --accent-light: 217 135 87;
+  --accent-contrast: 250 247 242;
+  --accent-accessible: 176 82 38;
+
+  --sakura: 232 160 168;
+  --gold: 201 168 118;
+  /* En dark, les teintes CLAIRES d'origine contrastent déjà très bien sur le
+     fond sombre (mesuré : 7,7:1 et 8,2:1) — on les réutilise telles quelles
+     sous ces mêmes noms de token plutôt que les nuances foncées ci-dessus,
+     qui donneraient l'effet inverse sur fond sombre. */
+  --sakura-accessible: 232 160 168;
+  --gold-accessible: 201 168 118;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: rgb(var(--bg));
+  color: rgb(var(--text));
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Titres en Fraunces (display) — global, sans toucher chaque composant */
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display), var(--font-sans), serif;
+}
+
+/* Labels / eyebrows / boutons en Inter Tight */
+.font-label {
+  font-family: var(--font-label), var(--font-sans), sans-serif;
+}
+
+::selection {
+  background-color: rgb(var(--accent) / 0.3);
+  color: rgb(var(--text));
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(var(--surface));
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--border-strong));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--accent));
+}
+
+/* Texte en dégradé — sakura→or (décoratif). Le terracotta reste réservé au
+   cliquable (boutons/liens) : voir règle système de marque §Palette.
+   Nuances -accessible (mêmes tokens que .hero-gradient plus bas), pas
+   --sakura/--gold bruts : posées en foreground text, elles échouent le
+   contraste AA (mesuré : 1,96:1 et 2,10:1, sous le seuil 3:1 "grand texte" —
+   voir commentaire des tokens dans :root). Correction du 13/09 : avant ça,
+   .gradient-text utilisait les teintes brutes partout SAUF sur le Hero (qui,
+   lui, avait déjà .hero-gradient en plus pour l'accessibilité) — d'où un
+   dégradé visiblement différent (plus clair) entre le Hero et tous les
+   autres titres (Galerie, Services, etc.) utilisant .gradient-text seul via
+   SectionHeader. En dark, --sakura-accessible/--gold-accessible valent les
+   mêmes RGB que --sakura/--gold (voir .dark plus bas) : aucun changement
+   visuel en dark, uniquement en light. */
+.gradient-text {
+  background: linear-gradient(
+    135deg,
+    rgb(var(--sakura-accessible)) 0%,
+    rgb(var(--gold-accessible)) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Bordure de carte en dégradé accent discret */
+.card-border {
+  background: linear-gradient(rgb(var(--surface)), rgb(var(--surface)))
+      padding-box,
+    linear-gradient(
+        135deg,
+        rgb(var(--accent) / 0.28),
+        rgb(var(--border-strong) / 0.5)
+      )
+      border-box;
+  border: 1px solid transparent;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Hero (components/sections/home/Hero.tsx) ═══════════════════════════ */
+
+/* Dégradé animé du mot clé du H1 — classe ADDITIVE à .gradient-text (qui
+   fournit déjà -webkit-background-clip/text-fill-color/background-clip),
+   jamais appliquée seule. Nuances -accessible (voir tokens ci-dessus) au
+   lieu de --sakura/--gold bruts : le dégradé décoratif d'origine échoue le
+   contraste AA en tant que texte (mesuré, pas supposé). Alternance
+   sakura→or→sakura→or (pas un aller simple) pour garder une variation
+   visible pendant tout le déplacement du background-position. */
+.hero-gradient {
+  display: inline-block;
+  /* Corrigé le 13/09 : sans line-height explicite ici, cette boîte
+     inline-block hérite du leading très serré du H1 (leading-[1.1]/[1.12]),
+     plus court que les descendantes du Fraunces gras à cette taille — le
+     dégradé (et donc le texte, puisque -webkit-text-fill-color est
+     transparent) s'arrêtait net avant le bas du "p"/"y", coupant leur
+     hampe/jambage à ras. Reproduit et vérifié en isolation (Playwright) :
+     1.1 coupe, 1.35 n'coupe plus, sans décaler la ligne de base ni ajouter
+     d'espacement visible entre les deux lignes du H1 (le line-height d'un
+     inline-block ajoute de l'espace symétriquement au-dessus/en dessous de
+     son propre contenu, la position de la baseline dans la ligne parente ne
+     bouge pas). Seul .hero-gradient est concerné : le .gradient-text simple
+     (SectionHeader) reste "inline" et hérite du line-height bien moins
+     serré du titre (leading-tight, 1.25) — vérifié qu'il ne coupe pas. */
+  line-height: 1.35;
+  background-image: linear-gradient(
+    110deg,
+    rgb(var(--sakura-accessible)) 0%,
+    rgb(var(--gold-accessible)) 33.333%,
+    rgb(var(--sakura-accessible)) 66.667%,
+    rgb(var(--gold-accessible)) 100%
+  );
+  background-size: 200% 100%;
+  background-position: 100% 50%;
+  background-repeat: no-repeat;
+}
+@keyframes mh-hero-gradient {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 100% 50%;
+  }
+}
+/* .hero-gradient--play n'est ajoutée par Hero.tsx qu'après le vrai signal de
+   fin d'Intro (événement "mh:intro-done", cf. Intro.tsx) — jamais sur un
+   délai fixe deviné : l'Intro peut être sautée, déjà jouée cette session, ou
+   ne jamais s'afficher (reduced-motion). Un seul passage (pas de boucle),
+   cohérent avec les animations d'entrée framer-motion déjà sur ce H1 (elles
+   aussi ne jouent qu'une fois). */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-gradient--play {
+    animation: mh-hero-gradient 3.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s 1 both;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-gradient {
+    animation: none;
+    background-position: 100% 50%;
+  }
+}
+/* Fallback : navigateur sans background-clip:text (rare) ou mode
+   forced-colors (accessibilité Windows) — texte plein lisible plutôt qu'un
+   texte transparent sur transparent (background-clip raté sans fallback). */
+@supports not (background-clip: text) {
+  .gradient-text.hero-gradient {
+    -webkit-text-fill-color: unset;
+    color: rgb(var(--text));
+    background-image: none;
+  }
+}
+@media (forced-colors: active) {
+  .gradient-text.hero-gradient {
+    -webkit-text-fill-color: unset;
+    color: CanvasText;
+    background-image: none;
+    animation: none;
+  }
+}
+
+/* Repère de scroll ("Explorer"/"Explore") — desktop uniquement (media query
+   plus bas) : le Hero mobile n'occupe pas toute la hauteur de l'écran (pas
+   de min-h-screen), l'ajouter y pousserait juste le reste de la page sans
+   raison. Flèche STATIQUE (pas de rebond) en première version : le H1 s'anime
+   déjà juste au-dessus, inutile d'ajouter un second mouvement. Couleur :
+   terracotta accessible existant (--accent-accessible), pas une nouvelle
+   teinte. */
+.hero-scroll-cue {
+  display: none;
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+  gap: 6px;
+  padding: 10px 4px;
+  min-height: 44px;
+  font-family: var(--font-display), serif;
+  font-size: 15px;
+  color: rgb(var(--accent-accessible));
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+.hero-scroll-cue:hover,
+.hero-scroll-cue:focus-visible {
+  opacity: 0.75;
+}
+.hero-scroll-cue:focus-visible {
+  outline: 2px solid rgb(var(--accent-accessible));
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.hero-scroll-cue-arrow {
+  font-size: 13px;
+}
+@media (min-width: 1024px) and (min-height: 760px) {
+  .hero-scroll-cue {
+    display: inline-flex;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Galerie (components/sections/home/Galerie.tsx) — déplacé depuis un bloc
+   <style jsx global> lors du passage de Galerie.tsx en Server Component :
+   styled-jsx importe en interne "client-only" et ne peut donc plus tourner
+   dans un composant serveur (constaté au build, pas une supposition). Le
+   CSS était déjà global (non scoped) dans son ancienne forme — contenu
+   strictement identique ici, seule sa méthode de livraison change. ═══ */
+
+/* ── 2 rangées défilantes, sens opposés (façon "logo wall" framer.com) ──
+   Chaque rangée a son propre .marquee-viewport (bord à bord) et son propre
+   .marquee-track dupliqué ×2 pour une boucle continue (translateX(-50%)).
+   La rangée 2 réutilise les mêmes keyframes en sens inverse
+   (animation-direction:reverse). Pause au survol indépendante par rangée
+   (deux .marquee-viewport distincts). */
+.marquee-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 48px;
+}
+.marquee-viewport {
+  overflow: hidden;
+}
+.marquee-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: marquee-scroll 26s linear infinite;
+}
+.marquee-track.reverse {
+  animation-direction: reverse;
+}
+/* -25% (pas -50%) car .marquee-track contient maintenant COPY_COUNT=4
+   copies du groupe de secteurs (Galerie.tsx) au lieu de 2 : on translate
+   toujours exactement 1 largeur de groupe (1/4 de la largeur totale de la
+   piste), la vitesse visuelle ne change donc pas sur les mêmes 26s — seule
+   la marge avant qu'un vide redevienne visible en bout de piste augmente :
+   (COPY_COUNT-1) × largeur de groupe, soit ~4500px, contre ~1500px avant. */
+@keyframes marquee-scroll {
+  to {
+    transform: translateX(-25%);
+  }
+}
+.marquee-viewport:hover .marquee-track,
+.marquee-viewport:focus-within .marquee-track,
+.marquee-stack.paused .marquee-track {
+  animation-play-state: paused;
+}
+.marquee-dup {
+  display: contents;
+}
+
+/* Slot de la marquee : largeur/flex fixes, Frame (100%) remplit tout le
+   reste (fond, bordure, ratio, décor, hover) — cf. Frame.tsx. */
+.card {
+  width: 360px;
+  flex: 0 0 auto;
+}
+
+/* .mh-frame-content (Frame.tsx) n'est qu'un point d'ancrage
+   position:relative, dimensionné par son propre contenu — comme tout notre
+   contenu est lui-même en position:absolute (pour remplir la carte),
+   .mh-frame-content resterait sinon 0×0. On le fait occuper toute la carte
+   réelle (.mh-frame-card, dimensionnée par son aspect-ratio) en le rendant
+   lui-même absolute/inset:0. Sélecteur à 2 classes : gagne sur la règle à 1
+   classe de Frame.tsx quel que soit l'ordre d'insertion des styles des deux
+   composants. */
+.mh-frame-card .mh-frame-content {
+  position: absolute;
+  inset: 0;
+}
+
+/* ═══ Carte réelle (MegaTaste) — au repos : nom de secteur. Au survol :
+   photo + légende + courte phrase. Pas de lien : la fiche détaillée va sur
+   /portfolio, pas sur la homepage. Le dégradé + le texte sur la photo
+   restent volontairement charbon/ivoire fixes (pas de token thème) : une
+   photo a besoin d'un voile sombre pour rester lisible, quel que soit le
+   thème de la page — même convention que ProjectGallery.tsx (from-black/50
+   + text-white). ═══ */
+.label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  text-align: center;
+  padding: 16px;
+  transition: opacity 0.4s ease;
+}
+.label .sector {
+  font-family: var(--font-display), serif;
+  font-weight: 500;
+  font-size: 20px;
+  color: rgb(var(--text));
+}
+.label .hint {
+  font-family: var(--font-label), sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(var(--text-muted));
+}
+/* Fond ardoise du cadre Restaurant : fixe, non réactif au thème (cf.
+   Frame.tsx, .mh-frame-card--slate). Le texte posé dessus doit donc l'être
+   aussi — sinon rgb(var(--text)) (sombre en light mode) devient quasi
+   identique à #1c1b18, illisible. Couleurs en dur cohérentes avec la
+   bordure ardoise déjà en dur dans Frame.tsx (rgba(250,247,242,0.15)). */
+.label--on-slate .sector {
+  color: rgba(250, 247, 242, 0.92);
+}
+.label--on-slate .hint {
+  color: rgba(250, 247, 242, 0.65);
+}
+.photo {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(0 0 0 / 0.6) 0%, transparent 48%);
+}
+.info-bottom {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.info-bottom .caption {
+  font-family: var(--font-label), sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #fff;
+}
+.info-bottom .caption b {
+  font-weight: 700;
+}
+.info-bottom .teaser-line {
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: rgb(255 255 255 / 0.88);
+}
+
+/* ═══ Cartes réelles (démos live, "carte par projet") — photo + légende
+   visibles AU REPOS, pas seulement au survol : avec jusqu'à 16 vraies démos,
+   l'ancien mécanisme "nom de secteur au repos / photo au survol" — pensé
+   pour 1 seul exemple (MegaTaste) noyé parmi 7 placeholders — masquerait la
+   quasi-totalité du contenu réel derrière un hover. Spécificité (2 classes)
+   volontairement supérieure à .label/.photo/.info-bottom (1 classe)
+   ci-dessus : pas d'!important, les règles ci-dessus restent le
+   comportement des placeholders. ═══ */
+.card.card--real .label {
+  opacity: 0;
+}
+.card.card--real .photo {
+  opacity: 1;
+}
+.card.card--real .info-bottom {
+  opacity: 1;
+}
+.card--real {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.card--real:focus-visible {
+  outline: 2px solid rgb(var(--accent-accessible));
+  outline-offset: 2px;
+}
+.real-hint {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  z-index: 1;
+  font-family: var(--font-label), sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.92);
+  background: rgb(0 0 0 / 0.35);
+  border-radius: 999px;
+  padding: 4px 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.card--real:hover .real-hint,
+.card--real:focus-visible .real-hint {
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mh-frame-card:hover .label {
+    opacity: 0;
+  }
+  .mh-frame-card:hover .photo {
+    opacity: 1;
+  }
+  .mh-frame-card:hover .info-bottom {
+    opacity: 1;
+  }
+}
+@media not (hover: hover) {
+  .label {
+    opacity: 0;
+  }
+  .photo {
+    opacity: 1;
+  }
+  .info-bottom {
+    opacity: 1;
+  }
+}
+
+/* ═══ Cartes placeholder (7 secteurs "en travail") — nom de secteur + tag
+   "En travail" toujours affichés ; le pétale-signature vient de Frame
+   (mh-frame-petal-shape). Jamais cliquables. ═══ */
+.base-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px;
+}
+.base-content .sector {
+  font-family: var(--font-display), serif;
+  font-weight: 500;
+  font-size: 18px;
+  color: rgb(var(--text-muted));
+}
+.base-content .tag {
+  font-family: var(--font-label), sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(var(--text-muted));
+  border: 1px solid rgb(var(--text) / 0.16);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.reveal {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  padding: 9px 12px;
+  border-radius: 8px;
+  background: rgb(var(--bg) / 0.9);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.reveal .teaser-line {
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgb(var(--text-2));
+}
+.reveal .prov-tag {
+  font-family: var(--font-label), sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: rgb(var(--gold));
+}
+@media (hover: hover) and (pointer: fine) {
+  .mh-frame-card:hover .reveal {
+    opacity: 1;
+  }
+}
+@media not (hover: hover) {
+  .reveal {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .label,
+  .photo,
+  .info-bottom,
+  .reveal {
+    transition: none;
+  }
+  /* Coupé net sur LES DEUX rangées : pas de défilement du tout. On repasse
+     chacune en grille statique et on masque sa copie dupliquée. */
+  .marquee-viewport {
+    overflow: visible;
+    max-width: 1180px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 24px;
+  }
+  .marquee-track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    animation: none;
+    transform: none;
+  }
+  .marquee-dup {
+    display: none;
+  }
+  .card {
+    width: auto;
+  }
+}
+
+/* ═══ Sécurité clavier : si une carte réelle reçoit le focus pendant que la
+   rangée défile, on fige TOUTE la rangée dans la même mise en page statique
+   que reduced-motion — sinon la copie focusable (copyIndex 0, la seule à ne
+   pas avoir tabIndex=-1) peut être hors-écran au moment du focus :
+   :focus-within seul ne fait qu'arrêter le défilement APRÈS coup, il ne
+   repositionne rien. Scopé via :has() au viewport contenant la carte
+   focusée. Support :has() : tous navigateurs majeurs depuis 2023 ; dégradé
+   proprement (comportement actuel, sans ce filet) sur les rares navigateurs
+   plus anciens grâce à @supports. ═══ */
+@supports selector(:has(a)) {
+  .marquee-viewport:has(.card--real:focus-visible) .marquee-track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    animation: none;
+    transform: none;
+  }
+  .marquee-viewport:has(.card--real:focus-visible) .marquee-dup {
+    display: none;
+  }
+  .marquee-viewport:has(.card--real:focus-visible) .card {
+    width: auto;
+  }
+}
+
+/* Sous 920px (et hors reduced-motion, géré séparément ci-dessus) : plus
+   d'auto-scroll du tout — défilement manuel au doigt à la place. Condition
+   sur (prefers-reduced-motion: no-preference), pas juste (max-width:
+   920px), pour ne jamais entrer en conflit avec le bloc reduced-motion
+   (source order oblige sinon) : les deux media queries sont mutuellement
+   exclusives par construction. */
+@media (max-width: 920px) and (prefers-reduced-motion: no-preference) {
+  .marquee-viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .marquee-track {
+    animation: none;
+    transform: none;
+  }
+  .card {
+    scroll-snap-align: start;
+  }
+  .marquee-dup {
+    display: none;
+  }
+}
+@media (max-width: 920px) and (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ─── ChalkText (components/ui/ChalkText.tsx) — même raison de déplacement
+   que le bloc Galerie ci-dessus (styled-jsx incompatible avec un Server
+   Component). Contenu identique. ─── */
+.mh-chalk-letter {
+  display: inline-block;
+}
+.mh-chalk-letter:nth-child(3n) {
+  transform: rotate(-1.5deg) translateY(-1px);
+}
+.mh-chalk-letter:nth-child(3n + 1) {
+  transform: rotate(1deg) translateY(1px);
+}
+.mh-chalk-letter:nth-child(3n + 2) {
+  transform: rotate(-0.5deg);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Intro (components/sections/home/Intro.tsx) — déplacé depuis un bloc
+   <style jsx global> : Intro.tsx reste un Client Component (refs DOM,
+   timers, transitionend — pas de contrainte styled-jsx/client-only ici),
+   mais ce bloc provoquait un flash non stylé (FOUC) au tout premier paint
+   et brièvement après la fin de l'intro — styled-jsx injecte son <style>
+   après l'hydratation, pas avant, contrairement au CSS de ce fichier qui
+   est déjà présent dans le <head> au premier octet. Contenu strictement
+   identique, seule sa méthode de livraison change.
+
+   Les durées de transition ci-dessous (650ms / 300ms) sont dupliquées
+   depuis MOVE_DURATION_MS / FADE_DURATION_MS dans Intro.tsx — CSS plat, pas
+   moyen de les référencer depuis une constante JS. Si l'un change, changer
+   l'autre. ═══ */
+.mh-intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(var(--bg));
+  cursor: pointer;
+}
+.mh-intro-overlay--hidden {
+  display: none;
+}
+.mh-intro-overlay--fading {
+  background: rgb(var(--bg) / 0);
+  transition: background 300ms ease;
+}
+
+.mh-intro-logo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  transform: scale(1) translate(0, 0);
+  transition: transform 650ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.mh-intro-svg {
+  width: 260px;
+  height: 260px;
+  display: block;
+}
+.mh-intro-wordmark {
+  font-family: var(--font-display), serif;
+  font-weight: 500;
+  font-size: 46px;
+  color: rgb(var(--text));
+  line-height: 1;
+  opacity: 1;
+  transition: opacity 0.45s ease;
+}
+.mh-intro-logo--wordmark-out .mh-intro-wordmark {
+  opacity: 0;
+}
+
+.mh-intro-petal-glow {
+  opacity: 1;
+  transition: opacity 0.22s ease;
+}
+.mh-intro-overlay--wave .mh-intro-petal-glow {
+  opacity: 0;
+}
+.mh-intro-overlay--wave .mh-intro-petal-glow[data-i="0"] {
+  transition-delay: 0ms;
+}
+.mh-intro-overlay--wave .mh-intro-petal-glow[data-i="1"] {
+  transition-delay: 70ms;
+}
+.mh-intro-overlay--wave .mh-intro-petal-glow[data-i="2"] {
+  transition-delay: 140ms;
+}
+.mh-intro-overlay--wave .mh-intro-petal-glow[data-i="3"] {
+  transition-delay: 210ms;
+}
+.mh-intro-overlay--wave .mh-intro-petal-glow[data-i="4"] {
+  transition-delay: 280ms;
+}
+
+.mh-intro-skip {
+  position: absolute;
+  bottom: 28px;
+  right: 28px;
+  font-family: var(--font-label), sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgb(var(--text-muted));
+  background: transparent;
+  border: 1px solid rgb(var(--text) / 0.16);
+  border-radius: 999px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.mh-intro-skip:hover {
+  color: rgb(var(--text));
+  border-color: rgb(var(--text) / 0.32);
+}
+.mh-intro-skip:focus-visible {
+  color: rgb(var(--text));
+  outline: 2px solid rgb(var(--accent-accessible));
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mh-intro-logo,
+  .mh-intro-overlay,
+  .mh-intro-petal-glow {
+    transition: none !important;
+  }
+}

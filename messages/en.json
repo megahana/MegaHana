@@ -1,0 +1,802 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "about": "About",
+    "contact": "Contact",
+    "cta": "View services",
+    "switchToFr": "Switch to French",
+    "switchToEn": "Switch to English",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "theme": "Toggle theme"
+  },
+  "Common": {
+    "newTab": "(opens in a new tab)",
+    "viewSite": "View site",
+    "lastUpdated": "Last updated: {date}",
+    "skipIntro": "Skip intro",
+    "gallery": {
+      "region": "Project screenshots",
+      "slide": "Screenshot {current} of {total}: {label}. Use left and right arrows to navigate.",
+      "expand": "Enlarge",
+      "prev": "Previous",
+      "next": "Next",
+      "view": "View: {label}",
+      "close": "Close"
+    }
+  },
+  "Home": {
+    "meta": {
+      "title": "Modern showcase websites",
+      "description": "Modern, fast showcase websites tailored to the identity of freelancers and small businesses."
+    },
+    "hero": {
+      "badge": "✦ Showcase sites, built around you",
+      "titleLead": "Your showcase website,",
+      "titleHighlight": "shaped by your world",
+      "subheadline": "Modern, fast and responsive showcase websites, built with Next.js and delivered with the complete source files, ready to deploy.",
+      "perks": [
+        "Timelines defined before we start",
+        "Design tailored to your business",
+        "Complete source files"
+      ],
+      "ctaPrimary": "Discover our services",
+      "ctaSecondary": "View portfolio",
+      "scrollCue": "Explore"
+    },
+    "galerie": {
+      "eyebrow": "✦ The Gallery",
+      "titleLead": "Eight worlds,",
+      "titleHighlight": "one signature per sector",
+      "description": "Each sector has its own artistic direction — sixteen live demos, two examples per world.",
+      "inProgress": "In progress",
+      "placeholderTag": "Placeholder text",
+      "real": {
+        "hint": "See the example"
+      },
+      "sectors": {
+        "restaurant": "Restaurant",
+        "artisans": "Artisans",
+        "artistes": "Artists",
+        "startup": "Startup",
+        "architecte": "Architect",
+        "musicien": "Musician",
+        "mode": "Fashion",
+        "bien-etre": "Wellness"
+      },
+      "teasers": {
+        "restaurant": "A dining room designed for welcome, a menu designed for the plate.",
+        "artisans": "A raw, sincere craft world — art direction coming soon.",
+        "artistes": "A showcase built to reveal the creative gesture.",
+        "startup": "A clear, direct image to carry a young project forward.",
+        "architecte": "A sober staging, in service of the work on show.",
+        "musicien": "A digital stage designed for listening as much as looking.",
+        "mode": "A pared-back look, true to the discipline of couture.",
+        "bien-etre": "A calm space, in the image of a caring practice."
+      },
+      "pauseScroll": "Pause scrolling",
+      "resumeScroll": "Resume scrolling"
+    },
+    "offers": {
+      "eyebrow": "Offers",
+      "titleLead": "Packages for",
+      "titleHighlight": "your showcase website",
+      "description": "Choose a landing page, a professional website or a bilingual website depending on your needs.",
+      "landingDescription": "A single page to present your business.",
+      "businessDescription": "A professional website with up to 4 pages.",
+      "bilingualDescription": "A bilingual website with up to 6 pages.",
+      "cta": "View packages"
+    },
+    "portfolio": {
+      "eyebrow": "Portfolio",
+      "titleLead": "Proof through",
+      "titleHighlight": "the work",
+      "description": "A concrete example of what I can design and deploy.",
+      "badge": "Featured project",
+      "viewAll": "View full portfolio",
+      "imageAlt": "Preview of the {name} project",
+      "carouselRegion": "Featured projects"
+    },
+    "howItWorks": {
+      "eyebrow": "How it works",
+      "titleLead": "Simple,",
+      "titleHighlight": "in 4 steps",
+      "description": "From your request to delivery, a clear process with no surprises.",
+      "steps": [
+        {
+          "title": "Choose a package",
+          "description": "Review the three packages and pick the one that matches the number of pages and languages you need."
+        },
+        {
+          "title": "Order on Upwork",
+          "description": "Order the package that fits directly on Upwork; the scope is confirmed at the start."
+        },
+        {
+          "title": "Build",
+          "description": "I design and develop your website based on the agreed scope, then present the result for the planned revisions."
+        },
+        {
+          "title": "Delivery",
+          "description": "You receive the website and the complete source files, ready to use or deploy."
+        }
+      ]
+    },
+    "whyUs": {
+      "eyebrow": "Why Megahana",
+      "titleLead": "What makes",
+      "titleHighlight": "the difference",
+      "description": "No agency, no middleman. One developer, one point of contact, one delivered website.",
+      "items": [
+        {
+          "title": "A single point of contact",
+          "description": "You work directly with the developer who designs and builds your website, with no agency or middleman."
+        },
+        {
+          "title": "Modern technologies",
+          "description": "Next.js and Tailwind CSS for fast, reliable websites that are easy to grow."
+        },
+        {
+          "title": "A website built to grow",
+          "description": "Your website can evolve with your business without having to be rebuilt from scratch."
+        }
+      ]
+    },
+    "cta": {
+      "badge": "Available for new projects",
+      "titleLead": "Ready to create",
+      "titleHighlight": "your showcase website?",
+      "subtitle": "Explore the available packages and choose the one that fits your project.",
+      "button": "View services"
+    }
+  },
+  "Footer": {
+    "description": "Modern, fast and responsive showcase websites for freelancers and small businesses.",
+    "navHeading": "Navigation",
+    "contactHeading": "Contact",
+    "linkedin": "Megahana on LinkedIn",
+    "rights": "© {year} Megahana. All rights reserved.",
+    "madeWith": "Built with Next.js and Tailwind CSS.",
+    "version": "Megahana v{version} · Last updated: {date}",
+    "legal": {
+      "notice": "Legal notice",
+      "privacy": "Privacy policy",
+      "terms": "Terms of sale"
+    },
+    "upwork": "View packages on Upwork"
+  },
+  "MobileCta": {
+    "default": "View services"
+  },
+  "Projects": {
+    "megareco": {
+      "shortDescription": "Full-stack web application that lets users discover, rate, comment on and save their favourite works."
+    },
+    "megataste": {
+      "shortDescription": "Showcase website for a Mediterranean restaurant: menu, atmosphere and contact."
+    }
+  },
+  "Services": {
+    "meta": {
+      "title": "Services",
+      "description": "Showcase website creation: landing page, professional website or bilingual website. Responsive, optimised, with complete source files."
+    },
+    "hero": {
+      "eyebrow": "Services",
+      "titleLead": "Turnkey",
+      "titleHighlight": "showcase websites",
+      "description": "A landing page, a professional website or a bilingual website, with a design tailored to your business."
+    },
+    "intro": "Megahana builds modern, fast and responsive showcase websites, developed with Next.js. The content and design are tailored to your identity, and every package is delivered with the complete source files.",
+    "commonLine": "Every package includes a modern, responsive showcase website, integration of the content you provide, performance optimisation and delivery of the complete source files.",
+    "externalFeesLine": "External fees are not included in the packages: domain name, paid hosting, professional email, third-party subscriptions and any overages related to external tools.",
+    "packages": {
+      "eyebrow": "Packages",
+      "titleLead": "Packages available",
+      "titleHighlight": "on Upwork",
+      "description": "Choose the level that fits your project and order directly on Upwork.",
+      "notice": "Every package includes a modern, responsive business website delivered with the complete source files. Full details for each level are available on Upwork.",
+      "currencyNote": "Prices are displayed in US dollars. The final amount is confirmed on Upwork. Domain name, paid hosting, professional email and external subscriptions are not included.",
+      "orderCta": "Order on Upwork",
+      "deliveryDays": "{count} days",
+      "revisions": "{count} revisions",
+      "bilingualBadge": "Bilingual",
+      "items": {
+        "starter": {
+          "pages": "1 page",
+          "language": "1 language",
+          "features": [
+            "Responsive single-page website",
+            "Modern design tailored to your business",
+            "Integration of your content",
+            "Performance optimisation",
+            "Complete source files",
+            "Social media icons"
+          ]
+        },
+        "standard": {
+          "pages": "up to 4 pages",
+          "language": "1 language",
+          "features": [
+            "Responsive website up to 4 pages",
+            "Modern design tailored to your business",
+            "Integration of your content",
+            "Performance optimisation",
+            "Complete source files",
+            "Social media icons"
+          ]
+        },
+        "advanced": {
+          "pages": "up to 6 pages",
+          "language": "up to 2 languages",
+          "features": [
+            "Responsive website up to 6 pages",
+            "Structure with up to 2 languages",
+            "Integration of your content",
+            "Performance optimisation",
+            "Complete source files",
+            "Social media icons"
+          ]
+        }
+      }
+    },
+    "tech": {
+      "eyebrow": "The tech",
+      "titleLead": "Built with",
+      "titleHighlight": "modern tools",
+      "subtitle": "Modern technologies for a fast, reliable website that's easy to evolve.",
+      "common": [
+        {
+          "name": "Next.js, React & TypeScript",
+          "description": "A modern, reliable and durable foundation for your website."
+        },
+        {
+          "name": "Tailwind CSS",
+          "description": "A polished, consistent interface that's easy to evolve."
+        },
+        {
+          "name": "Responsive design",
+          "description": "A perfect display on desktop, tablet and mobile."
+        },
+        {
+          "name": "Optimised images",
+          "description": "Lightweight visuals for fast loading."
+        },
+        {
+          "name": "SEO & basic metadata",
+          "description": "A structure ready for search engines."
+        },
+        {
+          "name": "Complete source files",
+          "description": "You receive all the website's code — it's yours."
+        }
+      ],
+      "compare": {
+        "heading": "Package comparison",
+        "delivery": "Delivery time",
+        "revisions": "Revisions",
+        "pages": "Pages",
+        "features": [
+          "Design customization",
+          "Content upload",
+          "Responsive design",
+          "Source code"
+        ]
+      },
+      "addons": {
+        "heading": "Optional add-ons",
+        "items": [
+          "Fast delivery: +$50 to +$150",
+          "Additional revision: +$30",
+          "Additional page (+2 days): +$75"
+        ]
+      },
+      "note": "Domain name, paid hosting, professional email and third-party subscriptions are not included unless agreed separately."
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "titleLead": "Frequently asked",
+      "titleHighlight": "questions",
+      "description": "Everything you need to know before getting started.",
+      "items": [
+        {
+          "question": "Which package should I choose?",
+          "answer": "Starter for a one-page website, Standard for a website up to 4 pages, Advanced for a bilingual website up to 6 pages.\n\nFull details for each level are available on Upwork."
+        },
+        {
+          "question": "How do I order?",
+          "answer": "You order directly on Upwork, on the package that matches your project."
+        },
+        {
+          "question": "What do I need to provide before we start?",
+          "answer": "Your text, your logo, your images, links to your social media, your colours and visual preferences, and your legal information if needed."
+        },
+        {
+          "question": "Are domain name and hosting included?",
+          "answer": "No. Domain name, paid hosting, professional email and external subscriptions are not included unless agreed separately."
+        },
+        {
+          "question": "Is deployment included?",
+          "answer": "No, deployment is not included by default. You receive the complete source files, ready to deploy. Deployment support is possible by specific agreement."
+        },
+        {
+          "question": "Will I receive the source files?",
+          "answer": "Yes. Every package is delivered with the complete source files of the website."
+        },
+        {
+          "question": "How many languages are included?",
+          "answer": "The Starter and Standard packages include a single language. The Advanced package includes a structure with up to 2 languages."
+        },
+        {
+          "question": "How does multilingual content and translation work?",
+          "answer": "You provide the text in each chosen language. Translation is not included by default: if needed, it is discussed separately or added to the scope."
+        },
+        {
+          "question": "Are advanced forms or emailing included?",
+          "answer": "No. Advanced forms, newsletters, email automations or external integrations are not included and require a separate agreement."
+        },
+        {
+          "question": "What are the timelines and revisions?",
+          "answer": "Timelines and revisions are indicated for each package and confirmed on Upwork. They start after receiving the items needed for the project."
+        }
+      ]
+    }
+  },
+  "Portfolio": {
+    "meta": {
+      "title": "Portfolio",
+      "description": "MegaReco: a complete full-stack web application. Case study: authentication, admin, profiles, ratings."
+    },
+    "header": {
+      "eyebrow": "Portfolio",
+      "titleLead": "My",
+      "titleHighlight": "work",
+      "description": "Modern showcase websites and complete web projects, designed and deployed by Megahana."
+    },
+    "showcaseHeading": "Showcase websites",
+    "captureSoon": "Screenshot coming soon",
+    "nextProjectTitle": "Next project",
+    "nextProjectStatus": "Coming soon",
+    "comingSoonHeading": "Projects in preparation",
+    "comingSoonBadge": "Coming soon",
+    "comingSoonComing": "Soon",
+    "comingSoonTags": [
+      "Showcase website",
+      "Next.js",
+      "Responsive",
+      "UX/UI"
+    ],
+    "caseStudyHeading": "Case study",
+    "showcase": {
+      "megataste": {
+        "description": "Showcase website for a Mediterranean restaurant: menu, atmosphere and contact."
+      },
+      "atelier-cendre-chene": {
+        "description": "Showcase website for a craft woodworking studio: custom pieces, raw materials and contact."
+      },
+      "maison-trait-juste": {
+        "description": "Showcase website for a craft workshop: know-how, project portfolio and custom quotes."
+      },
+      "liora-venn-studio": {
+        "description": "Showcase website for an artist studio: artwork portfolio, exhibitions and contact."
+      },
+      "atelier-noemie-aster": {
+        "description": "Showcase website for an artist's studio: artwork gallery, creative approach and contact."
+      },
+      "velune": {
+        "description": "Showcase website for a startup: product overview, pitch and contact."
+      },
+      "kerno-systems": {
+        "description": "Showcase website for a tech startup: offering, use cases and contact."
+      },
+      "maison-sepia": {
+        "description": "Showcase website for a restaurant: menu, atmosphere and booking."
+      },
+      "les-trois-aulnes": {
+        "description": "Showcase website for a restaurant: menu, dining room and booking."
+      },
+      "atelier-monolithe": {
+        "description": "Showcase website for an architecture firm: projects, approach and contact."
+      },
+      "studio-trame-27": {
+        "description": "Showcase website for an interior design studio: project portfolio and contact."
+      },
+      "kairo-nocturne": {
+        "description": "Showcase website for a musician: sets, tour dates and booking."
+      },
+      "sillon-88": {
+        "description": "Showcase website for a record label: catalog, artists and contact."
+      },
+      "maison-elyra": {
+        "description": "Showcase website for a fashion house: collections, lookbook and shop."
+      },
+      "nomae-studio": {
+        "description": "Showcase website for a fashion studio: collections, silhouettes and contact."
+      },
+      "studio-souffle": {
+        "description": "Showcase website for a wellness studio: treatments, practices and booking."
+      },
+      "source-canopee": {
+        "description": "Showcase website for a wellness retreat: treatments, natural setting and booking."
+      }
+    },
+    "coming": {
+      "megabuild": {
+        "tagline": "Tradesperson showcase website",
+        "description": "Plumber, electrician, carpenter, heating engineer..."
+      },
+      "megacoach": {
+        "tagline": "Coach / Consultant showcase website",
+        "description": "Presentation, guidance, appointment booking."
+      }
+    },
+    "caseStudy": {
+      "labels": {
+        "project": "The project",
+        "visualOverview": "Visual overview ({count} screenshots)",
+        "mobileVersion": "Mobile version",
+        "features": "Key features",
+        "challenges": "Technical challenges",
+        "architecture": "Architecture and technologies",
+        "techMain": "Core technologies",
+        "skills": "Skills applied",
+        "problem": "Problem",
+        "solution": "Solution",
+        "result": "Result",
+        "mobileTitle": "Designed for every screen",
+        "viewOnline": "View {name} online",
+        "sourceCode": "View source code",
+        "finalTitle": "Discover {name} in real conditions",
+        "finalText": "Explore the platform, create an account and discover the various features built for this project.",
+        "finalSource": "View source code"
+      },
+      "tagline": "A web platform to discover, save, rate and comment on mangas, manhwas and webtoons.",
+      "badges": [
+        "Featured project",
+        "Full-stack",
+        "Built solo",
+        "In production"
+      ],
+      "highlights": [
+        "Built solo",
+        "Responsive",
+        "In production",
+        "Actively developed"
+      ],
+      "intro": "MegaReco was created to centralise the discovery and tracking of works in a modern, clear and accessible interface. The platform lets users explore new works, manage their favourites, track their activity and take part in the community.",
+      "role": "I designed and developed the whole project solo, from product thinking and interface design to full-stack development, the database, deployment and maintenance.",
+      "meta": [
+        {
+          "label": "Role",
+          "value": "UI/UX design and full-stack development"
+        },
+        {
+          "label": "Status",
+          "value": "Live and actively developed"
+        },
+        {
+          "label": "Compatibility",
+          "value": "Desktop, tablet and mobile"
+        }
+      ],
+      "responsiveNote": "An interface adapted to desktops, tablets and smartphones.",
+      "mobileBullets": [
+        "Adaptive grids and cards",
+        "Mobile menu and navigation",
+        "Optimised forms",
+        "Touch carousels",
+        "Admin tables",
+        "Responsive pagination"
+      ],
+      "galleryCaptions": [
+        {
+          "label": "Home page",
+          "description": "Discover works through search, filters and curated selections."
+        },
+        {
+          "label": "Work detail page",
+          "description": "Synopsis, average rating, community reviews and add to favourites."
+        },
+        {
+          "label": "User profile",
+          "description": "Level, titles, achievements, history and personalised favourites."
+        },
+        {
+          "label": "Admin interface",
+          "description": "Managing works, validating suggestions and moderating content."
+        },
+        {
+          "label": "Authentication",
+          "description": "Secure login with email verification and password recovery."
+        }
+      ],
+      "featureGroups": [
+        {
+          "title": "Discovery",
+          "items": [
+            "Search",
+            "Filters",
+            "Detailed pages",
+            "Recent additions",
+            "Work suggestions"
+          ]
+        },
+        {
+          "title": "User account",
+          "items": [
+            "Authentication",
+            "Email verification",
+            "Personalised profiles",
+            "Favourites",
+            "User history"
+          ]
+        },
+        {
+          "title": "Community",
+          "items": [
+            "Ratings",
+            "Comments",
+            "Suggestions",
+            "Interactions with works"
+          ]
+        },
+        {
+          "title": "Progression and management",
+          "items": [
+            "Levels",
+            "Titles",
+            "Achievements",
+            "Admin interface",
+            "Moderation"
+          ]
+        }
+      ],
+      "challenges": [
+        {
+          "title": "Authentication and security",
+          "problem": "Allow account creation while protecting access and verifying email addresses.",
+          "solution": "An authentication system with email verification, password recovery, session management and rate limiting against abuse.",
+          "result": "A reliable login experience suited to a production application."
+        },
+        {
+          "title": "Gamification and progression",
+          "problem": "Reward user activity without granting the same rewards multiple times.",
+          "solution": "A system of levels, XP, titles and achievements able to automatically check already-met conditions.",
+          "result": "Consistent progression that encourages regular use of the platform."
+        },
+        {
+          "title": "Administration and moderation",
+          "problem": "Manage works, suggestions and community content without touching the database directly.",
+          "solution": "A dedicated admin interface with validation, editing and moderation tools.",
+          "result": "Faster, safer and more autonomous management of the platform."
+        },
+        {
+          "title": "Responsive and user experience",
+          "problem": "Keep clear navigation on desktop and mobile alike.",
+          "solution": "Adapting grids, menus, carousels, forms, tables and pagination to different screen sizes.",
+          "result": "A consistent experience across desktop, tablet and smartphone."
+        }
+      ],
+      "architecture": {
+        "flow": [
+          "Vue.js interface",
+          "Node.js / Express API",
+          "PostgreSQL database"
+        ],
+        "deployment": "Frontend deployed on Vercel, API hosted on Render and database managed with Neon."
+      }
+    }
+  },
+  "About": {
+    "meta": {
+      "title": "About",
+      "description": "Independent web developer and founder of Megahana, I build modern, fast and responsive showcase websites."
+    },
+    "eyebrow": "About",
+    "role": "Independent web developer, founder of Megahana.",
+    "linkedinPerso": "Personal LinkedIn",
+    "intro": [
+      "I'm an independent web developer, founder of Megahana. The name comes from a simple idea: every site is a petal, and every client their own color — not a template with a new coat of paint, but a direction built around your business, your tone, your audience.",
+      "My goal is simple: to design clear websites, tailored to your identity, and easy to use on both desktop and mobile.",
+      "I place great importance on code quality, performance and user experience."
+    ],
+    "whyMe": {
+      "eyebrow": "Why work with me",
+      "titleLead": "Concrete",
+      "titleHighlight": "advantages",
+      "items": [
+        {
+          "title": "Direct communication",
+          "description": "You work directly with the person who designs and develops your website."
+        },
+        {
+          "title": "Technical quality",
+          "description": "Clean, maintainable code, designed to make future website updates easier."
+        },
+        {
+          "title": "Performance",
+          "description": "Fast, responsive websites, checked with tools like Lighthouse."
+        },
+        {
+          "title": "A website built to grow",
+          "description": "Your website can evolve with new pages, new content or a bilingual version."
+        }
+      ]
+    },
+    "tech": {
+      "eyebrow": "Tech stack",
+      "title": "Technologies and tools used",
+      "subtitle": "Modern technologies and reliable tools to build fast, maintainable websites adapted to every screen."
+    }
+  },
+  "Contact": {
+    "meta": {
+      "title": "Contact",
+      "description": "Discover Megahana's showcase website packages on Upwork, or reach out on LinkedIn for a general enquiry."
+    },
+    "eyebrow": "Contact",
+    "titleLead": "Let's talk about your",
+    "titleHighlight": "showcase website",
+    "description": "To order a landing page, a professional website or a bilingual website, check out the packages available on Upwork. For a general enquiry or a partnership, you can also reach out on LinkedIn.",
+    "generalLabel": "For a general enquiry or a partnership:",
+    "linkedin": "Megahana on LinkedIn",
+    "upworkCta": "View packages on Upwork"
+  },
+  "Legal": {
+    "notice": {
+      "meta": {
+        "title": "Legal notice",
+        "description": "Legal notice for the Megahana website: publisher, host, intellectual property and contact."
+      },
+      "eyebrow": "Legal information",
+      "title": "Legal notice",
+      "sections": [
+        {
+          "heading": "Site publisher",
+          "body": "This website is published by Ahmed OMEROVIC, sole trader (entrepreneur individuel / EI under French law).\nTrading name: Megahana.\nBusiness address: 17 rue Raymond Poincaré, 74300 Cluses, France.\nSIREN: 942 659 954.\nSIRET (registered office): 942 659 954 00013.\nVAT: VAT not applicable, article 293 B of the French General Tax Code (CGI). Intra-community VAT number: not applicable, unless assigned later.\nEmail: omerovic.ahmed.work@gmail.com.\nPhone: +33 6 74 55 92 46."
+        },
+        {
+          "heading": "Publication manager",
+          "body": "Publication manager: Ahmed OMEROVIC."
+        },
+        {
+          "heading": "Host",
+          "body": "The website is hosted by Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, USA.\nWebsite: https://vercel.com. Support: https://vercel.com/help."
+        },
+        {
+          "heading": "Intellectual property",
+          "body": "All content on this website (text, visuals, logo, structure and design) is the property of Megahana or of its respective owners, unless otherwise stated.\nAny reproduction, representation, modification or use, in whole or in part, without prior written authorisation, is prohibited.\nThird-party trademarks, logos and content (featured projects, screenshots, technologies mentioned) remain the property of their respective owners."
+        },
+        {
+          "heading": "Liability",
+          "body": "Megahana strives to ensure the accuracy of the information published on this website, but cannot guarantee that it is free of errors or omissions.\nThe site may contain links to external websites (Upwork, LinkedIn, featured projects) over whose content Megahana has no control and for which it cannot be held responsible."
+        },
+        {
+          "heading": "Contact",
+          "body": "For any question regarding the website, you can contact us at: omerovic.ahmed.work@gmail.com, or via the links in the footer."
+        }
+      ]
+    },
+    "privacy": {
+      "meta": {
+        "title": "Privacy policy",
+        "description": "Privacy policy for the Megahana website: data processed, external services, user rights and cookies."
+      },
+      "eyebrow": "Legal information",
+      "title": "Privacy policy",
+      "sections": [
+        {
+          "heading": "Introduction",
+          "body": "This policy describes how data may be processed when using the Megahana website.\nIt applies to the current version of the site, which is a showcase website presenting our services."
+        },
+        {
+          "heading": "Data collected",
+          "body": "The site is a showcase website and does not offer account creation.\nAs there is no contact form on the site, no personal data is collected directly through the site.\nOnly technical data (for example IP address, browser type, connection logs) may be processed automatically by the host or the external services used, in order to ensure the operation and security of the site."
+        },
+        {
+          "heading": "Purposes of processing",
+          "body": "Any technical data processed is used solely to:\n• ensure the proper operation of the site;\n• guarantee its security;\n• produce, where applicable, technical operating statistics.\nCommercial exchanges and the client relationship take place outside the site."
+        },
+        {
+          "heading": "External services used",
+          "body": "Commercial exchanges may take place via Upwork, LinkedIn or email depending on the case.\nThese services have their own privacy policies, which we encourage you to review.\nThe site is deployed on Vercel or a suitable platform, which may process technical data as the host."
+        },
+        {
+          "heading": "Retention period",
+          "body": "Technical data processed by the host or the external services is retained according to the periods defined by those providers.\nExchanges carried out via Upwork, LinkedIn or email are retained according to those services' own policies and the applicable legal obligations (in particular accounting obligations for invoicing documents)."
+        },
+        {
+          "heading": "Data sharing",
+          "body": "Megahana does not sell your data.\nThe only data processed is handled by the technical and commercial providers mentioned above, within the limits necessary to provide their services."
+        },
+        {
+          "heading": "User rights",
+          "body": "In accordance with the applicable data protection regulations (in particular the GDPR for European Union residents), you have rights of access, rectification, erasure, objection and restriction regarding your data.\nTo exercise these rights, you can contact us at: omerovic.ahmed.work@gmail.com.\nDepending on the service concerned (Upwork, LinkedIn, etc.), some requests must be addressed directly to the provider."
+        },
+        {
+          "heading": "Contact",
+          "body": "For any question regarding this privacy policy: omerovic.ahmed.work@gmail.com."
+        },
+        {
+          "heading": "Cookies and trackers",
+          "body": "As it stands, the site does not use advertising cookies or audience analytics tools requiring your consent.\nOnly cookies or trackers strictly necessary for the technical operation of the site may be used.\nShould audience measurement or marketing tools (for example Google Analytics, Meta Pixel, Hotjar) be added later, a consent management mechanism would be put in place."
+        }
+      ]
+    },
+    "terms": {
+      "meta": {
+        "title": "Terms of sale",
+        "description": "Megahana terms of sale: packages available on Upwork, payment, delivery and external fees."
+      },
+      "eyebrow": "Legal information",
+      "title": "Terms of sale",
+      "sections": [
+        {
+          "heading": "Purpose",
+          "body": "These terms govern the showcase website creation services offered by Ahmed OMEROVIC, a sole trader operating under the trading name Megahana.\nThey apply to any order, unless otherwise agreed in writing."
+        },
+        {
+          "heading": "Services offered",
+          "body": "Megahana offers the creation of showcase websites in standardised packages (Starter, Standard, Advanced), delivered with the complete source files."
+        },
+        {
+          "heading": "Ordering services",
+          "body": "Website creation packages are ordered through the Upwork platform.\nThe scope of the project (pages, features, content, languages) is confirmed at the start."
+        },
+        {
+          "heading": "Pricing",
+          "body": "Packages are displayed in US dollars (USD). The prices shown on the site are indicative; the final amount is confirmed on Upwork."
+        },
+        {
+          "heading": "Payment",
+          "body": "Payment for the packages is made via Upwork, according to the platform's terms."
+        },
+        {
+          "heading": "Delivery timelines",
+          "body": "Delivery timelines are indicated for each package and confirmed on Upwork.\nThey start once the necessary items have been received (content, access, approvals) and according to the platform's terms."
+        },
+        {
+          "heading": "Client obligations",
+          "body": "The client undertakes to provide the items necessary to carry out the service: text, images, logo, access to tools, legal information, and domain / DNS access if needed.\nMeeting the timelines depends in particular on the timely delivery of these items."
+        },
+        {
+          "heading": "Revisions and changes",
+          "body": "The number of revisions included is specified for each package.\nAny request beyond the agreed scope may be subject to a quote or an adjustment, confirmed before being carried out."
+        },
+        {
+          "heading": "External fees not included",
+          "body": "The domain name, paid hosting, professional email, external tools, third-party subscriptions and overages related to external services are not included in the packages, unless specifically agreed in writing.\nThese fees remain the client's responsibility."
+        },
+        {
+          "heading": "Delivery",
+          "body": "The service is considered delivered when the website, within the agreed scope, and the complete source files are made available to the client."
+        },
+        {
+          "heading": "Right of withdrawal",
+          "body": "In accordance with the applicable regulations, the right of withdrawal may not apply to services that are fully performed or personalised at the client's request.\nOrders placed via Upwork are moreover subject to the platform's terms and policy."
+        },
+        {
+          "heading": "Liability",
+          "body": "Megahana undertakes to carry out the services with care and professionalism, as a best-efforts obligation.\nMegahana cannot be held responsible for interruptions, malfunctions or damage related to external services (host, domain, third-party tools) or to improper use by the client."
+        },
+        {
+          "heading": "Intellectual property",
+          "body": "Unless otherwise agreed, the client holds the usage rights to the delivered website once the service has been paid for in full.\nContent provided by the client remains its property. Megahana's know-how and reusable technical components remain the property of Megahana.\nThird-party technologies, libraries and content remain subject to their respective licences."
+        },
+        {
+          "heading": "Personal data",
+          "body": "The processing of personal data is described in the website's Privacy policy."
+        },
+        {
+          "heading": "Disputes and applicable law",
+          "body": "These terms are governed by French law.\nIn the event of a dispute, the parties will endeavour to reach an amicable solution before any action; failing that, the French courts shall have jurisdiction, subject to the mandatory rules applicable to consumers.\nOrders placed via Upwork are also subject to the platform's terms."
+        },
+        {
+          "heading": "Contact",
+          "body": "For any question regarding these terms: omerovic.ahmed.work@gmail.com."
+        }
+      ]
+    }
+  }
+}
