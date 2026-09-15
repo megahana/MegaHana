@@ -1,3 +1,22 @@
+// ⚠️ eslint est volontairement figé à 9.39.5 dans package.json (pas de caret) —
+// NE PAS "corriger" vers la 10.x en pensant à un oubli. eslint-config-next@16
+// (donc Next 16) tire eslint-plugin-react@7.37.5 (dernière version publiée),
+// qui casse sous ESLint 10 pour deux raisons distinctes et confirmées par les
+// sources primaires (pas une hypothèse) :
+//   1. jsx-eslint/eslint-plugin-react#4018 — le mainteneur du plugin confirme
+//      lui-même qu'il n'est "explicitly not yet compatible with eslint 10"
+//      (correctif proposé, pas mergé) : https://github.com/jsx-eslint/eslint-plugin-react/issues/4018
+//   2. vercel/next.js#89764 — second blocage indépendant : le parseur Babel
+//      embarqué par eslint-config-next appelle scopeManager.addGlobals() (~1174
+//      globals) pour laquelle Babel 7 n'implémente pas l'API attendue par
+//      ESLint 10 (il faudrait Babel 8, pas encore prêt) :
+//      https://github.com/vercel/next.js/issues/89764
+// Un contournement ciblé (forcer settings.react.version + @typescript-eslint/parser
+// pour éviter le chemin getFilename()) ne suffirait pas : le second blocage sur
+// les globals resterait. À revoir quand eslint-config-next publie une version
+// dont les dépendances (eslint-plugin-react notamment) déclarent un support
+// ESLint 10 réel — pas de date fixe, vérifier périodiquement ou à la sortie
+// d'une nouvelle version d'eslint-config-next.
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import typescriptEslintPlugin from "@typescript-eslint/eslint-plugin";
