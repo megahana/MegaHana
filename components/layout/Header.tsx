@@ -42,12 +42,17 @@ export function Header() {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
           ? "bg-background/80 backdrop-blur-xl border-b border-border/50 shadow-lg shadow-black/20"
-          : "bg-transparent"
+          : "bg-transparent",
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
+          {/* Logo — sizes obligatoire : sans lui, next/image traite un <Image>
+              non-fill comme "taille fixe" et génère son srcset à partir de
+              width/height (1254px, la taille réelle du fichier source), pas
+              de la taille CSS affichée (48px) — d'où le srcset observé en
+              prod (w=1920 / w=3840) malgré un rendu à 48×48. Avec sizes, le
+              navigateur choisit la variante réellement adaptée. */}
           <Link href="/" className="flex items-center group">
             <Image
               id="mh-header-logo"
@@ -55,7 +60,8 @@ export function Header() {
               alt="Megahana"
               width={LOGO_WIDTH}
               height={LOGO_HEIGHT}
-              className="h-9 sm:h-10 w-auto object-contain transition-opacity group-hover:opacity-80"
+              sizes="48px"
+              className="h-12 w-12 object-contain transition-opacity group-hover:opacity-80"
               priority
             />
           </Link>
@@ -71,7 +77,7 @@ export function Header() {
                   "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
                   pathname === item.href
                     ? "text-text-primary bg-surface-2"
-                    : "text-text-secondary hover:text-text-primary hover:bg-surface-2/60"
+                    : "text-text-secondary hover:text-text-primary hover:bg-surface-2/60",
                 )}
               >
                 {t(item.key)}
@@ -120,7 +126,7 @@ export function Header() {
                     "px-4 py-3 rounded-lg text-sm font-medium transition-colors",
                     pathname === item.href
                       ? "text-text-primary bg-surface-2"
-                      : "text-text-secondary hover:text-text-primary hover:bg-surface-2/60"
+                      : "text-text-secondary hover:text-text-primary hover:bg-surface-2/60",
                   )}
                 >
                   {t(item.key)}

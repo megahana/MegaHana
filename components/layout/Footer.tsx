@@ -28,24 +28,25 @@ export function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" className="inline-flex mb-4">
+              {/* sizes obligatoire ici aussi — même cause que Header.tsx :
+                  sans lui, next/image dimensionne le srcset sur width/height
+                  (1254px, taille du fichier source) plutôt que sur la taille
+                  CSS réellement affichée (36px). */}
               <Image
                 src={LOGO_URL}
                 alt="Megahana"
                 width={LOGO_WIDTH}
                 height={LOGO_HEIGHT}
+                sizes="36px"
                 className="h-9 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
               />
             </Link>
-            <p className="text-sm text-text-secondary leading-relaxed">
-              {t("description")}
-            </p>
+            <p className="text-sm text-text-secondary leading-relaxed">{t("description")}</p>
           </div>
 
           {/* Nav */}
           <div>
-            <h3 className="text-sm font-semibold text-text-primary mb-4">
-              {t("navHeading")}
-            </h3>
+            <h3 className="text-sm font-semibold text-text-primary mb-4">{t("navHeading")}</h3>
             <ul className="space-y-2">
               {navItems.map((item) => (
                 <li key={item.href}>
@@ -62,9 +63,7 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="text-sm font-semibold text-text-primary mb-4">
-              {t("contactHeading")}
-            </h3>
+            <h3 className="text-sm font-semibold text-text-primary mb-4">{t("contactHeading")}</h3>
             <ul className="space-y-2">
               <li>
                 <a
