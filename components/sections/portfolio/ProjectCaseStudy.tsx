@@ -16,6 +16,7 @@ import { useTranslations } from "next-intl";
 import { ProjectGallery } from "@/components/sections/portfolio/ProjectGallery";
 import { ProjectDetailsDrawer } from "@/components/sections/portfolio/ProjectDetailsDrawer";
 import { MEGARECO_DARK_BG } from "@/components/sections/portfolio/megareco-theme";
+import { cn } from "@/lib/utils";
 import type { GalleryImage, Project } from "@/types";
 
 /* Palette MegaReco par défaut — surchargeable via accent */
@@ -114,7 +115,7 @@ export function ProjectCaseStudy({ project, accent = DEFAULT_ACCENT }: Props) {
         style={{ background: `linear-gradient(135deg, ${accent.primary}55, ${accent.soft}33)` }}
       />
       <div
-        className="relative rounded-3xl overflow-hidden"
+        className="mh-case-study relative rounded-3xl overflow-hidden"
         style={{ background: accent.bg, border }}
       >
         {/* ── Top bar ── */}
@@ -469,18 +470,29 @@ export function ProjectCaseStudy({ project, accent = DEFAULT_ACCENT }: Props) {
                             </div>
                             <div className="space-y-3">
                               {[
-                                { tag: t("labels.problem"), text: c.problem, color: "#e07070" },
+                                {
+                                  tag: t("labels.problem"),
+                                  text: c.problem,
+                                  className: "text-case-problem",
+                                },
                                 {
                                   tag: t("labels.solution"),
                                   text: c.solution,
                                   color: accent.primary,
                                 },
-                                { tag: t("labels.result"), text: c.result, color: "#70b870" },
+                                {
+                                  tag: t("labels.result"),
+                                  text: c.result,
+                                  className: "text-case-result",
+                                },
                               ].map((row) => (
                                 <div key={row.tag}>
                                   <p
-                                    className="text-[10px] font-bold tracking-widest uppercase mb-1"
-                                    style={{ color: row.color }}
+                                    className={cn(
+                                      "text-[10px] font-bold tracking-widest uppercase mb-1",
+                                      row.className,
+                                    )}
+                                    style={row.color ? { color: row.color } : undefined}
                                   >
                                     {row.tag}
                                   </p>

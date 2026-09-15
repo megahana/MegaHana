@@ -27,6 +27,12 @@ const config: Config = {
         // Accents de marque décoratifs — jamais en fond plein sur de grandes surfaces.
         sakura: "rgb(var(--sakura) / <alpha-value>)",
         gold: "rgb(var(--gold) / <alpha-value>)",
+        // Alias locaux (pas des tokens de marque) : distinguent "problème"/"résultat"
+        // dans l'étude de cas MegaReco sans introduire de teinte rouge/verte globale
+        // type erreur/succès. Valeur réelle définie par .mh-case-study (voir globals.css),
+        // scopée à ce composant à fond toujours sombre.
+        "case-problem": "rgb(var(--case-problem) / <alpha-value>)",
+        "case-result": "rgb(var(--case-result) / <alpha-value>)",
         "text-primary": "rgb(var(--text) / <alpha-value>)",
         "text-secondary": "rgb(var(--text-2) / <alpha-value>)",
         "text-muted": "rgb(var(--text-muted) / <alpha-value>)",

@@ -844,3 +844,16 @@ h3,
     opacity: 1;
   }
 }
+
+/* Étude de cas MegaReco (ProjectCaseStudy.tsx) — fond toujours sombre, y
+   compris en thème clair du site (identité MegaReco, indépendante du thème
+   Megahana, voir MEGARECO_DARK_BG). "Problème"/"résultat" distingués par un
+   alias local vers les accents de marque existants (sakura/or), pas par de
+   nouvelles teintes rouge/vert type erreur/succès — une difficulté d'étude de
+   cas n'est pas une erreur d'interface. --sakura/--gold sont identiques en
+   light/dark (contraste vérifié ≈8:1 et ≈7,5:1 sur #1c1d21), donc sûrs à
+   utiliser tels quels indépendamment du thème global. */
+.mh-case-study {
+  --case-problem: var(--sakura);
+  --case-result: var(--gold);
+}
