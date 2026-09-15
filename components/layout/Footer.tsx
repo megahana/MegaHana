@@ -1,11 +1,9 @@
 import Image from "next/image";
 import { Linkedin, ExternalLink } from "lucide-react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { LINKEDIN_STUDIO_URL, LOGO_URL, LOGO_WIDTH, LOGO_HEIGHT } from "@/lib/site";
 import { UPWORK_PRODUCT_URL } from "@/lib/upwork";
-import { siteVersion } from "@/lib/site-version";
-import { formatDate } from "@/lib/utils";
 
 const navItems = [
   { href: "/services", key: "services" },
@@ -17,7 +15,6 @@ const navItems = [
 export function Footer() {
   const t = useTranslations("Footer");
   const tn = useTranslations("Navigation");
-  const locale = useLocale();
   const year = new Date().getFullYear();
 
   return (
@@ -118,14 +115,6 @@ export function Footer() {
             <p>{t("rights", { year })}</p>
             <p>{t("madeWith")}</p>
           </div>
-
-          {/* Version du site — discret mais lisible */}
-          <p className="text-xs text-text-secondary/70 text-center sm:text-left">
-            {t("version", {
-              version: siteVersion.version,
-              date: formatDate(siteVersion.lastUpdated, locale),
-            })}
-          </p>
         </div>
       </div>
     </footer>

@@ -161,7 +161,6 @@
     "linkedin": "Megahana sur LinkedIn",
     "rights": "© {year} Megahana. Tous droits réservés.",
     "madeWith": "Fait avec Next.js et Tailwind CSS.",
-    "version": "Megahana v{version} · Dernière mise à jour : {date}",
     "legal": {
       "notice": "Mentions légales",
       "privacy": "Politique de confidentialité",
