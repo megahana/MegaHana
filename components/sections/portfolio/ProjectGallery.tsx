@@ -258,6 +258,10 @@ export function ProjectGallery({ images, accentColor }: ProjectGalleryProps) {
             )}
 
             {/* Image container */}
+            {/* onClick ne fait qu'un stopPropagation (empêche la fermeture de la lightbox
+                au clic à l'intérieur) : aucune action réelle, pas d'équivalent clavier
+                pertinent à ajouter. */}
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
             <div
               className="relative max-w-5xl w-full max-h-[85vh]"
               onClick={(e) => e.stopPropagation()}

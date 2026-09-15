@@ -95,35 +95,6 @@ export function Intro() {
     const skipButton = skipButtonRef.current;
     if (!overlay || !logo || !svg || !skipButton) return;
 
-    // DEBUG TEMPORAIRE (à retirer une fois confirmé que le garde-fou de
-    // moveToHeader ne se déclenche jamais en usage normal — cf. point 6).
-    function traceIntro(stage: string) {
-      const header = document.getElementById(HEADER_LOGO_ID);
-      const h = header?.getBoundingClientRect();
-      const s = svg?.getBoundingClientRect();
-      let session = "unavailable";
-      try {
-        session = sessionStorage.getItem(SESSION_KEY) ?? "null";
-      } catch {}
-      console.log(
-        "[intro]",
-        JSON.stringify({
-          stage,
-          ms: Math.round(performance.now()),
-          session,
-          headerCount: document.querySelectorAll("#mh-header-logo").length,
-          headerHeight: h?.height,
-          svgHeight: s?.height,
-          scale: h && s ? h.height / s.height : null,
-          overlayPosition: overlay && getComputedStyle(overlay).position,
-          overlayDisplay: overlay && getComputedStyle(overlay).display,
-          svgCssHeight: svg && getComputedStyle(svg).height,
-          logoTransform: logo && getComputedStyle(logo).transform,
-        })
-      );
-    }
-    traceIntro("effect:start");
-
     const timers: ReturnType<typeof setTimeout>[] = [];
     const after = (ms: number, fn: () => void) => {
       timers.push(setTimeout(fn, ms));
@@ -162,7 +133,6 @@ export function Intro() {
     // `overflow:hidden` posé sur body), donc rien à libérer non plus.
     function finish() {
       overlay?.classList.add("mh-intro-overlay--hidden");
-      traceIntro("finish:hidden");
       document.getElementById(HEADER_LOGO_ID)?.closest("a")?.focus();
       // Hero.tsx écoute cet événement pour déclencher son dégradé animé
       // (une seule fois, jamais sur un délai deviné) — émis ici (fin
@@ -189,10 +159,17 @@ export function Intro() {
     function moveToHeader() {
       if (moved) return;
       moved = true;
-      traceIntro("moveToHeader:before-measure");
 
       const headerLogo = document.getElementById(HEADER_LOGO_ID);
       if (!headerLogo || !svg || !logo) {
+        // Anomalie réelle (pas un DEBUG temporaire) : ce garde-fou n'est
+        // jamais censé se déclencher en usage normal (Header monté dès le
+        // premier paint, cf. layout.tsx) — signal à garder en prod.
+        console.warn("[intro] moveToHeader: repli anticipé, élément manquant", {
+          hasHeaderLogo: !!headerLogo,
+          hasSvg: !!svg,
+          hasLogo: !!logo,
+        });
         finish();
         return;
       }
@@ -210,6 +187,15 @@ export function Intro() {
         svgRect.width <= 0 ||
         headerRect.width <= 0
       ) {
+        // Même logique que ci-dessus : anomalie réelle à tracer, pas un log
+        // de développement à retirer.
+        console.warn("[intro] moveToHeader: repli anticipé, mesures incohérentes", {
+          scale,
+          svgWidth: svgRect.width,
+          svgHeight: svgRect.height,
+          headerWidth: headerRect.width,
+          headerHeight: headerRect.height,
+        });
         finish();
         return;
       }
@@ -231,7 +217,6 @@ export function Intro() {
         // mais TS ne propage pas cette narrowing jusque dans une closure
         // aussi profondément imbriquée — re-vérifié ici pour le typer.
         if (!overlay) return;
-        traceIntro("fade:start");
         overlay.classList.add("mh-intro-overlay--fading");
         // Transition sur le raccourci "background", mais seule sa couleur
         // change ici : le navigateur rapporte transitionend sur la
@@ -248,7 +233,6 @@ export function Intro() {
     }
     if (played) {
       overlay.classList.add("mh-intro-overlay--hidden");
-      traceIntro("played:hidden");
       // Déféré d'un tick (pas dispatché synchronement ici) : cette branche
       // tourne dans le useLayoutEffect de Intro, qui s'exécute pour TOUT
       // l'arbre avant le useEffect de Hero (celui qui pose l'écouteur

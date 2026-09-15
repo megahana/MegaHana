@@ -191,6 +191,11 @@ export function Frame({
   }
 
   return (
+    // onMouseMove/onMouseLeave pilotent uniquement le tilt 3D décoratif : le vrai lien
+    // cliquable est un élément enfant séparé, qui gère déjà son propre focus clavier
+    // (:has(.card--real:focus-visible)/tabIndex={-1} sur les doublons du marquee, voir
+    // ChalkText/Galerie) — ne pas ajouter de role/tabIndex ici, ça percuterait cette logique.
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
       ref={cardRef}
       className={cn("mh-frame-card", variant && `mh-frame-card--${variant}`, className)}
