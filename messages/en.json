@@ -353,13 +353,25 @@
       "description": "Modern showcase websites and complete web projects, designed and deployed by Megahana."
     },
     "showcaseHeading": "Showcase websites",
+    "filters": {
+      "ariaLabel": "Filter showcase websites by sector",
+      "all": "All",
+      "resultsCount": "{count, plural, =0 {No showcase website shown} one {# showcase website shown} other {# showcase websites shown}}"
+    },
+    "teaser": {
+      "ariaLabel": "Portfolio overview",
+      "caseStudy": {
+        "title": "Case study",
+        "description": "MegaReco, our client project: design, development and results."
+      },
+      "showcase": {
+        "title": "Showcase websites",
+        "description": "{count, plural, one {# demo} other {# demos}} across {sectorCount} sectors."
+      }
+    },
     "captureSoon": "Screenshot coming soon",
     "nextProjectTitle": "Next project",
     "nextProjectStatus": "Coming soon",
-    "comingSoonHeading": "Projects in preparation",
-    "comingSoonBadge": "Coming soon",
-    "comingSoonComing": "Soon",
-    "comingSoonTags": ["Showcase website", "Next.js", "Responsive", "UX/UI"],
     "caseStudyHeading": "Case study",
     "showcase": {
       "megataste": {
@@ -414,19 +426,8 @@
         "description": "Showcase website for a wellness retreat: treatments, natural setting and booking."
       }
     },
-    "coming": {
-      "megabuild": {
-        "tagline": "Tradesperson showcase website",
-        "description": "Plumber, electrician, carpenter, heating engineer..."
-      },
-      "megacoach": {
-        "tagline": "Coach / Consultant showcase website",
-        "description": "Presentation, guidance, appointment booking."
-      }
-    },
     "caseStudy": {
       "labels": {
-        "project": "The project",
         "visualOverview": "Visual overview ({count} screenshots)",
         "mobileVersion": "Mobile version",
         "features": "Key features",
@@ -442,10 +443,15 @@
         "sourceCode": "View source code",
         "finalTitle": "Discover {name} in real conditions",
         "finalText": "Explore the platform, create an account and discover the various features built for this project.",
-        "finalSource": "View source code"
+        "finalSource": "View source code",
+        "discoverDetails": "Discover project details",
+        "hideDetails": "Hide details",
+        "needSection": "Need & context",
+        "executionSection": "Execution",
+        "technicalSection": "Technical choices"
       },
       "tagline": "A web platform to discover, save, rate and comment on mangas, manhwas and webtoons.",
-      "badges": ["Featured project", "Full-stack", "Built solo", "In production"],
+      "badges": ["Client project", "Featured project", "Full-stack", "Built solo", "In production"],
       "highlights": ["Built solo", "Responsive", "In production", "Actively developed"],
       "intro": "MegaReco was created to centralise the discovery and tracking of works in a modern, clear and accessible interface. The platform lets users explore new works, manage their favourites, track their activity and take part in the community.",
       "role": "I designed and developed the whole project solo, from product thinking and interface design to full-stack development, the database, deployment and maintenance.",

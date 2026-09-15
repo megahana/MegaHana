@@ -358,13 +358,25 @@
       "description": "Sites vitrines modernes et projets web complets, conçus et déployés par Megahana."
     },
     "showcaseHeading": "Sites vitrines",
+    "filters": {
+      "ariaLabel": "Filtrer les sites vitrines par secteur",
+      "all": "Tous",
+      "resultsCount": "{count, plural, =0 {Aucun site vitrine affiché} one {# site vitrine affiché} other {# sites vitrines affichés}}"
+    },
+    "teaser": {
+      "ariaLabel": "Aperçu du portfolio",
+      "caseStudy": {
+        "title": "Étude de cas",
+        "description": "MegaReco, notre projet client : conception, développement et résultats."
+      },
+      "showcase": {
+        "title": "Sites vitrines",
+        "description": "{count, plural, one {# démo} other {# démos}} réparties sur {sectorCount} secteurs."
+      }
+    },
     "captureSoon": "Capture à venir",
     "nextProjectTitle": "Prochain projet",
     "nextProjectStatus": "Bientôt disponible",
-    "comingSoonHeading": "Projets en préparation",
-    "comingSoonBadge": "Bientôt disponible",
-    "comingSoonComing": "À venir",
-    "comingSoonTags": ["Site vitrine", "Next.js", "Responsive", "UX/UI"],
     "caseStudyHeading": "Étude de cas",
     "showcase": {
       "megataste": {
@@ -419,19 +431,8 @@
         "description": "Site vitrine d'une retraite bien-être : soins, cadre naturel et réservation."
       }
     },
-    "coming": {
-      "megabuild": {
-        "tagline": "Site vitrine Artisan",
-        "description": "Plombier, électricien, menuisier, chauffagiste..."
-      },
-      "megacoach": {
-        "tagline": "Site vitrine Coach / Consultant",
-        "description": "Présentation, accompagnement, prise de rendez-vous."
-      }
-    },
     "caseStudy": {
       "labels": {
-        "project": "Le projet",
         "visualOverview": "Aperçu visuel ({count} captures)",
         "mobileVersion": "Version mobile",
         "features": "Fonctionnalités principales",
@@ -447,10 +448,21 @@
         "sourceCode": "Voir le code source",
         "finalTitle": "Découvrez {name} en conditions réelles",
         "finalText": "Explorez la plateforme, créez un compte et découvrez les différentes fonctionnalités développées pour ce projet.",
-        "finalSource": "Consulter le code source"
+        "finalSource": "Consulter le code source",
+        "discoverDetails": "Découvrir les détails du projet",
+        "hideDetails": "Masquer les détails",
+        "needSection": "Besoin & contexte",
+        "executionSection": "Réalisation",
+        "technicalSection": "Choix techniques"
       },
       "tagline": "Une plateforme web permettant de découvrir, sauvegarder, noter et commenter des mangas, manhwas et webtoons.",
-      "badges": ["Projet phare", "Full-stack", "Développé en solo", "En production"],
+      "badges": [
+        "Projet client",
+        "Projet phare",
+        "Full-stack",
+        "Développé en solo",
+        "En production"
+      ],
       "highlights": ["Développé en solo", "Responsive", "En production", "Développement actif"],
       "intro": "MegaReco est né avec l'objectif de centraliser la découverte et le suivi d'œuvres dans une interface moderne, claire et accessible. La plateforme permet aux utilisateurs d'explorer de nouvelles œuvres, de gérer leurs favoris, de suivre leur activité et de participer à la communauté.",
       "role": "J'ai conçu et développé l'ensemble du projet en solo, de la réflexion produit et du design de l'interface jusqu'au développement full-stack, à la base de données, au déploiement et à la maintenance.",

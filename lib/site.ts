@@ -6,10 +6,7 @@
 const FALLBACK_URL = "https://megamind-studio.com";
 
 // URL normalisée (sans barre oblique finale) pour éviter les doubles "/".
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_URL).replace(
-  /\/+$/,
-  ""
-);
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_URL).replace(/\/+$/, "");
 
 // Profil LinkedIn officiel de MegaMind Studio (source unique réutilisée dans le site).
 export const LINKEDIN_STUDIO_URL = "https://www.linkedin.com/company/megamind-studio/";
@@ -19,7 +16,9 @@ export const LINKEDIN_STUDIO_URL = "https://www.linkedin.com/company/megamind-st
  * servie par Next sur /icon.png). PNG carré 1254×1254 avec canal alpha (centre
  * et fond transparents) → s'adapte à tout fond (light/dark), pas de rectangle
  * sombre. Aucune dépendance externe. Taille d'affichage pilotée par le CSS
- * (h-9 sm:h-10) ; on déclare le ratio réel (carré) pour éviter toute déformation.
+ * (h-12 w-12, fixe sur tous les breakpoints — correction 14/09 : sous 48px le
+ * détail pixel/mosaïque de l'icône devenait peu lisible, voir système de
+ * marque) ; on déclare le ratio réel (carré) pour éviter toute déformation.
  */
 export const LOGO_URL = "/icon.png";
 export const LOGO_WIDTH = 1254;
