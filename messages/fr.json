@@ -17,6 +17,9 @@
     "viewSite": "Voir le site",
     "lastUpdated": "Dernière mise à jour : {date}",
     "skipIntro": "Passer l'intro",
+    "image": {
+      "unavailable": "Image indisponible pour le moment."
+    },
     "gallery": {
       "region": "Captures d'écran du projet",
       "slide": "Capture {current} sur {total} : {label}. Flèches gauche et droite pour naviguer.",
@@ -361,12 +364,7 @@
     "comingSoonHeading": "Projets en préparation",
     "comingSoonBadge": "Bientôt disponible",
     "comingSoonComing": "À venir",
-    "comingSoonTags": [
-      "Site vitrine",
-      "Next.js",
-      "Responsive",
-      "UX/UI"
-    ],
+    "comingSoonTags": ["Site vitrine", "Next.js", "Responsive", "UX/UI"],
     "caseStudyHeading": "Étude de cas",
     "showcase": {
       "megataste": {
@@ -452,18 +450,8 @@
         "finalSource": "Consulter le code source"
       },
       "tagline": "Une plateforme web permettant de découvrir, sauvegarder, noter et commenter des mangas, manhwas et webtoons.",
-      "badges": [
-        "Projet phare",
-        "Full-stack",
-        "Développé en solo",
-        "En production"
-      ],
-      "highlights": [
-        "Développé en solo",
-        "Responsive",
-        "En production",
-        "Développement actif"
-      ],
+      "badges": ["Projet phare", "Full-stack", "Développé en solo", "En production"],
+      "highlights": ["Développé en solo", "Responsive", "En production", "Développement actif"],
       "intro": "MegaReco est né avec l'objectif de centraliser la découverte et le suivi d'œuvres dans une interface moderne, claire et accessible. La plateforme permet aux utilisateurs d'explorer de nouvelles œuvres, de gérer leurs favoris, de suivre leur activité et de participer à la communauté.",
       "role": "J'ai conçu et développé l'ensemble du projet en solo, de la réflexion produit et du design de l'interface jusqu'au développement full-stack, à la base de données, au déploiement et à la maintenance.",
       "meta": [
@@ -534,22 +522,11 @@
         },
         {
           "title": "Communauté",
-          "items": [
-            "Notes",
-            "Commentaires",
-            "Suggestions",
-            "Interactions avec les œuvres"
-          ]
+          "items": ["Notes", "Commentaires", "Suggestions", "Interactions avec les œuvres"]
         },
         {
           "title": "Progression et gestion",
-          "items": [
-            "Niveaux",
-            "Titres",
-            "Achievements",
-            "Interface d'administration",
-            "Modération"
-          ]
+          "items": ["Niveaux", "Titres", "Achievements", "Interface d'administration", "Modération"]
         }
       ],
       "challenges": [
@@ -579,11 +556,7 @@
         }
       ],
       "architecture": {
-        "flow": [
-          "Interface Vue.js",
-          "API Node.js / Express",
-          "Base de données PostgreSQL"
-        ],
+        "flow": ["Interface Vue.js", "API Node.js / Express", "Base de données PostgreSQL"],
         "deployment": "Frontend déployé sur Vercel, API hébergée sur Render et base de données gérée avec Neon."
       }
     }

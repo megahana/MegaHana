@@ -17,6 +17,9 @@
     "viewSite": "View site",
     "lastUpdated": "Last updated: {date}",
     "skipIntro": "Skip intro",
+    "image": {
+      "unavailable": "Image currently unavailable."
+    },
     "gallery": {
       "region": "Project screenshots",
       "slide": "Screenshot {current} of {total}: {label}. Use left and right arrows to navigate.",
@@ -277,12 +280,7 @@
         "delivery": "Delivery time",
         "revisions": "Revisions",
         "pages": "Pages",
-        "features": [
-          "Design customization",
-          "Content upload",
-          "Responsive design",
-          "Source code"
-        ]
+        "features": ["Design customization", "Content upload", "Responsive design", "Source code"]
       },
       "addons": {
         "heading": "Optional add-ons",
@@ -361,12 +359,7 @@
     "comingSoonHeading": "Projects in preparation",
     "comingSoonBadge": "Coming soon",
     "comingSoonComing": "Soon",
-    "comingSoonTags": [
-      "Showcase website",
-      "Next.js",
-      "Responsive",
-      "UX/UI"
-    ],
+    "comingSoonTags": ["Showcase website", "Next.js", "Responsive", "UX/UI"],
     "caseStudyHeading": "Case study",
     "showcase": {
       "megataste": {
@@ -452,18 +445,8 @@
         "finalSource": "View source code"
       },
       "tagline": "A web platform to discover, save, rate and comment on mangas, manhwas and webtoons.",
-      "badges": [
-        "Featured project",
-        "Full-stack",
-        "Built solo",
-        "In production"
-      ],
-      "highlights": [
-        "Built solo",
-        "Responsive",
-        "In production",
-        "Actively developed"
-      ],
+      "badges": ["Featured project", "Full-stack", "Built solo", "In production"],
+      "highlights": ["Built solo", "Responsive", "In production", "Actively developed"],
       "intro": "MegaReco was created to centralise the discovery and tracking of works in a modern, clear and accessible interface. The platform lets users explore new works, manage their favourites, track their activity and take part in the community.",
       "role": "I designed and developed the whole project solo, from product thinking and interface design to full-stack development, the database, deployment and maintenance.",
       "meta": [
@@ -514,13 +497,7 @@
       "featureGroups": [
         {
           "title": "Discovery",
-          "items": [
-            "Search",
-            "Filters",
-            "Detailed pages",
-            "Recent additions",
-            "Work suggestions"
-          ]
+          "items": ["Search", "Filters", "Detailed pages", "Recent additions", "Work suggestions"]
         },
         {
           "title": "User account",
@@ -534,22 +511,11 @@
         },
         {
           "title": "Community",
-          "items": [
-            "Ratings",
-            "Comments",
-            "Suggestions",
-            "Interactions with works"
-          ]
+          "items": ["Ratings", "Comments", "Suggestions", "Interactions with works"]
         },
         {
           "title": "Progression and management",
-          "items": [
-            "Levels",
-            "Titles",
-            "Achievements",
-            "Admin interface",
-            "Moderation"
-          ]
+          "items": ["Levels", "Titles", "Achievements", "Admin interface", "Moderation"]
         }
       ],
       "challenges": [
@@ -579,11 +545,7 @@
         }
       ],
       "architecture": {
-        "flow": [
-          "Vue.js interface",
-          "Node.js / Express API",
-          "PostgreSQL database"
-        ],
+        "flow": ["Vue.js interface", "Node.js / Express API", "PostgreSQL database"],
         "deployment": "Frontend deployed on Vercel, API hosted on Render and database managed with Neon."
       }
     }

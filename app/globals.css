@@ -78,7 +78,9 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 /* Titres en Fraunces (display) — global, sans toucher chaque composant */
@@ -140,14 +142,9 @@ h3,
 
 /* Bordure de carte en dégradé accent discret */
 .card-border {
-  background: linear-gradient(rgb(var(--surface)), rgb(var(--surface)))
-      padding-box,
-    linear-gradient(
-        135deg,
-        rgb(var(--accent) / 0.28),
-        rgb(var(--border-strong) / 0.5)
-      )
-      border-box;
+  background:
+    linear-gradient(rgb(var(--surface)), rgb(var(--surface))) padding-box,
+    linear-gradient(135deg, rgb(var(--accent) / 0.28), rgb(var(--border-strong) / 0.5)) border-box;
   border: 1px solid transparent;
 }
 
@@ -768,7 +765,9 @@ h3,
   border-radius: 999px;
   padding: 8px 16px;
   cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 .mh-intro-skip:hover {
   color: rgb(var(--text));
@@ -785,5 +784,55 @@ h3,
   .mh-intro-overlay,
   .mh-intro-petal-glow {
     transition: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ImageWithLoader (components/ui/ImageWithLoader.tsx) — animation de
+   chargement des images basée sur le logo, appliquée pour l'instant aux
+   seules cartes "Sites vitrines" de /portfolio (ShowcaseGrid.tsx). ═══ */
+.mh-image-loader {
+  --mh-image-loader-reveal-delay: 150ms;
+  --mh-image-loader-fade-duration: 200ms;
+  --mh-image-loader-breathe-duration: 1800ms;
+  --mh-image-loader-opacity-min: 0.55;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity var(--mh-image-loader-fade-duration) ease-out,
+    visibility 0s linear var(--mh-image-loader-fade-duration);
+}
+
+.mh-image-loader[data-visible="true"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Évite de faire clignoter la fleur sur un chargement rapide/en cache. */
+.mh-image-loader-mark {
+  opacity: 0;
+  animation: mh-image-loader-breathe var(--mh-image-loader-breathe-duration) ease-in-out
+    var(--mh-image-loader-reveal-delay) infinite;
+}
+
+@keyframes mh-image-loader-breathe {
+  0%,
+  100% {
+    opacity: var(--mh-image-loader-opacity-min);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mh-image-loader {
+    transition: none;
+  }
+  .mh-image-loader-mark {
+    animation: none;
+    opacity: 1;
   }
 }
