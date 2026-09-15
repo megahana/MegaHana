@@ -44,6 +44,7 @@ import { routing } from "@/i18n/routing";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileCtaBanner } from "@/components/layout/MobileCtaBanner";
+import { InsertedScripts } from "@/components/layout/InsertedScripts";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -118,11 +119,7 @@ export default async function LocaleLayout({
       )}
     >
       <body className="bg-background text-text-primary antialiased">
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
+        <InsertedScripts themeScript={themeScript} jsonLd={JSON.stringify(organizationJsonLd)} />
         <NextIntlClientProvider>
           <Header />
           <main>{children}</main>
