@@ -33,6 +33,10 @@ export function Header() {
   }, []);
 
   useEffect(() => {
+    // Ferme le menu mobile au changement de route — un vrai effet de bord
+    // externe (la navigation), pas une valeur dérivable des props/state du
+    // rendu en cours ; pas de restructuration en "key reset" pertinente ici.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMobileOpen(false);
   }, [pathname]);
 

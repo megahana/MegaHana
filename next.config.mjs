@@ -25,6 +25,10 @@ const nextConfig = {
         hostname: "mega-taste.vercel.app",
       },
     ],
+    // Next 16 restreint qualities par défaut à [75] — le repo utilise
+    // explicitement 90/95/100 (ProjectGallery.tsx, ProjectCaseStudy.tsx),
+    // qui seraient sinon arrondis à 75 (perte de qualité silencieuse).
+    qualities: [75, 90, 95, 100],
   },
 };
 

@@ -77,6 +77,12 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       suppressHydrationWarning
+      // Next 16 ne gère plus lui-même le scroll-behavior pendant la
+      // navigation SPA (avant : neutralisé temporairement pour un scroll
+      // instantané, puis restauré) — cet attribut préserve ce comportement
+      // pour scroll-smooth ci-dessous (défilement doux réservé aux ancres
+      // in-page, pas aux changements de route).
+      data-scroll-behavior="smooth"
       className={`${inter.variable} ${fraunces.variable} ${interTight.variable} scroll-smooth`}
     >
       <body className="bg-background text-text-primary antialiased">
