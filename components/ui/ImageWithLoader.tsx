@@ -61,6 +61,9 @@ function LoadingImage({
     let cancelled = false;
     const image = imageRef.current;
 
+    // Même pattern "isMounted" que ThemeToggle.tsx : évite un mismatch
+    // d'hydratation, aucune alternative sans effet pour détecter cet état.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setEnhanced(true);
 
     // Vérification complémentaire pour une image déjà en cache navigateur

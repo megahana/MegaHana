@@ -88,6 +88,10 @@ export function ThemeToggle({ className }: { className?: string }) {
   );
 
   useEffect(() => {
+    // Pattern "isMounted" classique pour éviter un mismatch d'hydratation :
+    // le serveur ne peut jamais savoir si on est monté côté client, il n'y a
+    // pas d'alternative sans effet pour détecter cet état précis.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
