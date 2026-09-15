@@ -86,7 +86,12 @@ export function ContactForm() {
           name,
           email,
           message,
+          // "subject" pilote uniquement la ligne d'objet de l'email chez
+          // Web3Forms (n'apparaît pas dans le corps). "enquiry_type" duplique
+          // le même choix comme ligne visible du corps du message, pour trier
+          // sans dépendre de l'objet.
           subject: emailSubject,
+          ...(subjectOption ? { enquiry_type: subjectLabels[subjectOption] } : {}),
         }),
       });
 
