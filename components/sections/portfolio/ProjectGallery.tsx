@@ -88,12 +88,15 @@ export function ProjectGallery({ images, accentColor }: ProjectGalleryProps) {
         aria-label={tg("region")}
       >
 
-        {/* Main image */}
+        {/* Main image — pattern APG carousel : région (ligne ~86) > groupe slide (ici) */}
         <div
           className="relative group/main rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1c1d21]"
           tabIndex={0}
           onKeyDown={onCarouselKey}
+          role="group"
+          aria-roledescription="slide"
           aria-label={tg("slide", { current: active + 1, total, label: current.label })}
+          aria-live="polite"
           style={{ ["--tw-ring-color" as string]: ring }}
         >
           {/* Glow — couleur accent ou fallback primary/sakura/or */}
