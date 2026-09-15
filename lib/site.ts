@@ -8,8 +8,8 @@ const FALLBACK_URL = "https://megamind-studio.com";
 // URL normalisée (sans barre oblique finale) pour éviter les doubles "/".
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_URL).replace(/\/+$/, "");
 
-// Profil LinkedIn officiel de MegaMind Studio (source unique réutilisée dans le site).
-export const LINKEDIN_STUDIO_URL = "https://www.linkedin.com/company/megamind-studio/";
+// Page LinkedIn officielle de Megahana (source unique réutilisée dans le site).
+export const LINKEDIN_STUDIO_URL = "https://www.linkedin.com/company/megahana";
 
 /**
  * Logo officiel — icône "fleur pixel" Megahana, image LOCALE (app/icon.png,
