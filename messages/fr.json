@@ -617,15 +617,47 @@
   "Contact": {
     "meta": {
       "title": "Contact",
-      "description": "Découvrez les formules de sites vitrines Megahana sur Upwork, ou contactez-moi sur LinkedIn pour une question générale."
+      "description": "Un projet à préciser ou une question avant de vous lancer ? Contactez Megahana par formulaire, email, Upwork ou LinkedIn."
     },
     "eyebrow": "Contact",
     "titleLead": "Parlons de votre",
     "titleHighlight": "site vitrine",
-    "description": "Pour commander une landing page, un site professionnel ou un site bilingue, consultez les formules disponibles sur Upwork. Pour une question générale ou un partenariat, vous pouvez également me contacter sur LinkedIn.",
-    "generalLabel": "Pour une question générale ou un partenariat :",
-    "linkedin": "Megahana sur LinkedIn",
-    "upworkCta": "Voir les formules sur Upwork"
+    "description": "Un projet à préciser ou une question avant de vous lancer ? Présentez-nous votre besoin : nous poursuivrons l'échange par email.",
+    "form": {
+      "heading": "Présentez votre projet",
+      "requiredNote": "Les champs indiqués comme obligatoires sont nécessaires pour traiter votre demande.",
+      "nameLabel": "Nom — obligatoire",
+      "namePlaceholder": "Votre nom",
+      "emailLabel": "Email — obligatoire",
+      "emailPlaceholder": "vous@exemple.fr",
+      "subjectLabel": "Sujet — facultatif",
+      "subjectPlaceholder": "Choisir un sujet",
+      "subjectOptions": {
+        "website": "Création d'un site",
+        "package": "Question sur une formule",
+        "other": "Partenariat ou autre demande"
+      },
+      "messageLabel": "Message — obligatoire",
+      "messagePlaceholder": "Présentez votre activité et ce dont vous avez besoin. Si vous avez déjà un site ou une date souhaitée, vous pouvez les préciser ici.",
+      "submit": "Envoyer mon message",
+      "submitting": "Envoi en cours…",
+      "successTitle": "Merci pour votre message",
+      "successText": "Votre demande a bien été transmise. Nous vous répondrons à l'adresse email indiquée.",
+      "errorGeneral": "L'envoi n'a pas pu être confirmé. Votre message est conservé : réessayez ou écrivez-nous directement par email.",
+      "errorName": "Indiquez votre nom.",
+      "errorEmail": "Indiquez une adresse email valide.",
+      "errorMessage": "Écrivez votre message.",
+      "privacyNote": "Megahana utilise les informations saisies pour traiter votre demande et vous répondre.",
+      "privacyLink": "En savoir plus dans notre politique de confidentialité."
+    },
+    "emailAltLabel": "Vous préférez votre messagerie ?",
+    "upwork": {
+      "title": "Votre formule est déjà choisie ?",
+      "text": "Retrouvez les formules et passez votre commande sur Upwork.",
+      "cta": "Voir les formules sur Upwork"
+    },
+    "linkedinText": "Pour suivre le studio ou échanger sur un partenariat.",
+    "linkedin": "Megahana sur LinkedIn"
   },
   "Legal": {
     "notice": {
@@ -676,19 +708,19 @@
         },
         {
           "heading": "Données collectées",
-          "body": "Le site est un site vitrine et ne propose pas de création de compte.\nEn l'absence de formulaire de contact sur le site, aucune donnée personnelle n'est collectée directement via le site.\nSeules des données techniques (par exemple adresse IP, type de navigateur, journaux de connexion) peuvent être traitées automatiquement par l'hébergeur ou les services externes utilisés, afin d'assurer le fonctionnement et la sécurité du site."
+          "body": "Le site est un site vitrine et ne propose pas de création de compte.\nLe formulaire de contact (page Contact) collecte les données que vous saisissez volontairement : nom, adresse email, sujet (facultatif) et message. Ces données sont transmises via Web3Forms, un service tiers qui achemine le message par email à Megahana, et ne sont pas utilisées à d'autres fins.\nDes données techniques (par exemple adresse IP, type de navigateur, journaux de connexion) peuvent aussi être traitées automatiquement par l'hébergeur ou les services externes utilisés, afin d'assurer le fonctionnement et la sécurité du site."
         },
         {
           "heading": "Finalités du traitement",
-          "body": "Les données techniques éventuellement traitées servent uniquement à :\n• assurer le bon fonctionnement du site ;\n• garantir sa sécurité ;\n• établir, le cas échéant, des statistiques techniques de fonctionnement.\nLes échanges commerciaux et la relation client se déroulent en dehors du site."
+          "body": "Les données saisies dans le formulaire de contact servent uniquement à traiter votre demande et à vous répondre par email.\nLes données techniques éventuellement traitées servent à :\n• assurer le bon fonctionnement du site ;\n• garantir sa sécurité ;\n• établir, le cas échéant, des statistiques techniques de fonctionnement.\nLes échanges commerciaux et la relation client se poursuivent ensuite par email, Upwork ou LinkedIn selon le cas."
         },
         {
           "heading": "Services externes utilisés",
-          "body": "Les échanges commerciaux peuvent se faire via Upwork, LinkedIn ou email selon le cas.\nCes services disposent de leurs propres politiques de confidentialité, que nous vous invitons à consulter.\nLe site est déployé sur Vercel ou une plateforme adaptée, susceptible de traiter des données techniques en tant qu'hébergeur."
+          "body": "Le formulaire de contact utilise Web3Forms pour l'acheminement des messages par email ; consultez leur politique de confidentialité pour en savoir plus sur leur traitement des données.\nLes échanges commerciaux peuvent aussi se faire via Upwork, LinkedIn ou email selon le cas — ces services disposent de leurs propres politiques de confidentialité, que nous vous invitons à consulter.\nLe site est déployé sur Vercel ou une plateforme adaptée, susceptible de traiter des données techniques en tant qu'hébergeur."
         },
         {
           "heading": "Durée de conservation",
-          "body": "Les données techniques traitées par l'hébergeur ou les services externes sont conservées selon les durées définies par ces prestataires.\nLes échanges réalisés via Upwork, LinkedIn ou email sont conservés selon les politiques propres à ces services et les obligations légales applicables (notamment comptables pour les documents de facturation)."
+          "body": "Les messages envoyés via le formulaire de contact sont conservés le temps nécessaire au traitement de votre demande, puis supprimés s'ils n'aboutissent pas à une relation commerciale.\nLes données techniques traitées par l'hébergeur ou les services externes sont conservées selon les durées définies par ces prestataires.\nLes échanges réalisés via Upwork, LinkedIn ou email sont conservés selon les politiques propres à ces services et les obligations légales applicables (notamment comptables pour les documents de facturation)."
         },
         {
           "heading": "Partage des données",

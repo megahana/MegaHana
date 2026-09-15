@@ -600,15 +600,47 @@
   "Contact": {
     "meta": {
       "title": "Contact",
-      "description": "Discover Megahana's showcase website packages on Upwork, or reach out on LinkedIn for a general enquiry."
+      "description": "Have a project to define or a question before getting started? Contact Megahana by form, email, Upwork or LinkedIn."
     },
     "eyebrow": "Contact",
     "titleLead": "Let's talk about your",
     "titleHighlight": "showcase website",
-    "description": "To order a landing page, a professional website or a bilingual website, check out the packages available on Upwork. For a general enquiry or a partnership, you can also reach out on LinkedIn.",
-    "generalLabel": "For a general enquiry or a partnership:",
-    "linkedin": "Megahana on LinkedIn",
-    "upworkCta": "View packages on Upwork"
+    "description": "Have a project in mind or a question before getting started? Tell us what you need, and we'll continue the conversation by email.",
+    "form": {
+      "heading": "Tell us about your project",
+      "requiredNote": "Required fields are needed to handle your enquiry.",
+      "nameLabel": "Name — required",
+      "namePlaceholder": "Your name",
+      "emailLabel": "Email — required",
+      "emailPlaceholder": "you@example.com",
+      "subjectLabel": "Subject — optional",
+      "subjectPlaceholder": "Select a subject",
+      "subjectOptions": {
+        "website": "Website project",
+        "package": "Package enquiry",
+        "other": "Partnership or other enquiry"
+      },
+      "messageLabel": "Message — required",
+      "messagePlaceholder": "Tell us about your business and what you need. If you already have a website or a preferred date, you can include them here.",
+      "submit": "Send message",
+      "submitting": "Sending…",
+      "successTitle": "Thank you for your message",
+      "successText": "Your enquiry has been submitted. We'll reply to the email address you provided.",
+      "errorGeneral": "We couldn't confirm your submission. Your message has been kept: please try again or email us directly.",
+      "errorName": "Enter your name.",
+      "errorEmail": "Enter a valid email address.",
+      "errorMessage": "Enter your message.",
+      "privacyNote": "Megahana uses the information you provide to handle your enquiry and reply to you.",
+      "privacyLink": "Find out more in our privacy policy."
+    },
+    "emailAltLabel": "Prefer to use your email app?",
+    "upwork": {
+      "title": "Already chosen your package?",
+      "text": "View the packages and place your order on Upwork.",
+      "cta": "View packages on Upwork"
+    },
+    "linkedinText": "Follow the studio or connect about a partnership.",
+    "linkedin": "Megahana on LinkedIn"
   },
   "Legal": {
     "notice": {
@@ -659,19 +691,19 @@
         },
         {
           "heading": "Data collected",
-          "body": "The site is a showcase website and does not offer account creation.\nAs there is no contact form on the site, no personal data is collected directly through the site.\nOnly technical data (for example IP address, browser type, connection logs) may be processed automatically by the host or the external services used, in order to ensure the operation and security of the site."
+          "body": "The site is a showcase website and does not offer account creation.\nThe contact form (Contact page) collects the information you choose to provide: name, email address, subject (optional) and message. This information is sent via Web3Forms, a third-party service that delivers the message to Megahana by email, and is not used for any other purpose.\nTechnical data (for example IP address, browser type, connection logs) may also be processed automatically by the host or the external services used, in order to ensure the operation and security of the site."
         },
         {
           "heading": "Purposes of processing",
-          "body": "Any technical data processed is used solely to:\n• ensure the proper operation of the site;\n• guarantee its security;\n• produce, where applicable, technical operating statistics.\nCommercial exchanges and the client relationship take place outside the site."
+          "body": "Information submitted through the contact form is only used to handle your enquiry and reply to you by email.\nAny technical data processed is used to:\n• ensure the proper operation of the site;\n• guarantee its security;\n• produce, where applicable, technical operating statistics.\nCommercial exchanges and the client relationship then continue by email, Upwork or LinkedIn depending on the case."
         },
         {
           "heading": "External services used",
-          "body": "Commercial exchanges may take place via Upwork, LinkedIn or email depending on the case.\nThese services have their own privacy policies, which we encourage you to review.\nThe site is deployed on Vercel or a suitable platform, which may process technical data as the host."
+          "body": "The contact form uses Web3Forms to deliver messages by email; see their privacy policy for details on how they process data.\nCommercial exchanges may also take place via Upwork, LinkedIn or email depending on the case — these services have their own privacy policies, which we encourage you to review.\nThe site is deployed on Vercel or a suitable platform, which may process technical data as the host."
         },
         {
           "heading": "Retention period",
-          "body": "Technical data processed by the host or the external services is retained according to the periods defined by those providers.\nExchanges carried out via Upwork, LinkedIn or email are retained according to those services' own policies and the applicable legal obligations (in particular accounting obligations for invoicing documents)."
+          "body": "Messages sent through the contact form are kept for as long as needed to handle your enquiry, then deleted if they do not lead to a business relationship.\nTechnical data processed by the host or the external services is retained according to the periods defined by those providers.\nExchanges carried out via Upwork, LinkedIn or email are retained according to those services' own policies and the applicable legal obligations (in particular accounting obligations for invoicing documents)."
         },
         {
           "heading": "Data sharing",

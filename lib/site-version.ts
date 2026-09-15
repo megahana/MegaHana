@@ -21,6 +21,6 @@ export const siteVersion = {
 };
 
 export const legalVersion = {
-  // Mis à jour : migration Fiverr → Upwork (CGV, mentions, confidentialité).
-  lastUpdated: "2026-07-22",
+  // Mis à jour : politique de confidentialité (formulaire de contact Web3Forms).
+  lastUpdated: "2026-09-16",
 };

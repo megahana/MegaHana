@@ -11,6 +11,11 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_URL).repla
 // Page LinkedIn officielle de Megahana (source unique réutilisée dans le site).
 export const LINKEDIN_STUDIO_URL = "https://www.linkedin.com/company/megahana";
 
+// Adresse affichée comme repli du formulaire de contact (page Contact) —
+// distincte de l'email des mentions légales (identité SIRET), dédiée au
+// canal client. Source unique, réutilisée par ContactForm.tsx.
+export const CONTACT_FORM_EMAIL = "megahanapro@proton.me";
+
 /**
  * Logo officiel — icône "fleur pixel" Megahana, image LOCALE (app/icon.png,
  * servie par Next sur /icon.png). PNG carré 1254×1254 avec canal alpha (centre
