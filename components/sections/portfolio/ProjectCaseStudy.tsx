@@ -15,6 +15,7 @@ import {
 import { useTranslations } from "next-intl";
 import { ProjectGallery } from "@/components/sections/portfolio/ProjectGallery";
 import { ProjectDetailsDrawer } from "@/components/sections/portfolio/ProjectDetailsDrawer";
+import { MEGARECO_DARK_BG } from "@/components/sections/portfolio/megareco-theme";
 import type { GalleryImage, Project } from "@/types";
 
 /* Palette MegaReco par défaut — surchargeable via accent */
@@ -22,7 +23,7 @@ const DEFAULT_ACCENT = {
   primary: "#f4a261",
   dim: "#b88e6f",
   soft: "#9c7b5f",
-  bg: "#1c1d21",
+  bg: MEGARECO_DARK_BG,
   inner: "#0e0f14",
 };
 
@@ -141,8 +142,12 @@ export function ProjectCaseStudy({ project, accent = DEFAULT_ACCENT }: Props) {
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-medium transition-colors group/ext shrink-0 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1c1d21]"
-              style={{ color: accent.primary, ["--tw-ring-color" as string]: accent.primary }}
+              className="inline-flex items-center gap-2 text-sm font-medium transition-colors group/ext shrink-0 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+              style={{
+                color: accent.primary,
+                ["--tw-ring-color" as string]: accent.primary,
+                ["--tw-ring-offset-color" as string]: MEGARECO_DARK_BG,
+              }}
             >
               {url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
               <ExternalLink className="w-4 h-4 group-hover/ext:translate-x-0.5 group-hover/ext:-translate-y-0.5 transition-transform" />
@@ -248,12 +253,13 @@ export function ProjectCaseStudy({ project, accent = DEFAULT_ACCENT }: Props) {
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1c1d21]"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                   style={{
                     background: `linear-gradient(135deg, ${accent.primary}, ${accent.soft})`,
                     color: accent.inner,
                     boxShadow: `0 4px 24px ${accent.primary}33`,
                     ["--tw-ring-color" as string]: accent.primary,
+                    ["--tw-ring-offset-color" as string]: MEGARECO_DARK_BG,
                   }}
                 >
                   {t("labels.viewOnline", { name: title })}
@@ -265,11 +271,12 @@ export function ProjectCaseStudy({ project, accent = DEFAULT_ACCENT }: Props) {
                   href={githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium border transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1c1d21]"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium border transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                   style={{
                     color: TEXT.body,
                     borderColor: accBorder,
                     ["--tw-ring-color" as string]: accent.primary,
+                    ["--tw-ring-offset-color" as string]: MEGARECO_DARK_BG,
                   }}
                 >
                   <Github className="w-4 h-4" />
@@ -611,12 +618,13 @@ export function ProjectCaseStudy({ project, accent = DEFAULT_ACCENT }: Props) {
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1c1d21]"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                   style={{
                     background: `linear-gradient(135deg, ${accent.primary}, ${accent.soft})`,
                     color: accent.inner,
                     boxShadow: `0 4px 24px ${accent.primary}33`,
                     ["--tw-ring-color" as string]: accent.primary,
+                    ["--tw-ring-offset-color" as string]: MEGARECO_DARK_BG,
                   }}
                 >
                   {t("labels.viewOnline", { name: title })}
@@ -627,11 +635,12 @@ export function ProjectCaseStudy({ project, accent = DEFAULT_ACCENT }: Props) {
                     href={githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium border transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1c1d21]"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium border transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                     style={{
                       color: TEXT.body,
                       borderColor: accBorder,
                       ["--tw-ring-color" as string]: accent.primary,
+                      ["--tw-ring-offset-color" as string]: MEGARECO_DARK_BG,
                     }}
                   >
                     <Github className="w-4 h-4" />

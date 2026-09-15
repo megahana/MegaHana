@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, X, Expand } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { GalleryImage } from "@/types";
 import { cn } from "@/lib/utils";
+import { MEGARECO_DARK_BG } from "@/components/sections/portfolio/megareco-theme";
 
 interface ProjectGalleryProps {
   images: GalleryImage[];
@@ -37,7 +38,7 @@ export function ProjectGallery({ images, accentColor }: ProjectGalleryProps) {
       setDirection(delta);
       setActive((prev) => (prev + delta + total) % total);
     },
-    [total]
+    [total],
   );
 
   /* Keyboard navigation — lightbox global */
@@ -55,13 +56,21 @@ export function ProjectGallery({ images, accentColor }: ProjectGalleryProps) {
   /* Lock scroll when lightbox open */
   useEffect(() => {
     document.body.style.overflow = lightbox ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [lightbox]);
 
   /* Keyboard navigation — carrousel principal (quand focus) */
   const onCarouselKey = (e: React.KeyboardEvent) => {
-    if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
-    if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      go(-1);
+    }
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      go(1);
+    }
   };
 
   const current = images[active];
@@ -87,23 +96,27 @@ export function ProjectGallery({ images, accentColor }: ProjectGalleryProps) {
         aria-roledescription="carousel"
         aria-label={tg("region")}
       >
-
         {/* Main image — pattern APG carousel : région (ligne ~86) > groupe slide (ici) */}
         <div
-          className="relative group/main rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1c1d21]"
+          className="relative group/main rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
           tabIndex={0}
           onKeyDown={onCarouselKey}
           role="group"
           aria-roledescription="slide"
           aria-label={tg("slide", { current: active + 1, total, label: current.label })}
           aria-live="polite"
-          style={{ ["--tw-ring-color" as string]: ring }}
+          style={{
+            ["--tw-ring-color" as string]: ring,
+            ["--tw-ring-offset-color" as string]: MEGARECO_DARK_BG,
+          }}
         >
           {/* Glow — couleur accent ou fallback primary/sakura/or */}
           {accentColor ? (
             <div
               className="absolute -inset-px rounded-2xl blur-sm opacity-50 group-hover/main:opacity-80 transition-opacity duration-500 pointer-events-none"
-              style={{ background: `linear-gradient(135deg, ${accentColor}55, ${accentColor}22, ${accentColor}44)` }}
+              style={{
+                background: `linear-gradient(135deg, ${accentColor}55, ${accentColor}22, ${accentColor}44)`,
+              }}
             />
           ) : (
             <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-primary/25 via-sakura/15 to-gold/25 blur-sm opacity-50 group-hover/main:opacity-80 transition-opacity duration-500 pointer-events-none" />
@@ -132,7 +145,12 @@ export function ProjectGallery({ images, accentColor }: ProjectGalleryProps) {
                     sizes="(max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1200px"
                   />
                 ) : (
-                  <div className={cn("absolute inset-0 flex flex-col items-center justify-center gap-2", PLACEHOLDER_GRADIENT)}>
+                  <div
+                    className={cn(
+                      "absolute inset-0 flex flex-col items-center justify-center gap-2",
+                      PLACEHOLDER_GRADIENT,
+                    )}
+                  >
                     <p className="text-text-muted text-sm">{current.label}</p>
                     <p className="text-text-muted/50 text-xs">{current.src.split("/").pop()}</p>
                   </div>
@@ -143,7 +161,9 @@ export function ProjectGallery({ images, accentColor }: ProjectGalleryProps) {
                 <div className="absolute bottom-0 left-0 right-0 px-5 pb-4 pt-8">
                   <p className="text-white font-semibold text-sm">{current.label}</p>
                   {current.description && (
-                    <p className="text-white/80 text-xs mt-0.5 hidden sm:block">{current.description}</p>
+                    <p className="text-white/80 text-xs mt-0.5 hidden sm:block">
+                      {current.description}
+                    </p>
                   )}
                 </div>
               </motion.div>
@@ -190,17 +210,27 @@ export function ProjectGallery({ images, accentColor }: ProjectGalleryProps) {
           {images.map((img, i) => (
             <button
               key={i}
-              onClick={() => { setDirection(i > active ? 1 : -1); setActive(i); }}
+              onClick={() => {
+                setDirection(i > active ? 1 : -1);
+                setActive(i);
+              }}
               className={cn(
-                "relative aspect-[4/3] rounded-lg overflow-hidden border transition-all duration-200 bg-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1c1d21]",
-                i === active
-                  ? "scale-[1.03]"
-                  : "opacity-70 hover:opacity-100"
+                "relative aspect-[4/3] rounded-lg overflow-hidden border transition-all duration-200 bg-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+                i === active ? "scale-[1.03]" : "opacity-70 hover:opacity-100",
               )}
               style={
                 i === active
-                  ? { borderColor: ring, boxShadow: `0 0 0 1px ${ring}66`, ["--tw-ring-color" as string]: ring }
-                  : { borderColor: "rgba(255,255,255,0.14)", ["--tw-ring-color" as string]: ring }
+                  ? {
+                      borderColor: ring,
+                      boxShadow: `0 0 0 1px ${ring}66`,
+                      ["--tw-ring-color" as string]: ring,
+                      ["--tw-ring-offset-color" as string]: MEGARECO_DARK_BG,
+                    }
+                  : {
+                      borderColor: "rgba(255,255,255,0.14)",
+                      ["--tw-ring-color" as string]: ring,
+                      ["--tw-ring-offset-color" as string]: MEGARECO_DARK_BG,
+                    }
               }
               aria-label={tg("view", { label: img.label })}
               aria-current={i === active}
@@ -216,7 +246,9 @@ export function ProjectGallery({ images, accentColor }: ProjectGalleryProps) {
                 />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <p className="text-[9px] text-text-muted text-center px-1 leading-tight">{img.label}</p>
+                  <p className="text-[9px] text-text-muted text-center px-1 leading-tight">
+                    {img.label}
+                  </p>
                 </div>
               )}
             </button>
@@ -252,7 +284,10 @@ export function ProjectGallery({ images, accentColor }: ProjectGalleryProps) {
             {/* Prev */}
             {total > 1 && (
               <button
-                onClick={(e) => { e.stopPropagation(); go(-1); }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  go(-1);
+                }}
                 className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white transition-colors z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
                 aria-label={tg("prev")}
               >
@@ -277,7 +312,10 @@ export function ProjectGallery({ images, accentColor }: ProjectGalleryProps) {
                   initial="enter"
                   animate="center"
                   exit="exit"
-                  transition={{ duration: reduceMotion ? 0.12 : 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  transition={{
+                    duration: reduceMotion ? 0.12 : 0.25,
+                    ease: [0.25, 0.46, 0.45, 0.94],
+                  }}
                 >
                   <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
                     {hasImage(current.src) ? (
@@ -290,7 +328,12 @@ export function ProjectGallery({ images, accentColor }: ProjectGalleryProps) {
                         sizes="(max-width: 1280px) 100vw, 1200px"
                       />
                     ) : (
-                      <div className={cn("absolute inset-0 flex flex-col items-center justify-center gap-2", PLACEHOLDER_GRADIENT)}>
+                      <div
+                        className={cn(
+                          "absolute inset-0 flex flex-col items-center justify-center gap-2",
+                          PLACEHOLDER_GRADIENT,
+                        )}
+                      >
                         <p className="text-text-muted text-sm">{current.label}</p>
                         <p className="text-text-muted/50 text-xs">{current.src.split("/").pop()}</p>
                       </div>
@@ -309,7 +352,10 @@ export function ProjectGallery({ images, accentColor }: ProjectGalleryProps) {
             {/* Next */}
             {total > 1 && (
               <button
-                onClick={(e) => { e.stopPropagation(); go(1); }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  go(1);
+                }}
                 className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white transition-colors z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
                 aria-label={tg("next")}
               >

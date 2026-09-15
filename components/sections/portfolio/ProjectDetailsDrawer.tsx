@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { MEGARECO_DARK_BG } from "@/components/sections/portfolio/megareco-theme";
 
 interface Props {
   toggleLabel: string;
@@ -48,8 +49,13 @@ export function ProjectDetailsDrawer({
         aria-expanded={isOpen}
         aria-controls={panelId}
         onClick={() => setIsOpen((v) => !v)}
-        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium border transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1c1d21]"
-        style={{ color: textColor, borderColor, ["--tw-ring-color" as string]: accentColor }}
+        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium border transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+        style={{
+          color: textColor,
+          borderColor,
+          ["--tw-ring-color" as string]: accentColor,
+          ["--tw-ring-offset-color" as string]: MEGARECO_DARK_BG,
+        }}
       >
         {isOpen ? closeLabel : toggleLabel}
         <ChevronDown
