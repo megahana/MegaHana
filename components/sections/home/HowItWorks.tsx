@@ -38,9 +38,7 @@ export function HowItWorks() {
                     )}
                   </div>
 
-                  <h3 className="text-xl font-bold text-text-primary mb-3">
-                    {step.title}
-                  </h3>
+                  <h3 className="text-xl font-bold text-text-primary mb-3">{step.title}</h3>
                   <p className="text-text-secondary leading-relaxed text-sm md:text-base">
                     {step.description}
                   </p>

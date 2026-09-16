@@ -33,9 +33,7 @@ export function ServicesPreview() {
                   <f.icon className="w-5 h-5 text-primary-light" />
                 </div>
                 <h3 className="font-semibold text-text-primary">{f.name}</h3>
-                <p className="text-sm text-text-secondary leading-relaxed">
-                  {f.description}
-                </p>
+                <p className="text-sm text-text-secondary leading-relaxed">{f.description}</p>
               </div>
             </div>
           </AnimateIn>

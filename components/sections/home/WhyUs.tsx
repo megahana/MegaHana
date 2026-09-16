@@ -34,9 +34,7 @@ export function WhyUs() {
                     </div>
                   )}
                   <h3 className="font-semibold text-text-primary">{item.title}</h3>
-                  <p className="text-sm text-text-secondary leading-relaxed">
-                    {item.description}
-                  </p>
+                  <p className="text-sm text-text-secondary leading-relaxed">{item.description}</p>
                 </div>
               </div>
             </AnimateIn>

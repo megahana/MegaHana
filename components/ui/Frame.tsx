@@ -76,8 +76,15 @@ function renderDecoration(sector: Sector, editorialTag: string, petalSymbolId: s
             </div>
             <div className="mh-frame-browser-address" />
           </div>
-          <svg className="mh-frame-petal-blob mh-frame-petal-blob--browser" viewBox="0 0 120 170" aria-hidden="true">
-            <use href={`#${petalSymbolId}`} className="mh-frame-petal-shape mh-frame-petal-shape--or" />
+          <svg
+            className="mh-frame-petal-blob mh-frame-petal-blob--browser"
+            viewBox="0 0 120 170"
+            aria-hidden="true"
+          >
+            <use
+              href={`#${petalSymbolId}`}
+              className="mh-frame-petal-shape mh-frame-petal-shape--or"
+            />
           </svg>
         </>
       );
@@ -86,7 +93,10 @@ function renderDecoration(sector: Sector, editorialTag: string, petalSymbolId: s
       return (
         <div className="mh-frame-cartouche">
           <svg className="mh-frame-petal-stamp" viewBox="0 0 120 170" aria-hidden="true">
-            <use href={`#${petalSymbolId}`} className="mh-frame-petal-shape mh-frame-petal-shape--stamp" />
+            <use
+              href={`#${petalSymbolId}`}
+              className="mh-frame-petal-shape mh-frame-petal-shape--stamp"
+            />
           </svg>
         </div>
       );
@@ -96,15 +106,53 @@ function renderDecoration(sector: Sector, editorialTag: string, petalSymbolId: s
         <>
           <svg className="mh-frame-vinyl-disc" viewBox="0 0 200 200" aria-hidden="true">
             <circle cx="100" cy="100" r="92" fill="rgb(var(--text) / 0.05)" />
-            <circle cx="100" cy="100" r="82" fill="none" stroke="rgb(var(--text) / 0.12)" strokeWidth="0.6" />
-            <circle cx="100" cy="100" r="68" fill="none" stroke="rgb(var(--text) / 0.12)" strokeWidth="0.6" />
-            <circle cx="100" cy="100" r="54" fill="none" stroke="rgb(var(--text) / 0.12)" strokeWidth="0.6" />
-            <circle cx="100" cy="100" r="40" fill="none" stroke="rgb(var(--text) / 0.12)" strokeWidth="0.6" />
-            <circle cx="100" cy="100" r="3" fill="rgb(var(--bg))" stroke="rgb(var(--text) / 0.25)" strokeWidth="1" />
+            <circle
+              cx="100"
+              cy="100"
+              r="82"
+              fill="none"
+              stroke="rgb(var(--text) / 0.12)"
+              strokeWidth="0.6"
+            />
+            <circle
+              cx="100"
+              cy="100"
+              r="68"
+              fill="none"
+              stroke="rgb(var(--text) / 0.12)"
+              strokeWidth="0.6"
+            />
+            <circle
+              cx="100"
+              cy="100"
+              r="54"
+              fill="none"
+              stroke="rgb(var(--text) / 0.12)"
+              strokeWidth="0.6"
+            />
+            <circle
+              cx="100"
+              cy="100"
+              r="40"
+              fill="none"
+              stroke="rgb(var(--text) / 0.12)"
+              strokeWidth="0.6"
+            />
+            <circle
+              cx="100"
+              cy="100"
+              r="3"
+              fill="rgb(var(--bg))"
+              stroke="rgb(var(--text) / 0.25)"
+              strokeWidth="1"
+            />
           </svg>
           <div className="mh-frame-vinyl-label">
             <svg className="mh-frame-petal-stamp" viewBox="0 0 120 170" aria-hidden="true">
-              <use href={`#${petalSymbolId}`} className="mh-frame-petal-shape mh-frame-petal-shape--label" />
+              <use
+                href={`#${petalSymbolId}`}
+                className="mh-frame-petal-shape mh-frame-petal-shape--label"
+              />
             </svg>
           </div>
         </>
@@ -118,7 +166,10 @@ function renderDecoration(sector: Sector, editorialTag: string, petalSymbolId: s
           <div className="mh-frame-editorial-frame" />
           <span className="mh-frame-editorial-tag">{editorialTag}</span>
           <svg className="mh-frame-editorial-emblem" viewBox="0 0 120 170" aria-hidden="true">
-            <use href={`#${petalSymbolId}`} className="mh-frame-petal-shape mh-frame-petal-shape--emblem" />
+            <use
+              href={`#${petalSymbolId}`}
+              className="mh-frame-petal-shape mh-frame-petal-shape--emblem"
+            />
           </svg>
         </>
       );
@@ -129,7 +180,10 @@ function renderDecoration(sector: Sector, editorialTag: string, petalSymbolId: s
           <div className="mh-frame-gallery-frame" />
           <div className="mh-frame-gallery-cartel">
             <svg className="mh-frame-petal-stamp" viewBox="0 0 120 170" aria-hidden="true">
-              <use href={`#${petalSymbolId}`} className="mh-frame-petal-shape mh-frame-petal-shape--cartel" />
+              <use
+                href={`#${petalSymbolId}`}
+                className="mh-frame-petal-shape mh-frame-petal-shape--cartel"
+              />
             </svg>
           </div>
         </>
@@ -140,7 +194,10 @@ function renderDecoration(sector: Sector, editorialTag: string, petalSymbolId: s
         <>
           <div className="mh-frame-wood-mark-halo" />
           <svg className="mh-frame-wood-mark" viewBox="0 0 120 170" aria-hidden="true">
-            <use href={`#${petalSymbolId}`} className="mh-frame-petal-shape mh-frame-petal-shape--wood" />
+            <use
+              href={`#${petalSymbolId}`}
+              className="mh-frame-petal-shape mh-frame-petal-shape--wood"
+            />
           </svg>
         </>
       );
@@ -150,7 +207,10 @@ function renderDecoration(sector: Sector, editorialTag: string, petalSymbolId: s
       // Bien-être, mais réutilisé via <use> (pas besoin d'animer son `d` ici).
       return (
         <svg className="mh-frame-petal-blob" viewBox="0 0 120 170" aria-hidden="true">
-          <use href={`#${petalSymbolId}`} className="mh-frame-petal-shape mh-frame-petal-shape--chalk" />
+          <use
+            href={`#${petalSymbolId}`}
+            className="mh-frame-petal-shape mh-frame-petal-shape--chalk"
+          />
         </svg>
       );
   }
@@ -227,7 +287,9 @@ export function Frame({
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+          transition:
+            transform 0.15s ease-out,
+            box-shadow 0.3s ease;
           will-change: transform;
         }
         .mh-frame-card:hover {
@@ -262,10 +324,14 @@ export function Frame({
         @keyframes mh-frame-petal-breathe {
           0%,
           100% {
-            d: path("M 85,85 C 85,112.61 73.81,135 60,135 C 46.19,135 35,112.61 35,85 C 35,57.39 46.19,35 60,35 C 73.81,35 85,57.39 85,85 Z");
+            d: path(
+              "M 85,85 C 85,112.61 73.81,135 60,135 C 46.19,135 35,112.61 35,85 C 35,57.39 46.19,35 60,35 C 73.81,35 85,57.39 85,85 Z"
+            );
           }
           50% {
-            d: path("M 88,83 C 88,114 72.5,132 61,132 C 49.5,132 33,112 33,88 C 33,64 42,32 58,32 C 74,32 88,52 88,83 Z");
+            d: path(
+              "M 88,83 C 88,114 72.5,132 61,132 C 49.5,132 33,112 33,88 C 33,64 42,32 58,32 C 74,32 88,52 88,83 Z"
+            );
           }
         }
         @media (prefers-reduced-motion: reduce) {
@@ -327,7 +393,8 @@ export function Frame({
 
         /* ═══ Architecte — grille technique + cartouche coin bas-droit ═══ */
         .mh-frame-card--blueprint {
-          background-image: repeating-linear-gradient(0deg, rgb(var(--text) / 0.1) 0 1px, transparent 1px 96px),
+          background-image:
+            repeating-linear-gradient(0deg, rgb(var(--text) / 0.1) 0 1px, transparent 1px 96px),
             repeating-linear-gradient(90deg, rgb(var(--text) / 0.1) 0 1px, transparent 1px 96px),
             repeating-linear-gradient(0deg, rgb(var(--text) / 0.05) 0 1px, transparent 1px 24px),
             repeating-linear-gradient(90deg, rgb(var(--text) / 0.05) 0 1px, transparent 1px 24px);
@@ -464,9 +531,14 @@ export function Frame({
         /* ═══ Artisans — texture bois + marque au fer bas-gauche ═══ */
         .mh-frame-card--wood {
           background-color: rgb(var(--bg));
-          background-image: repeating-linear-gradient(90deg, rgb(var(--text) / 0.05) 0 1px, transparent 1px 140px),
+          background-image:
+            repeating-linear-gradient(90deg, rgb(var(--text) / 0.05) 0 1px, transparent 1px 140px),
             repeating-linear-gradient(0deg, rgb(var(--gold) / 0.1) 0 2px, transparent 2px 10px),
-            repeating-linear-gradient(0deg, rgb(var(--border-strong) / 0.35) 0 3px, transparent 3px 7px);
+            repeating-linear-gradient(
+              0deg,
+              rgb(var(--border-strong) / 0.35) 0 3px,
+              transparent 3px 7px
+            );
         }
         .mh-frame-wood-mark-halo {
           position: absolute;
@@ -498,7 +570,8 @@ export function Frame({
         .mh-frame-card--slate {
           background-color: #1c1b18;
           border-color: rgba(250, 247, 242, 0.15);
-          background-image: radial-gradient(1px 1px at 20% 30%, rgba(250, 247, 242, 0.08), transparent),
+          background-image:
+            radial-gradient(1px 1px at 20% 30%, rgba(250, 247, 242, 0.08), transparent),
             radial-gradient(1px 1px at 70% 65%, rgba(250, 247, 242, 0.06), transparent),
             radial-gradient(1.5px 1.5px at 45% 80%, rgba(250, 247, 242, 0.07), transparent),
             radial-gradient(1px 1px at 85% 20%, rgba(250, 247, 242, 0.05), transparent),

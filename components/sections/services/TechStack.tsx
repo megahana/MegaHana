@@ -1,4 +1,13 @@
-import { Code2, Palette, Smartphone, ImageIcon, Search, FileCode2, Check, Plus } from "lucide-react";
+import {
+  Code2,
+  Palette,
+  Smartphone,
+  ImageIcon,
+  Search,
+  FileCode2,
+  Check,
+  Plus,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { SectionHeader } from "@/components/ui/SectionHeader";

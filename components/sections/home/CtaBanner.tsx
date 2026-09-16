@@ -18,14 +18,11 @@ export function CtaBanner() {
           <div className="relative px-6 sm:px-8 md:px-16 py-12 sm:py-16 md:py-20 text-center">
             <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-5 sm:mb-6">
               <Zap className="w-4 h-4 text-primary-light" />
-              <span className="text-sm text-primary-light font-medium">
-                {t("badge")}
-              </span>
+              <span className="text-sm text-primary-light font-medium">{t("badge")}</span>
             </div>
 
             <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-text-primary mb-4">
-              {t("titleLead")}{" "}
-              <span className="gradient-text">{t("titleHighlight")}</span>
+              {t("titleLead")} <span className="gradient-text">{t("titleHighlight")}</span>
             </h2>
             <p className="text-text-secondary text-base sm:text-lg max-w-xl mx-auto mb-8">
               {t("subtitle")}

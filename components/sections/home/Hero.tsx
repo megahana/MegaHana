@@ -49,7 +49,9 @@ export function Hero() {
             className="text-[1.9rem] sm:text-5xl md:text-6xl lg:text-7xl font-bold text-text-primary leading-[1.12] sm:leading-[1.1] tracking-tight"
           >
             {t("titleLead")}{" "}
-            <span className={cn("gradient-text", "hero-gradient", heroReady && "hero-gradient--play")}>
+            <span
+              className={cn("gradient-text", "hero-gradient", heroReady && "hero-gradient--play")}
+            >
               {t("titleHighlight")}
             </span>
           </motion.h1>
@@ -72,10 +74,7 @@ export function Hero() {
             className="flex flex-wrap justify-center gap-4 mt-8"
           >
             {perks.map((perk) => (
-              <div
-                key={perk}
-                className="flex items-center gap-2 text-sm text-text-secondary"
-              >
+              <div key={perk} className="flex items-center gap-2 text-sm text-text-secondary">
                 <CheckCircle2 className="w-4 h-4 text-gold shrink-0" />
                 {perk}
               </div>

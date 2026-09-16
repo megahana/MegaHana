@@ -15,15 +15,7 @@ const PHOTO_SRC = "/images/photo.png";
 
 const whyMeIcons = [MessageCircle, Code2, Zap, TrendingUp];
 
-const skills = [
-  "Next.js",
-  "React",
-  "TypeScript",
-  "Tailwind CSS",
-  "Vercel",
-  "Lighthouse",
-  "Figma",
-];
+const skills = ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel", "Lighthouse", "Figma"];
 
 export async function generateMetadata({
   params,
@@ -68,22 +60,42 @@ function AboutContent() {
                 <h1 className="text-2xl font-bold text-text-primary">Ahmed OMEROVIC</h1>
                 <p className="text-text-secondary text-sm mt-0.5">{t("role")}</p>
                 <div className="flex flex-wrap items-center gap-3 mt-3">
-                  <a href={LINKEDIN_PERSO_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-xs text-text-muted hover:text-primary-light transition-colors">
+                  <a
+                    href={LINKEDIN_PERSO_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-xs text-text-muted hover:text-primary-light transition-colors"
+                  >
                     <Linkedin className="w-3.5 h-3.5" />
                     {t("linkedinPerso")}
                   </a>
                   <span className="text-border-light">·</span>
-                  <a href={LINKEDIN_STUDIO_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-xs text-text-muted hover:text-primary-light transition-colors">
+                  <a
+                    href={LINKEDIN_STUDIO_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-xs text-text-muted hover:text-primary-light transition-colors"
+                  >
                     <Linkedin className="w-3.5 h-3.5" />
                     Megahana
                   </a>
                   <span className="text-border-light">·</span>
-                  <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-xs text-text-muted hover:text-text-secondary transition-colors">
+                  <a
+                    href={GITHUB_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-xs text-text-muted hover:text-text-secondary transition-colors"
+                  >
                     <Github className="w-3.5 h-3.5" />
                     GitHub
                   </a>
                   <span className="text-border-light">·</span>
-                  <a href={UPWORK_PRODUCT_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-xs text-text-muted hover:text-primary-light transition-colors">
+                  <a
+                    href={UPWORK_PRODUCT_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-xs text-text-muted hover:text-primary-light transition-colors"
+                  >
                     <Store className="w-3.5 h-3.5" />
                     Upwork
                   </a>
@@ -129,7 +141,9 @@ function AboutContent() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-text-primary text-sm mb-1">{item.title}</h3>
-                      <p className="text-sm text-text-secondary leading-relaxed">{item.description}</p>
+                      <p className="text-sm text-text-secondary leading-relaxed">
+                        {item.description}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -165,11 +179,7 @@ function AboutContent() {
   );
 }
 
-export default async function AboutPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
   return <AboutContent />;

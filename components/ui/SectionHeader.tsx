@@ -27,10 +27,7 @@ export function SectionHeader({
         </p>
       )}
       <Heading className="text-3xl md:text-4xl lg:text-5xl font-bold text-text-primary leading-tight">
-        {title}{" "}
-        {titleHighlight && (
-          <span className="gradient-text">{titleHighlight}</span>
-        )}
+        {title} {titleHighlight && <span className="gradient-text">{titleHighlight}</span>}
       </Heading>
       {description && (
         <p className="mt-4 text-base sm:text-lg text-text-secondary leading-relaxed">

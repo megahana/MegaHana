@@ -43,9 +43,7 @@ export function LegalPage({ namespace }: { namespace: string }) {
           {sections.map((section, i) => (
             <AnimateIn key={section.heading} delay={i * 0.04}>
               <div>
-                <h2 className="text-lg font-semibold text-text-primary mb-2">
-                  {section.heading}
-                </h2>
+                <h2 className="text-lg font-semibold text-text-primary mb-2">{section.heading}</h2>
                 <p className="text-sm text-text-secondary leading-relaxed whitespace-pre-line">
                   {section.body}
                 </p>

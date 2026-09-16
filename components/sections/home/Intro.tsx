@@ -109,7 +109,7 @@ export function Intro() {
       el: HTMLElement,
       propertyName: string,
       cssDurationMs: number,
-      onDone: () => void
+      onDone: () => void,
     ) {
       let done = false;
       function finishOnce() {
@@ -312,7 +312,12 @@ export function Intro() {
           <defs>
             {/* Fond plein derrière le carré arrondi, même teinte : sans lui, l'interstice
                 entre tuiles (9x9, carré 7.5x7.5) reste transparent → effet "carrelage". */}
-            <pattern id="mh-intro-pattern-sakura" width="9" height="9" patternUnits="userSpaceOnUse">
+            <pattern
+              id="mh-intro-pattern-sakura"
+              width="9"
+              height="9"
+              patternUnits="userSpaceOnUse"
+            >
               <rect width="9" height="9" fill="rgb(var(--sakura))" />
               <rect width="7.5" height="7.5" rx="2" fill="rgb(var(--sakura))" />
             </pattern>
@@ -333,7 +338,13 @@ export function Intro() {
             </radialGradient>
             {PETALS.map((p, i) => (
               <clipPath id={`mh-intro-clip-${i}`} key={`clip-${i}`}>
-                <ellipse cx={p.cx} cy={p.cy} rx={p.rx} ry={p.ry} transform={`rotate(${p.rotate})`} />
+                <ellipse
+                  cx={p.cx}
+                  cy={p.cy}
+                  rx={p.rx}
+                  ry={p.ry}
+                  transform={`rotate(${p.rotate})`}
+                />
               </clipPath>
             ))}
           </defs>
@@ -351,7 +362,13 @@ export function Intro() {
                 recentré et agrandi (x/y:[-100,100]) pour couvrir les 5. */}
             {PETALS.map((p, i) => (
               <g key={`flat-${i}`} clipPath={`url(#mh-intro-clip-${i})`}>
-                <rect x={-100} y={-100} width={200} height={200} fill={`url(#mh-intro-pattern-${p.hue})`} />
+                <rect
+                  x={-100}
+                  y={-100}
+                  width={200}
+                  height={200}
+                  fill={`url(#mh-intro-pattern-${p.hue})`}
+                />
               </g>
             ))}
             {/* Couche glow — au-dessus, s'estompe pétale par pétale. Ellipse remplie
@@ -372,7 +389,14 @@ export function Intro() {
             ))}
             <g fill="none" stroke="rgb(var(--bg))" strokeWidth={3}>
               {PETALS.map((p, i) => (
-                <ellipse key={`sep-${i}`} cx={p.cx} cy={p.cy} rx={p.rx} ry={p.ry} transform={`rotate(${p.rotate})`} />
+                <ellipse
+                  key={`sep-${i}`}
+                  cx={p.cx}
+                  cy={p.cy}
+                  rx={p.rx}
+                  ry={p.ry}
+                  transform={`rotate(${p.rotate})`}
+                />
               ))}
             </g>
             <circle cx={5} cy={1} r={14} fill="rgb(var(--bg))" />

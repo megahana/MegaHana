@@ -22,8 +22,7 @@ const variants = {
   secondary:
     "bg-surface-2 text-text-primary border border-border-light hover:border-primary/50 hover:bg-surface",
   ghost: "text-text-secondary hover:text-text-primary hover:bg-surface-2",
-  outline:
-    "border border-primary/50 text-primary hover:bg-primary/10 hover:border-primary",
+  outline: "border border-primary/50 text-primary hover:bg-primary/10 hover:border-primary",
 };
 
 const sizes = {
@@ -48,7 +47,7 @@ export function Button({
     "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
     variants[variant],
     sizes[size],
-    className
+    className,
   );
 
   if (href) {

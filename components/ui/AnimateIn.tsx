@@ -11,12 +11,7 @@ interface AnimateInProps {
   className?: string;
 }
 
-export function AnimateIn({
-  children,
-  delay = 0,
-  direction = "up",
-  className,
-}: AnimateInProps) {
+export function AnimateIn({ children, delay = 0, direction = "up", className }: AnimateInProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
@@ -35,11 +30,7 @@ export function AnimateIn({
         opacity: 0,
         ...directionMap[direction],
       }}
-      animate={
-        isInView
-          ? { opacity: 1, y: 0, x: 0 }
-          : { opacity: 0, ...directionMap[direction] }
-      }
+      animate={isInView ? { opacity: 1, y: 0, x: 0 } : { opacity: 0, ...directionMap[direction] }}
       transition={{
         duration: 0.6,
         delay,

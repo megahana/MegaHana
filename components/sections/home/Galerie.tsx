@@ -56,7 +56,7 @@ type Slot = { sector: Sector; project: Project | null };
 // existent.
 function sectorSlots(sector: Sector): Slot[] {
   const demos = projects.filter(
-    (p) => p.sector === sector && p.status === "demo-live" && p.id !== "megataste"
+    (p) => p.sector === sector && p.status === "demo-live" && p.id !== "megataste",
   );
   if (demos.length === 0) return [{ sector, project: null }];
   return demos.map((project) => ({ sector, project }));
@@ -67,7 +67,7 @@ function renderCard(
   copyIndex: number,
   t: Translator,
   sectorNames: Record<string, string>,
-  teasers: Record<string, string>
+  teasers: Record<string, string>,
 ) {
   const { sector, project } = slot;
   const keyBase = project ? project.id : sector;
@@ -134,7 +134,7 @@ function renderRow(
   reverse: boolean,
   t: Translator,
   sectorNames: Record<string, string>,
-  teasers: Record<string, string>
+  teasers: Record<string, string>,
 ) {
   const slots = sectors.flatMap(sectorSlots);
   const dupCopies = Array.from({ length: COPY_COUNT - 1 }, (_, i) => i + 1);
@@ -144,7 +144,7 @@ function renderRow(
         {slots.map((slot) => renderCard(slot, 0, t, sectorNames, teasers))}
         <div className="marquee-dup" aria-hidden="true">
           {dupCopies.map((copyIndex) =>
-            slots.map((slot) => renderCard(slot, copyIndex, t, sectorNames, teasers))
+            slots.map((slot) => renderCard(slot, copyIndex, t, sectorNames, teasers)),
           )}
         </div>
       </div>
