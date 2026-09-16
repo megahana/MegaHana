@@ -24,7 +24,15 @@
   /* Accent — terracotta, seule couleur "cliquable" (boutons, liens, CTA) */
   --accent: 193 98 46;
   --accent-strong: 156 78 36;
-  --accent-light: 217 135 87;
+  /* Recette V1 (16-17/09) : 217 135 87 échouait le contraste AA texte
+     (4,5:1) partout en clair — 2,44 à 2,78:1 mesurés (badges, labels
+     "eyebrow" via SectionHeader.tsx sur tout le site, texte d'erreur du
+     formulaire, 28 usages recensés, tous du texte/icônes réels). Décision
+     Ahmed : corriger en AA quitte à fusionner visuellement avec
+     --accent-strong en clair (assumé). Assombri à même teinte jusqu'à
+     ≥4,5:1 partout : 4,74 (surface-2), 5,05 (bg), 5,39 (surface). Le dark
+     n'est pas touché (217 135 87 y passe déjà, 4,75 à 6,19:1). */
+  --accent-light: 165 84 37;
   --accent-contrast: 250 247 242;
   /* Variante accessible du terracotta — WCAG AA (~4.8:1 sur ivoire), usage
      ciblé là où --accent seul échoue le contraste (voir tailwind.config.ts). */
