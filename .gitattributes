@@ -1,0 +1,6 @@
+# Fins de ligne normalisées en LF pour tout le monde, quel que soit l'OS ou
+# la config core.autocrlf locale — évite les faux échecs de `prettier --check`
+# / `npm run check:release` dus à des CRLF introduits au checkout sur Windows
+# (constaté 17/09 : le contenu réellement committé était déjà en LF, seul le
+# répertoire de travail local différait).
+* text=auto eol=lf
