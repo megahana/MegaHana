@@ -14,6 +14,10 @@ interface ButtonProps {
   disabled?: boolean;
   className?: string;
   external?: boolean;
+  /** Libellé accessible optionnel — utile quand plusieurs boutons de la même
+   *  page partagent le même texte visible (ex. 3 CTA "Discuter de mon projet"
+   *  sur les cartes de formules, à différencier au clavier/lecteur d'écran). */
+  ariaLabel?: string;
 }
 
 const variants = {
@@ -41,6 +45,7 @@ export function Button({
   disabled,
   className,
   external,
+  ariaLabel,
 }: ButtonProps) {
   const classes = cn(
     "inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-200 cursor-pointer select-none",
@@ -58,6 +63,7 @@ export function Button({
         <a
           href={href}
           className={classes}
+          aria-label={ariaLabel}
           {...(external || href.startsWith("http")
             ? { target: "_blank", rel: "noopener noreferrer" }
             : {})}
@@ -68,7 +74,7 @@ export function Button({
     }
     // Liens internes → Link next-intl (préfixe la locale automatiquement).
     return (
-      <Link href={href} className={classes}>
+      <Link href={href} className={classes} aria-label={ariaLabel}>
         {children}
       </Link>
     );
@@ -80,6 +86,7 @@ export function Button({
       onClick={onClick}
       disabled={disabled}
       className={classes}
+      aria-label={ariaLabel}
       whileTap={{ scale: disabled ? 1 : 0.97 }}
     >
       {children}

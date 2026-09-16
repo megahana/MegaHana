@@ -3,7 +3,16 @@ import { useTranslations } from "next-intl";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { Button } from "@/components/ui/Button";
 
-export function CtaBanner() {
+interface CtaBannerProps {
+  /** Destination du bouton — par défaut /services (usage générique Home/About/Portfolio). */
+  href?: string;
+  /** Libellé du bouton — par défaut la traduction générique "Home.cta.button".
+   *  À surcharger quand la bannière est utilisée sur la page vers laquelle elle
+   *  pointerait par défaut (ex. /services), où "View services" n'a pas de sens. */
+  buttonLabel?: string;
+}
+
+export function CtaBanner({ href = "/services", buttonLabel }: CtaBannerProps = {}) {
   const t = useTranslations("Home.cta");
 
   return (
@@ -29,8 +38,8 @@ export function CtaBanner() {
             </p>
 
             <div className="flex justify-center">
-              <Button href="/services" size="lg">
-                {t("button")}
+              <Button href={href} size="lg">
+                {buttonLabel ?? t("button")}
                 <ArrowRight className="w-5 h-5" />
               </Button>
             </div>
