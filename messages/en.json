@@ -159,6 +159,9 @@
     "navHeading": "Navigation",
     "contactHeading": "Contact",
     "linkedin": "Megahana on LinkedIn",
+    "behance": "Megahana on Behance",
+    "instagram": "Megahana on Instagram",
+    "facebook": "Megahana on Facebook",
     "rights": "© {year} Megahana. All rights reserved.",
     "madeWith": "Built with Next.js and Tailwind CSS.",
     "legal": {

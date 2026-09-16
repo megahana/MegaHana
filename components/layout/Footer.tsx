@@ -1,8 +1,16 @@
 import Image from "next/image";
-import { Linkedin, ExternalLink } from "lucide-react";
+import { Linkedin, Instagram, Facebook, ExternalLink } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { LINKEDIN_STUDIO_URL, LOGO_URL, LOGO_WIDTH, LOGO_HEIGHT } from "@/lib/site";
+import {
+  LINKEDIN_STUDIO_URL,
+  BEHANCE_STUDIO_URL,
+  INSTAGRAM_STUDIO_URL,
+  FACEBOOK_STUDIO_URL,
+  LOGO_URL,
+  LOGO_WIDTH,
+  LOGO_HEIGHT,
+} from "@/lib/site";
 import { UPWORK_PRODUCT_URL } from "@/lib/upwork";
 
 const navItems = [
@@ -86,6 +94,42 @@ export function Footer() {
                 >
                   <Linkedin className="w-4 h-4" />
                   {t("linkedin")}
+                </a>
+              </li>
+              {/* Behance : pas d'icône de marque dans lucide-react (vérifié,
+                  version installée) — même repli que pour Upwork ci-dessus :
+                  ExternalLink générique plutôt qu'un logo. */}
+              <li>
+                <a
+                  href={BEHANCE_STUDIO_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 py-2 text-sm text-text-secondary hover:text-primary-light transition-colors"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  {t("behance")}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={INSTAGRAM_STUDIO_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 py-2 text-sm text-text-secondary hover:text-primary-light transition-colors"
+                >
+                  <Instagram className="w-4 h-4" />
+                  {t("instagram")}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={FACEBOOK_STUDIO_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 py-2 text-sm text-text-secondary hover:text-primary-light transition-colors"
+                >
+                  <Facebook className="w-4 h-4" />
+                  {t("facebook")}
                 </a>
               </li>
             </ul>

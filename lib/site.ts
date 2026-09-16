@@ -11,6 +11,15 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_URL).repla
 // Page LinkedIn officielle de Megahana (source unique réutilisée dans le site).
 export const LINKEDIN_STUDIO_URL = "https://www.linkedin.com/company/megahana";
 
+// Profils Megahana sur les autres plateformes (finitions V1, 17/09) — tous
+// confirmés par Ahmed comme étant la marque Megahana elle-même, pas des
+// profils personnels. Le lien Facebook utilise une URL profile.php?id=...
+// (pas de nom d'utilisateur personnalisé) mais pointe bien sur la page
+// Megahana. Dribbble (profil personnel d'Ahmed) volontairement absent ici.
+export const BEHANCE_STUDIO_URL = "https://www.behance.net/megahana";
+export const INSTAGRAM_STUDIO_URL = "https://www.instagram.com/megahana.studio/";
+export const FACEBOOK_STUDIO_URL = "https://www.facebook.com/profile.php?id=61590905535936";
+
 // Adresse affichée comme repli du formulaire de contact (page Contact) —
 // distincte de l'email des mentions légales (identité SIRET), dédiée au
 // canal client. Source unique, réutilisée par ContactForm.tsx.
