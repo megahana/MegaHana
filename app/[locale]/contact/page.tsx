@@ -3,6 +3,7 @@ import { Linkedin, ExternalLink, Mail } from "lucide-react";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { useTranslations } from "next-intl";
 import { AnimateIn } from "@/components/ui/AnimateIn";
+import { HashFocus } from "@/components/ui/HashFocus";
 import { ContactForm } from "@/components/sections/contact/ContactForm";
 import { localizedMetadata, LINKEDIN_STUDIO_URL, CONTACT_FORM_EMAIL } from "@/lib/site";
 import { UPWORK_PRODUCT_URL } from "@/lib/upwork";
@@ -27,6 +28,11 @@ function ContactContent() {
 
   return (
     <div className="pt-20">
+      {/* Focus clavier sur #discuss après un clic /services → /contact#discuss
+          (transition client-side) — le scroll fonctionnait déjà, pas le
+          focus. Voir HashFocus.tsx. */}
+      <HashFocus />
+
       <section className="pt-8 pb-10 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto text-center">
         <AnimateIn>
           <p className="text-sm font-semibold tracking-widest uppercase text-primary-light mb-4">
