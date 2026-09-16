@@ -17,6 +17,7 @@
     "viewSite": "Voir le site",
     "lastUpdated": "Dernière mise à jour : {date}",
     "skipIntro": "Passer l'intro",
+    "discussProject": "Discuter de mon projet",
     "image": {
       "unavailable": "Image indisponible pour le moment."
     },
@@ -185,133 +186,140 @@
   "Services": {
     "meta": {
       "title": "Services",
-      "description": "Création de sites vitrines : landing page, site professionnel ou site bilingue. Responsive, optimisé, avec fichiers sources complets."
+      "description": "Création de sites vitrines : page de présentation, site plusieurs pages ou site bilingue. Responsive, optimisé, avec fichiers sources complets."
     },
     "hero": {
       "eyebrow": "Services",
       "titleLead": "Des sites vitrines",
-      "titleHighlight": "clés en main",
-      "description": "Une landing page, un site professionnel ou un site bilingue, au design adapté à votre activité."
+      "titleHighlight": "à votre image",
+      "description": "Une page de présentation, un site de plusieurs pages ou une version bilingue : choisissez une base adaptée à votre projet, puis définissons ensemble les détails dans un devis."
     },
-    "intro": "Megahana conçoit des sites vitrines modernes, rapides et responsive, développés avec Next.js. Le contenu et le design sont adaptés à votre identité, et chaque formule est livrée avec les fichiers sources complets.",
-    "commonLine": "Toutes les formules incluent un site vitrine moderne et responsive, l'ajout des contenus fournis, l'optimisation des performances et la remise des fichiers sources complets.",
-    "externalFeesLine": "Les frais externes ne sont pas inclus dans les formules : nom de domaine, hébergement payant, email professionnel, abonnements tiers et dépassements éventuels liés aux outils externes.",
+    "intro": "Megahana crée des sites vitrines pour les indépendants et les petites entreprises. Chaque formule comprend un design adapté à votre identité, l'intégration de vos contenus et la remise des fichiers sources complets. La mise en ligne est proposée en option.",
     "packages": {
-      "eyebrow": "Formules",
-      "titleLead": "Des formules disponibles",
-      "titleHighlight": "sur Upwork",
-      "description": "Choisissez le niveau adapté à votre projet et commandez directement via Upwork.",
-      "notice": "Chaque formule inclut un site vitrine moderne et responsive, livré avec les fichiers sources complets. Le détail de chaque niveau est disponible sur Upwork.",
-      "currencyNote": "Tarifs affichés en dollars américains. Le montant final est confirmé sur Upwork. Nom de domaine, hébergement payant, email professionnel et abonnements externes non inclus.",
-      "orderCta": "Commander sur Upwork",
-      "deliveryDays": "{count} jours",
-      "revisions": "{count} révisions",
-      "bilingualBadge": "Bilingue",
-      "items": {
-        "starter": {
-          "pages": "1 page",
-          "language": "1 langue",
-          "features": [
-            "Site une page responsive",
-            "Design moderne adapté à votre activité",
-            "Ajout des contenus fournis",
-            "Optimisation des performances",
-            "Fichiers sources complets",
-            "Icônes réseaux sociaux"
-          ]
-        },
-        "standard": {
-          "pages": "jusqu'à 4 pages",
-          "language": "1 langue",
-          "features": [
-            "Site responsive jusqu'à 4 pages",
-            "Design moderne adapté à votre activité",
-            "Ajout des contenus fournis",
-            "Optimisation des performances",
-            "Fichiers sources complets",
-            "Icônes réseaux sociaux"
-          ]
-        },
-        "advanced": {
-          "pages": "jusqu'à 6 pages",
-          "language": "jusqu'à 2 langues",
-          "features": [
-            "Site responsive jusqu'à 6 pages",
-            "Structure jusqu'à 2 langues",
-            "Ajout des contenus fournis",
-            "Optimisation des performances",
-            "Fichiers sources complets",
-            "Icônes réseaux sociaux"
-          ]
-        }
+      "eyebrow": "Les formules",
+      "titleLead": "Une formule pour",
+      "titleHighlight": "votre site vitrine",
+      "description": "Trois périmètres pour vous repérer. Le devis précise les contenus, le calendrier et les révisions avant le démarrage.",
+      "commonNote": "Chaque formule comprend un site adapté aux mobiles, l'intégration des contenus fournis, l'optimisation des performances et les fichiers sources complets.",
+      "externalNote": "La mise en ligne est optionnelle. Les frais de domaine, d'hébergement, d'email professionnel et d'abonnements externes ne sont pas inclus.",
+      "schedule": "Calendrier et révisions confirmés dans le devis.",
+      "ctaLabel": "Discuter de mon projet — formule {tier}",
+      "features": {
+        "design": "Design adapté à votre identité",
+        "content": "Intégration de vos contenus",
+        "performance": "Optimisation des performances",
+        "sources": "Fichiers sources complets",
+        "social": "Icônes de réseaux sociaux"
+      },
+      "starter": {
+        "name": "Starter",
+        "description": "Une page pour présenter votre activité.",
+        "pages": "1 page",
+        "languages": "1 langue",
+        "responsive": "Site d'une page adapté aux mobiles"
+      },
+      "standard": {
+        "name": "Standard",
+        "description": "Plusieurs pages pour détailler votre activité et vos services.",
+        "pages": "Jusqu'à 4 pages",
+        "languages": "1 langue",
+        "responsive": "Site jusqu'à 4 pages adapté aux mobiles"
+      },
+      "advanced": {
+        "name": "Advanced",
+        "description": "Un site bilingue pour présenter votre activité dans deux langues.",
+        "pages": "Jusqu'à 6 pages",
+        "languages": "Jusqu'à 2 langues",
+        "responsive": "Site jusqu'à 6 pages adapté aux mobiles"
       }
     },
-    "tech": {
-      "eyebrow": "La technique",
-      "titleLead": "Une base technique",
-      "titleHighlight": "moderne",
-      "subtitle": "Des technologies modernes pour un site rapide, fiable et facile à faire évoluer.",
-      "common": [
-        {
-          "name": "Next.js, React & TypeScript",
-          "description": "Une base moderne, fiable et durable pour votre site."
+    "launch": {
+      "eyebrow": "En complément de votre formule",
+      "titleLead": "Option",
+      "titleHighlight": "mise en ligne",
+      "description": "Vous souhaitez nous confier la configuration et la publication de votre site ? Cette option s'ajoute à la formule choisie.",
+      "priceLabel": "Prix de base",
+      "priceNote": "Montant confirmé dans le devis selon votre configuration.",
+      "items": {
+        "domain": "Configuration du nom de domaine et des DNS",
+        "hosting": "Configuration de l'hébergement et du HTTPS",
+        "deployment": "Déploiement du site et vérification de sa mise en ligne"
+      },
+      "ownership": "Vous restez propriétaire du nom de domaine et titulaire des comptes fournisseurs. Megahana dispose des accès nécessaires pour effectuer la mise en ligne.",
+      "externalFees": "Les frais de domaine, d'hébergement, d'email professionnel et d'abonnements tiers restent à votre charge.",
+      "separation": "La création est couverte par votre formule. Cette option concerne uniquement la mise en ligne ponctuelle. Le suivi et la maintenance sont facultatifs et font l'objet d'un accord séparé, avec une durée et un périmètre définis.",
+      "cta": "Discuter de la mise en ligne"
+    },
+    "upwork": {
+      "title": "Vous préférez passer par Upwork ?",
+      "description": "Les mêmes formules sont également disponibles sur Upwork, avec des tarifs en USD. Le calendrier, les révisions et les modalités sont précisés dans la commande Upwork.",
+      "link": "{tier} sur Upwork"
+    },
+    "process": {
+      "eyebrow": "Le déroulement",
+      "titleLead": "Comment se déroule",
+      "titleHighlight": "votre projet ?",
+      "description": "En direct, nous précisons le projet ensemble avant de commencer la création.",
+      "steps": {
+        "project": {
+          "title": "Votre projet",
+          "description": "Vous partagez vos besoins, vos objectifs et les contenus dont vous disposez."
         },
-        {
-          "name": "Tailwind CSS",
-          "description": "Une interface soignée, cohérente et facile à faire évoluer."
+        "quote": {
+          "title": "Devis et acompte",
+          "description": "Nous convenons du périmètre, du calendrier et des révisions. Le démarrage suit l'acceptation du devis, le versement de l'acompte et la réception des éléments nécessaires."
         },
-        {
-          "name": "Design responsive",
-          "description": "Un affichage parfait sur ordinateur, tablette et mobile."
+        "creation": {
+          "title": "Création et validation",
+          "description": "Vous découvrez le site sur une adresse de prévisualisation. Nous effectuons les révisions convenues avant votre validation."
         },
-        {
-          "name": "Images optimisées",
-          "description": "Des visuels légers pour un chargement rapide."
-        },
-        {
-          "name": "SEO & métadonnées de base",
-          "description": "Une structure prête pour les moteurs de recherche."
-        },
-        {
-          "name": "Fichiers sources complets",
-          "description": "Vous recevez tout le code du site — il est à vous."
+        "delivery": {
+          "title": "Livraison",
+          "description": "Après validation du site et règlement du solde, vous recevez les fichiers sources. Si vous avez retenu l'option mise en ligne, nous publions également le site."
         }
-      ],
-      "compare": {
-        "heading": "Comparatif des formules",
-        "delivery": "Délai de livraison",
-        "revisions": "Révisions",
-        "pages": "Pages",
-        "features": [
-          "Personnalisation du design",
-          "Intégration des contenus",
-          "Design responsive",
-          "Code source complet"
-        ]
       },
-      "addons": {
-        "heading": "Options supplémentaires",
-        "items": [
-          "Livraison rapide : +50 $ à +150 $",
-          "Révision supplémentaire : +30 $",
-          "Page supplémentaire (+2 jours) : +75 $"
-        ]
+      "payment": "Paiement en direct par carte bancaire via Stripe ou par virement bancaire."
+    },
+    "quality": {
+      "eyebrow": "Qualité et livraison",
+      "titleLead": "Un site soigné,",
+      "titleHighlight": "des fichiers qui vous appartiennent",
+      "description": "Des bases techniques adaptées à un site vitrine et une livraison qui vous laisse la maîtrise de votre projet.",
+      "items": {
+        "responsive": {
+          "title": "Adapté aux mobiles",
+          "description": "Une mise en page pensée pour consulter votre site sur téléphone, tablette et ordinateur."
+        },
+        "performance": {
+          "title": "Des pages légères",
+          "description": "Des images et des ressources optimisées pour limiter le poids des pages et faciliter leur chargement."
+        },
+        "seo": {
+          "title": "Les bases du référencement",
+          "description": "Une structure de pages et des métadonnées préparées pour aider les moteurs de recherche à comprendre votre contenu."
+        },
+        "sources": {
+          "title": "Le code source livré",
+          "description": "Vous recevez les fichiers sources complets pour conserver et faire évoluer votre site."
+        }
       },
-      "note": "Le nom de domaine, l'hébergement payant, l'email professionnel et les abonnements externes ne sont pas inclus, sauf accord spécifique."
+      "techNote": "Sites développés avec Next.js, React, TypeScript et Tailwind CSS.",
+      "extrasTitle": "Un besoin supplémentaire ?",
+      "extrasDescription": "Page ou révision supplémentaire, délai accéléré : nous évaluons la faisabilité et le tarif dans le devis. Aucun supplément n'est engagé sans votre accord."
     },
     "faq": {
       "eyebrow": "FAQ",
-      "titleLead": "Questions",
-      "titleHighlight": "fréquentes",
-      "description": "Tout ce qu'il faut savoir avant de se lancer.",
+      "titleLead": "Vos questions,",
+      "titleHighlight": "nos réponses",
+      "description": "Les informations utiles pour choisir votre formule et préparer votre projet.",
       "items": [
         {
           "question": "Quelle formule choisir ?",
-          "answer": "Starter pour un site d'une page, Standard pour un site jusqu'à 4 pages, Advanced pour un site bilingue jusqu'à 6 pages.\n\nLe détail de chaque niveau est disponible sur Upwork."
+          "answer": "Starter pour un site d'une page, Standard pour un site jusqu'à 4 pages, Advanced pour un site bilingue jusqu'à 6 pages. Comparez les périmètres dans les cartes des formules sur cette page."
         },
         {
           "question": "Comment commander ?",
-          "answer": "La commande se fait directement via Upwork, sur la formule correspondant à votre projet."
+          "answer": "En direct, commencez par nous parler de votre projet. Nous établissons un devis précisant le périmètre, le calendrier et les modalités. Le travail démarre après acceptation du devis, réception de l'acompte et des éléments nécessaires. Vous pouvez également commander la formule de votre choix sur Upwork."
         },
         {
           "question": "Que dois-je fournir avant le démarrage ?",
@@ -319,11 +327,11 @@
         },
         {
           "question": "Le nom de domaine et l'hébergement sont-ils inclus ?",
-          "answer": "Non. Le nom de domaine, l'hébergement payant, l'email professionnel et les abonnements externes ne sont pas inclus, sauf accord spécifique."
+          "answer": "Non. Les frais de nom de domaine, d'hébergement, d'email professionnel et d'abonnements externes restent à votre charge. Leur configuration peut être prise en charge dans l'option mise en ligne : cette prestation ne comprend pas les frais des fournisseurs."
         },
         {
-          "question": "Le déploiement est-il inclus ?",
-          "answer": "Non, le déploiement n'est pas inclus par défaut. Vous recevez les fichiers sources complets, prêts à être déployés. Un accompagnement au déploiement est possible sur accord spécifique."
+          "question": "La mise en ligne est-elle incluse ?",
+          "answer": "Non. Votre formule couvre la création du site et la remise des fichiers sources. L'option mise en ligne, au prix de base de {amount} € confirmé dans le devis, couvre la configuration et le déploiement. Les frais fournisseurs et le suivi ou la maintenance ne sont pas inclus. Consultez l'encart « Option mise en ligne » sur cette page pour le détail."
         },
         {
           "question": "Vais-je recevoir les fichiers sources ?",
@@ -343,7 +351,11 @@
         },
         {
           "question": "Quels sont les délais et le nombre de révisions ?",
-          "answer": "Les délais et révisions sont indiqués pour chaque formule et confirmés sur Upwork. Ils commencent après réception des éléments nécessaires au projet."
+          "answer": "En direct, le calendrier et le nombre de révisions sont confirmés dans le devis. Le délai de réalisation démarre après acceptation du devis, réception de l'acompte et de tous les éléments nécessaires au projet. Pour une commande Upwork, le calendrier et les révisions sont précisés dans la commande sur la plateforme."
+        },
+        {
+          "question": "Comment se passe le paiement en direct ?",
+          "answer": "Vous pouvez régler par carte bancaire via Stripe ou par virement bancaire. Un acompte est demandé à la validation du devis. Le solde est réglé à la livraison, après votre validation du site et avant la remise des fichiers sources et l'éventuelle mise en ligne. Les montants et modalités figurent dans le devis."
         }
       ]
     }

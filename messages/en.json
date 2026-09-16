@@ -17,6 +17,7 @@
     "viewSite": "View site",
     "lastUpdated": "Last updated: {date}",
     "skipIntro": "Skip intro",
+    "discussProject": "Discuss your project",
     "image": {
       "unavailable": "Image currently unavailable."
     },
@@ -185,160 +186,176 @@
   "Services": {
     "meta": {
       "title": "Services",
-      "description": "Showcase website creation: landing page, professional website or bilingual website. Responsive, optimised, with complete source files."
+      "description": "Showcase website creation: landing page, multi-page website or bilingual website. Responsive, optimised, with complete source files."
     },
     "hero": {
       "eyebrow": "Services",
-      "titleLead": "Turnkey",
-      "titleHighlight": "showcase websites",
-      "description": "A landing page, a professional website or a bilingual website, with a design tailored to your business."
+      "titleLead": "Showcase websites,",
+      "titleHighlight": "shaped around you",
+      "description": "A single page, a multi-page website or a bilingual version: choose a starting point for your project, then agree the details with us in a quote."
     },
-    "intro": "Megahana builds modern, fast and responsive showcase websites, developed with Next.js. The content and design are tailored to your identity, and every package is delivered with the complete source files.",
-    "commonLine": "Every package includes a modern, responsive showcase website, integration of the content you provide, performance optimisation and delivery of the complete source files.",
-    "externalFeesLine": "External fees are not included in the packages: domain name, paid hosting, professional email, third-party subscriptions and any overages related to external tools.",
+    "intro": "Megahana creates showcase websites for freelancers and small businesses. Every package includes a design tailored to your identity, integration of your content and delivery of the complete source files. Website launch is optional.",
     "packages": {
       "eyebrow": "Packages",
-      "titleLead": "Packages available",
-      "titleHighlight": "on Upwork",
-      "description": "Choose the level that fits your project and order directly on Upwork.",
-      "notice": "Every package includes a modern, responsive business website delivered with the complete source files. Full details for each level are available on Upwork.",
-      "currencyNote": "Prices are displayed in US dollars. The final amount is confirmed on Upwork. Domain name, paid hosting, professional email and external subscriptions are not included.",
-      "orderCta": "Order on Upwork",
-      "deliveryDays": "{count} days",
-      "revisions": "{count} revisions",
-      "bilingualBadge": "Bilingual",
-      "items": {
-        "starter": {
-          "pages": "1 page",
-          "language": "1 language",
-          "features": [
-            "Responsive single-page website",
-            "Modern design tailored to your business",
-            "Integration of your content",
-            "Performance optimisation",
-            "Complete source files",
-            "Social media icons"
-          ]
-        },
-        "standard": {
-          "pages": "up to 4 pages",
-          "language": "1 language",
-          "features": [
-            "Responsive website up to 4 pages",
-            "Modern design tailored to your business",
-            "Integration of your content",
-            "Performance optimisation",
-            "Complete source files",
-            "Social media icons"
-          ]
-        },
-        "advanced": {
-          "pages": "up to 6 pages",
-          "language": "up to 2 languages",
-          "features": [
-            "Responsive website up to 6 pages",
-            "Structure with up to 2 languages",
-            "Integration of your content",
-            "Performance optimisation",
-            "Complete source files",
-            "Social media icons"
-          ]
-        }
+      "titleLead": "A package for",
+      "titleHighlight": "your showcase website",
+      "description": "Three scopes to help you choose. Your quote sets out the content, timeline and revisions before work begins.",
+      "commonNote": "Every package includes a responsive website, integration of the content you provide, performance optimisation and the complete source files.",
+      "externalNote": "Website launch is optional. Domain, hosting, professional email and external subscription fees are not included.",
+      "schedule": "Timeline and revisions confirmed in your quote.",
+      "ctaLabel": "Discuss your project — {tier} package",
+      "features": {
+        "design": "Design tailored to your identity",
+        "content": "Integration of your content",
+        "performance": "Performance optimisation",
+        "sources": "Complete source files",
+        "social": "Social media icons"
+      },
+      "starter": {
+        "name": "Starter",
+        "description": "A single page to introduce your business.",
+        "pages": "1 page",
+        "languages": "1 language",
+        "responsive": "Responsive single-page website"
+      },
+      "standard": {
+        "name": "Standard",
+        "description": "Multiple pages to present your business and services in more detail.",
+        "pages": "Up to 4 pages",
+        "languages": "1 language",
+        "responsive": "Responsive website with up to 4 pages"
+      },
+      "advanced": {
+        "name": "Advanced",
+        "description": "A bilingual website to present your business in two languages.",
+        "pages": "Up to 6 pages",
+        "languages": "Up to 2 languages",
+        "responsive": "Responsive website with up to 6 pages"
       }
     },
-    "tech": {
-      "eyebrow": "The tech",
-      "titleLead": "Built with",
-      "titleHighlight": "modern tools",
-      "subtitle": "Modern technologies for a fast, reliable website that's easy to evolve.",
-      "common": [
-        {
-          "name": "Next.js, React & TypeScript",
-          "description": "A modern, reliable and durable foundation for your website."
+    "launch": {
+      "eyebrow": "Alongside your package",
+      "titleLead": "Optional",
+      "titleHighlight": "website launch",
+      "description": "Would you like us to handle your website's setup and publication? This option can be added to any package.",
+      "priceLabel": "Base price",
+      "priceNote": "The amount is confirmed in your quote based on your setup.",
+      "items": {
+        "domain": "Domain and DNS configuration",
+        "hosting": "Hosting and HTTPS configuration",
+        "deployment": "Website deployment and launch checks"
+      },
+      "ownership": "You retain ownership of the domain and hold the provider accounts in your name. Megahana has the access needed to launch your website.",
+      "externalFees": "Domain, hosting, professional email and third-party subscription fees remain your responsibility.",
+      "separation": "Website creation is covered by your package. This option covers the one-off launch only. Ongoing support and maintenance are optional and require a separate agreement with a defined scope and duration.",
+      "cta": "Discuss your website launch"
+    },
+    "upwork": {
+      "title": "Prefer to use Upwork?",
+      "description": "The same packages are also available on Upwork, with prices in USD. The timeline, revisions and terms are specified in your Upwork order.",
+      "link": "{tier} on Upwork"
+    },
+    "process": {
+      "eyebrow": "The process",
+      "titleLead": "How your",
+      "titleHighlight": "project works",
+      "description": "When working directly with us, we agree the details together before creating your website.",
+      "steps": {
+        "project": {
+          "title": "Your project",
+          "description": "You share your needs, goals and the content you already have."
         },
-        {
-          "name": "Tailwind CSS",
-          "description": "A polished, consistent interface that's easy to evolve."
+        "quote": {
+          "title": "Quote and deposit",
+          "description": "We agree the scope, timeline and revisions. Work begins once you have accepted the quote, paid the deposit and provided the required materials."
         },
-        {
-          "name": "Responsive design",
-          "description": "A perfect display on desktop, tablet and mobile."
+        "creation": {
+          "title": "Creation and approval",
+          "description": "You review your website at a preview URL. We make the agreed revisions before your approval."
         },
-        {
-          "name": "Optimised images",
-          "description": "Lightweight visuals for fast loading."
-        },
-        {
-          "name": "SEO & basic metadata",
-          "description": "A structure ready for search engines."
-        },
-        {
-          "name": "Complete source files",
-          "description": "You receive all the website's code — it's yours."
+        "delivery": {
+          "title": "Delivery",
+          "description": "After you approve the website and pay the balance, you receive the source files. If you selected the website launch option, we also publish your website."
         }
-      ],
-      "compare": {
-        "heading": "Package comparison",
-        "delivery": "Delivery time",
-        "revisions": "Revisions",
-        "pages": "Pages",
-        "features": ["Design customization", "Content upload", "Responsive design", "Source code"]
       },
-      "addons": {
-        "heading": "Optional add-ons",
-        "items": [
-          "Fast delivery: +$50 to +$150",
-          "Additional revision: +$30",
-          "Additional page (+2 days): +$75"
-        ]
+      "payment": "Direct payments by card via Stripe or by bank transfer."
+    },
+    "quality": {
+      "eyebrow": "Quality and delivery",
+      "titleLead": "A carefully built website,",
+      "titleHighlight": "source files you own",
+      "description": "Technical foundations suited to a showcase website, with a handover that keeps you in control of your project.",
+      "items": {
+        "responsive": {
+          "title": "Ready for mobile",
+          "description": "A layout designed for viewing your website on phones, tablets and computers."
+        },
+        "performance": {
+          "title": "Lightweight pages",
+          "description": "Optimised images and resources to keep page sizes down and support faster loading."
+        },
+        "seo": {
+          "title": "SEO foundations",
+          "description": "Page structure and metadata prepared to help search engines understand your content."
+        },
+        "sources": {
+          "title": "Source code included",
+          "description": "You receive the complete source files so you can keep and develop your website further."
+        }
       },
-      "note": "Domain name, paid hosting, professional email and third-party subscriptions are not included unless agreed separately."
+      "techNote": "Websites built with Next.js, React, TypeScript and Tailwind CSS.",
+      "extrasTitle": "Need something extra?",
+      "extrasDescription": "An additional page or revision, or faster delivery: we assess feasibility and pricing in your quote. No extra work is charged without your agreement."
     },
     "faq": {
       "eyebrow": "FAQ",
-      "titleLead": "Frequently asked",
-      "titleHighlight": "questions",
-      "description": "Everything you need to know before getting started.",
+      "titleLead": "Your questions,",
+      "titleHighlight": "answered",
+      "description": "What you need to know to choose your package and prepare your project.",
       "items": [
         {
           "question": "Which package should I choose?",
-          "answer": "Starter for a one-page website, Standard for a website up to 4 pages, Advanced for a bilingual website up to 6 pages.\n\nFull details for each level are available on Upwork."
+          "answer": "Starter is for a single-page website, Standard for a website with up to 4 pages, and Advanced for a bilingual website with up to 6 pages. Compare the scopes in the package cards on this page."
         },
         {
           "question": "How do I order?",
-          "answer": "You order directly on Upwork, on the package that matches your project."
+          "answer": "To work with us directly, start by telling us about your project. We prepare a quote setting out the scope, timeline and terms. Work begins once you have accepted the quote, paid the deposit and provided the required materials. You can also order your chosen package on Upwork."
         },
         {
           "question": "What do I need to provide before we start?",
-          "answer": "Your text, your logo, your images, links to your social media, your colours and visual preferences, and your legal information if needed."
+          "answer": "Your text, logo, images, social media links, colours and visual preferences, as well as your legal information where needed."
         },
         {
-          "question": "Are domain name and hosting included?",
-          "answer": "No. Domain name, paid hosting, professional email and external subscriptions are not included unless agreed separately."
+          "question": "Are the domain name and hosting included?",
+          "answer": "No. Domain, hosting, professional email and external subscription fees remain your responsibility. Their configuration can be handled through the website launch option: this service does not include provider fees."
         },
         {
-          "question": "Is deployment included?",
-          "answer": "No, deployment is not included by default. You receive the complete source files, ready to deploy. Deployment support is possible by specific agreement."
+          "question": "Is website launch included?",
+          "answer": "No. Your package covers website creation and delivery of the source files. The website launch option, with a base price of {amount} € confirmed in your quote, covers setup and deployment. Provider fees and ongoing support or maintenance are not included. See the \"Optional website launch\" section on this page for details."
         },
         {
           "question": "Will I receive the source files?",
-          "answer": "Yes. Every package is delivered with the complete source files of the website."
+          "answer": "Yes. Every package is delivered with the complete website source files."
         },
         {
           "question": "How many languages are included?",
-          "answer": "The Starter and Standard packages include a single language. The Advanced package includes a structure with up to 2 languages."
+          "answer": "Starter and Standard include one language. Advanced includes a structure for up to 2 languages."
         },
         {
-          "question": "How does multilingual content and translation work?",
-          "answer": "You provide the text in each chosen language. Translation is not included by default: if needed, it is discussed separately or added to the scope."
+          "question": "How do multilingual content and translation work?",
+          "answer": "You provide the text in each language you want. Translation is not included by default: if needed, it is discussed separately or added to the scope."
         },
         {
-          "question": "Are advanced forms or emailing included?",
-          "answer": "No. Advanced forms, newsletters, email automations or external integrations are not included and require a separate agreement."
+          "question": "Are advanced forms or email marketing included?",
+          "answer": "No. Advanced forms, newsletters, email automations and external integrations are not included and require a separate agreement."
         },
         {
           "question": "What are the timelines and revisions?",
-          "answer": "Timelines and revisions are indicated for each package and confirmed on Upwork. They start after receiving the items needed for the project."
+          "answer": "For direct projects, the timeline and number of revisions are confirmed in your quote. The delivery timeline starts once you have accepted the quote, paid the deposit and provided all the required project materials. For Upwork orders, the timeline and revisions are specified in the order on the platform."
+        },
+        {
+          "question": "How do direct payments work?",
+          "answer": "You can pay by card via Stripe or by bank transfer. A deposit is requested when you accept the quote. The balance is paid at delivery, after you approve the website and before the source files are handed over and any optional launch takes place. Amounts and payment terms are set out in your quote."
         }
       ]
     }
