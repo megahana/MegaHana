@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X, Expand } from "lucide-react";
@@ -30,6 +30,10 @@ export function ProjectGallery({ images, accentColor }: ProjectGalleryProps) {
   const reduceMotion = useReducedMotion();
   const tg = useTranslations("Common.gallery");
 
+  const lightboxRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const expandButtonRef = useRef<HTMLButtonElement>(null);
+
   const total = images.length;
   const ring = accentColor ?? "#C1622E"; // fallback = --accent (garder synchro avec globals.css)
 
@@ -41,17 +45,57 @@ export function ProjectGallery({ images, accentColor }: ProjectGalleryProps) {
     [total],
   );
 
-  /* Keyboard navigation — lightbox global */
+  /* Ferme la lightbox ET rend le focus au bouton "Agrandir" qui l'a ouverte
+     (jamais au survol/clic souris seul : un utilisateur clavier doit
+     retrouver exactement où il était sur la page). */
+  const closeLightbox = useCallback(() => {
+    setLightbox(false);
+    expandButtonRef.current?.focus();
+  }, []);
+
+  /* Focus déplacé sur le bouton Fermer à l'ouverture — sans ça le focus
+     clavier reste sur le bouton "Agrandir", caché derrière l'overlay. */
+  useEffect(() => {
+    if (!lightbox) return;
+    closeButtonRef.current?.focus();
+  }, [lightbox]);
+
+  /* Keyboard navigation — lightbox global (Echap/flèches) + piège de focus
+     (Tab/Shift+Tab confinés aux boutons de la lightbox : le contenu de la
+     page derrière l'overlay ne doit pas être atteignable au clavier tant
+     qu'elle est ouverte — équivalent fonctionnel à un inert/aria-hidden sur
+     le reste de la page, sans avoir à sortir de l'arbre de ce composant
+     pour atteindre le Header/Footer). */
   useEffect(() => {
     if (!lightbox) return;
     const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setLightbox(false);
+      if (e.key === "Escape") {
+        closeLightbox();
+        return;
+      }
       if (e.key === "ArrowLeft") go(-1);
       if (e.key === "ArrowRight") go(1);
+      if (e.key === "Tab" && lightboxRef.current) {
+        const focusables = Array.from(
+          lightboxRef.current.querySelectorAll<HTMLElement>(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+          ),
+        );
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [lightbox, go]);
+  }, [lightbox, go, closeLightbox]);
 
   /* Lock scroll when lightbox open */
   useEffect(() => {
@@ -171,6 +215,7 @@ export function ProjectGallery({ images, accentColor }: ProjectGalleryProps) {
 
             {/* Expand button */}
             <button
+              ref={expandButtonRef}
               onClick={() => setLightbox(true)}
               className="absolute top-3 right-3 w-8 h-8 rounded-lg bg-black/50 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-black/70 transition-all opacity-0 group-hover/main:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
               aria-label={tg("expand")}
@@ -260,16 +305,21 @@ export function ProjectGallery({ images, accentColor }: ProjectGalleryProps) {
       <AnimatePresence>
         {lightbox && (
           <motion.div
+            ref={lightboxRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={tg("region")}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
-            onClick={() => setLightbox(false)}
+            onClick={closeLightbox}
           >
             {/* Close */}
             <button
-              onClick={() => setLightbox(false)}
+              ref={closeButtonRef}
+              onClick={closeLightbox}
               className="absolute top-4 right-4 w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white transition-colors z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
               aria-label={tg("close")}
             >
