@@ -13,7 +13,13 @@
   --border-strong: 196 188 168;
   --text: 28 27 24;
   --text-2: 90 88 82;
-  --text-muted: 140 137 127;
+  /* Recette V1 (16-17/09) : 140 137 127 échouait le contraste AA texte
+     (4,5:1) sur les 3 fonds où il est utilisé — 3,08 à 3,50:1 mesurés
+     (footer, notes de formulaire, labels "eyebrow" partagés, etc., aucun
+     usage recensé où ce contraste plus faible était volontaire). Assombri
+     à même teinte/saturation jusqu'à ≥4,5:1 partout : 4,61 (surface-2),
+     4,91 (bg), 5,24 (surface). */
+  --text-muted: 111 108 100;
 
   /* Accent — terracotta, seule couleur "cliquable" (boutons, liens, CTA) */
   --accent: 193 98 46;
@@ -44,7 +50,12 @@
   --border-strong: 74 69 60;
   --text: 250 247 242;
   --text-2: 201 196 184;
-  --text-muted: 143 138 126;
+  /* Recette V1 (16-17/09) : passait vs --bg (5,01:1) mais échouait vs
+     --surface (4,46:1) et --surface-2 (3,83:1) — le footer (bg-surface/85)
+     et d'autres panneaux posent ce texte sur ces fonds-là. Éclairci à
+     même teinte jusqu'à ≥4,5:1 partout : 4,64 (surface-2), 5,39
+     (surface), 6,05 (bg). */
+  --text-muted: 157 153 142;
 
   --accent: 193 98 46;
   --accent-strong: 156 78 36;
