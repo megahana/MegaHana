@@ -125,7 +125,7 @@ export function ContactForm() {
           (tabIndex={-1}, aria-hidden), en plus de la protection native
           Web3Forms (hCaptcha/reCAPTCHA v3 côté service). */}
       <div className="hidden" aria-hidden="true">
-        <label htmlFor="botcheck">Ne pas remplir</label>
+        <label htmlFor="botcheck">{t("honeypotLabel")}</label>
         <input type="text" id="botcheck" name="botcheck" tabIndex={-1} autoComplete="off" />
       </div>
 

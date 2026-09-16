@@ -625,6 +625,7 @@
     "description": "Un projet à préciser ou une question avant de vous lancer ? Présentez-nous votre besoin : nous poursuivrons l'échange par email.",
     "form": {
       "heading": "Présentez votre projet",
+      "honeypotLabel": "Ne pas remplir",
       "requiredNote": "Les champs indiqués comme obligatoires sont nécessaires pour traiter votre demande.",
       "nameLabel": "Nom — obligatoire",
       "namePlaceholder": "Votre nom",
