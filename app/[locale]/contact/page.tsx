@@ -54,9 +54,11 @@ function ContactContent() {
           <AnimateIn delay={0.1}>
             <div className="mt-8 pt-6 border-t border-border">
               <p className="text-sm text-text-secondary mb-2">{t("emailAltLabel")}</p>
+              {/* Recette V1 (17/09) : py-2 agrandit la zone cliquable
+                  (~20px -> ~36px), sous le seuil WCAG 2.5.8 sinon. */}
               <a
                 href={`mailto:${CONTACT_FORM_EMAIL}`}
-                className="inline-flex items-center gap-2 text-sm font-medium text-text-primary hover:text-primary-light transition-colors"
+                className="inline-flex items-center gap-2 py-2 text-sm font-medium text-text-primary hover:text-primary-light transition-colors"
               >
                 <Mail className="w-4 h-4" />
                 {CONTACT_FORM_EMAIL}
@@ -93,7 +95,7 @@ function ContactContent() {
                 href={LINKEDIN_STUDIO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-text-secondary hover:text-primary-light transition-colors"
+                className="inline-flex items-center gap-2 py-2 text-sm text-text-secondary hover:text-primary-light transition-colors"
               >
                 <Linkedin className="w-4 h-4" />
                 {t("linkedin")}
