@@ -81,7 +81,73 @@
         "bien-etre": "A calm space, in the image of a caring practice."
       },
       "pauseScroll": "Pause scrolling",
-      "resumeScroll": "Resume scrolling"
+      "resumeScroll": "Resume scrolling",
+      "cards": {
+        "atelier-cendre-chene": {
+          "descriptor": "Artisans · Showcase website",
+          "teaser": "Raw materials celebrated, from the grain of the wood to the presentation of the craft."
+        },
+        "maison-trait-juste": {
+          "descriptor": "Artisans · Showcase website",
+          "teaser": "A sober, precise line, designed to build trust at first glance."
+        },
+        "liora-venn-studio": {
+          "descriptor": "Artists · Showcase website",
+          "teaser": "A pared-back staging that leaves all the room for the artwork."
+        },
+        "atelier-noemie-aster": {
+          "descriptor": "Artists · Showcase website",
+          "teaser": "A clear space, designed like a digital exhibition."
+        },
+        "velune": {
+          "descriptor": "Startup · Showcase website",
+          "teaser": "A clear, direct message to carry a young project forward."
+        },
+        "kerno-systems": {
+          "descriptor": "Startup · Showcase website",
+          "teaser": "A technical, reassuring image, built to convince fast."
+        },
+        "maison-sepia": {
+          "descriptor": "Restaurant · Showcase website",
+          "teaser": "A hushed atmosphere, designed to make people want to book a table."
+        },
+        "les-trois-aulnes": {
+          "descriptor": "Restaurant · Showcase website",
+          "teaser": "A dining room and a menu told with the same care."
+        },
+        "atelier-monolithe": {
+          "descriptor": "Architect · Showcase website",
+          "teaser": "A sober staging, in service of the work on show."
+        },
+        "studio-trame-27": {
+          "descriptor": "Architect · Showcase website",
+          "teaser": "A precise grid, true to the rigour of technical drawing."
+        },
+        "kairo-nocturne": {
+          "descriptor": "Musician · Showcase website",
+          "teaser": "A digital stage designed for listening as much as for looking."
+        },
+        "sillon-88": {
+          "descriptor": "Musician · Showcase website",
+          "teaser": "A catalogue staged like a collection in its own right."
+        },
+        "maison-elyra": {
+          "descriptor": "Fashion · Showcase website",
+          "teaser": "A pared-back allure, true to the demands of couture."
+        },
+        "nomae-studio": {
+          "descriptor": "Fashion · Showcase website",
+          "teaser": "A bold silhouette, carried by a graphic layout."
+        },
+        "studio-souffle": {
+          "descriptor": "Wellness · Showcase website",
+          "teaser": "A calm space, in the image of a caring practice."
+        },
+        "source-canopee": {
+          "descriptor": "Wellness · Showcase website",
+          "teaser": "A green, natural breath, designed as a space to recharge."
+        }
+      }
     },
     "offers": {
       "eyebrow": "Offers",

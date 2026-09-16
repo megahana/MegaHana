@@ -46,6 +46,7 @@ type Translator = ReturnType<typeof useTranslations>;
 const COPY_COUNT = 4;
 
 type Slot = { sector: Sector; project: Project | null };
+type CardCopy = { descriptor?: string; teaser?: string };
 
 // Un secteur affiche 0 (placeholder "en travail"), 1 ou 2 cartes réelles —
 // jamais de second slot vide à côté d'une seule démo. MegaTaste (id
@@ -68,6 +69,7 @@ function renderCard(
   t: Translator,
   sectorNames: Record<string, string>,
   teasers: Record<string, string>,
+  cards: Record<string, CardCopy>,
 ) {
   const { sector, project } = slot;
   const keyBase = project ? project.id : sector;
@@ -80,6 +82,15 @@ function renderCard(
   const tabIndexValue = copyIndex === 0 ? undefined : -1;
 
   if (project) {
+    // Fuite FR→EN (trouvée dans le stash "services rewrite", corrigée ici) :
+    // descriptor/teaser vivaient uniquement en français dans lib/data.ts
+    // (données structurelles), ce qui affichait du français sur les pages
+    // EN. Traduits dans les catalogues i18n (Home.galerie.cards), avec repli
+    // sur lib/data.ts si une entrée venait à manquer — même pattern que le
+    // reste de la galerie.
+    const copy = cards[project.id];
+    const descriptor = copy?.descriptor ?? project.descriptor;
+    const teaser = copy?.teaser ?? project.teaser;
     return (
       <a
         className="card card--real"
@@ -104,9 +115,9 @@ function renderCard(
           <div className="info-bottom">
             <p className="caption">
               <b>{project.title}</b>
-              {project.descriptor ? ` · ${project.descriptor}` : ""}
+              {descriptor ? ` · ${descriptor}` : ""}
             </p>
-            {project.teaser ? <p className="teaser-line">{project.teaser}</p> : null}
+            {teaser ? <p className="teaser-line">{teaser}</p> : null}
           </div>
         </Frame>
       </a>
@@ -135,16 +146,17 @@ function renderRow(
   t: Translator,
   sectorNames: Record<string, string>,
   teasers: Record<string, string>,
+  cards: Record<string, CardCopy>,
 ) {
   const slots = sectors.flatMap(sectorSlots);
   const dupCopies = Array.from({ length: COPY_COUNT - 1 }, (_, i) => i + 1);
   return (
     <div className="marquee-viewport">
       <div className={reverse ? "marquee-track reverse" : "marquee-track"}>
-        {slots.map((slot) => renderCard(slot, 0, t, sectorNames, teasers))}
+        {slots.map((slot) => renderCard(slot, 0, t, sectorNames, teasers, cards))}
         <div className="marquee-dup" aria-hidden="true">
           {dupCopies.map((copyIndex) =>
-            slots.map((slot) => renderCard(slot, copyIndex, t, sectorNames, teasers)),
+            slots.map((slot) => renderCard(slot, copyIndex, t, sectorNames, teasers, cards)),
           )}
         </div>
       </div>
@@ -156,6 +168,7 @@ export function Galerie() {
   const t = useTranslations("Home.galerie");
   const sectorNames = t.raw("sectors") as Record<string, string>;
   const teasers = t.raw("teasers") as Record<string, string>;
+  const cards = t.raw("cards") as Record<string, CardCopy>;
 
   return (
     <section id="galerie" className="py-16 sm:py-20 lg:py-24 overflow-hidden scroll-mt-24">
@@ -172,8 +185,8 @@ export function Galerie() {
 
       <AnimateIn delay={0.15}>
         <MarqueeControls pauseLabel={t("pauseScroll")} resumeLabel={t("resumeScroll")}>
-          {renderRow(ROW_1, false, t, sectorNames, teasers)}
-          {renderRow(ROW_2, true, t, sectorNames, teasers)}
+          {renderRow(ROW_1, false, t, sectorNames, teasers, cards)}
+          {renderRow(ROW_2, true, t, sectorNames, teasers, cards)}
         </MarqueeControls>
       </AnimateIn>
     </section>

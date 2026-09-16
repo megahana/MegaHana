@@ -81,7 +81,73 @@
         "bien-etre": "Un espace apaisé, à l'image d'une pratique du soin."
       },
       "pauseScroll": "Mettre en pause le défilement",
-      "resumeScroll": "Reprendre le défilement"
+      "resumeScroll": "Reprendre le défilement",
+      "cards": {
+        "atelier-cendre-chene": {
+          "descriptor": "Artisans · Site vitrine",
+          "teaser": "Une matière brute mise en valeur, du grain du bois à la présentation du geste."
+        },
+        "maison-trait-juste": {
+          "descriptor": "Artisans · Site vitrine",
+          "teaser": "Un trait sobre et précis, pensé pour donner confiance au premier regard."
+        },
+        "liora-venn-studio": {
+          "descriptor": "Artistes · Site vitrine",
+          "teaser": "Une scénographie épurée qui laisse toute la place à l'œuvre."
+        },
+        "atelier-noemie-aster": {
+          "descriptor": "Artistes · Site vitrine",
+          "teaser": "Un espace clair, pensé comme un accrochage numérique."
+        },
+        "velune": {
+          "descriptor": "Startup · Site vitrine",
+          "teaser": "Un message clair et direct pour porter un projet naissant."
+        },
+        "kerno-systems": {
+          "descriptor": "Startup · Site vitrine",
+          "teaser": "Une image technique et rassurante, pensée pour convaincre vite."
+        },
+        "maison-sepia": {
+          "descriptor": "Restaurant · Site vitrine",
+          "teaser": "Une ambiance feutrée, pensée pour donner envie de réserver."
+        },
+        "les-trois-aulnes": {
+          "descriptor": "Restaurant · Site vitrine",
+          "teaser": "Une salle et une carte racontées avec la même attention."
+        },
+        "atelier-monolithe": {
+          "descriptor": "Architecte · Site vitrine",
+          "teaser": "Une mise en espace sobre, au service du travail présenté."
+        },
+        "studio-trame-27": {
+          "descriptor": "Architecte · Site vitrine",
+          "teaser": "Une grille précise, fidèle à la rigueur du dessin d'exécution."
+        },
+        "kairo-nocturne": {
+          "descriptor": "Musicien · Site vitrine",
+          "teaser": "Une scène numérique pensée pour l'écoute autant que pour l'image."
+        },
+        "sillon-88": {
+          "descriptor": "Musicien · Site vitrine",
+          "teaser": "Un catalogue mis en scène comme une collection à part entière."
+        },
+        "maison-elyra": {
+          "descriptor": "Mode · Site vitrine",
+          "teaser": "Une allure épurée, fidèle à l'exigence du geste couture."
+        },
+        "nomae-studio": {
+          "descriptor": "Mode · Site vitrine",
+          "teaser": "Une silhouette affirmée, portée par une mise en page graphique."
+        },
+        "studio-souffle": {
+          "descriptor": "Bien-être · Site vitrine",
+          "teaser": "Un espace apaisé, à l'image d'une pratique du soin."
+        },
+        "source-canopee": {
+          "descriptor": "Bien-être · Site vitrine",
+          "teaser": "Une respiration végétale, pensée comme un espace de ressourcement."
+        }
+      }
     },
     "offers": {
       "eyebrow": "Offres",
