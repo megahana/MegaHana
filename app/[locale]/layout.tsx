@@ -45,6 +45,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileCtaBanner } from "@/components/layout/MobileCtaBanner";
 import { InsertedScripts } from "@/components/layout/InsertedScripts";
+import { MotionConfigProvider } from "@/components/layout/MotionConfigProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -121,10 +122,12 @@ export default async function LocaleLayout({
       <body className="bg-background text-text-primary antialiased">
         <InsertedScripts themeScript={themeScript} jsonLd={JSON.stringify(organizationJsonLd)} />
         <NextIntlClientProvider>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <MobileCtaBanner />
+          <MotionConfigProvider>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+            <MobileCtaBanner />
+          </MotionConfigProvider>
         </NextIntlClientProvider>
       </body>
     </html>
