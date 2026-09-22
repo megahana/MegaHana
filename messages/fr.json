@@ -302,15 +302,18 @@
     "launch": {
       "eyebrow": "En complément de votre formule",
       "titleLead": "Option",
-      "titleHighlight": "mise en ligne",
+      "titleHighlight": "mise en ligne standard",
       "description": "Vous souhaitez nous confier la configuration et la publication de votre site ? Cette option s'ajoute à la formule choisie.",
-      "priceLabel": "Prix de base",
-      "priceNote": "Montant confirmé dans le devis selon votre configuration.",
+      "priceLabel": "Prix",
+      "priceNote": "Tarif fixe pour ce périmètre.",
       "items": {
-        "domain": "Configuration du nom de domaine et des DNS",
-        "hosting": "Configuration de l'hébergement et du HTTPS",
-        "deployment": "Déploiement du site et vérification de sa mise en ligne"
+        "domain": "Configuration du nom de domaine et des DNS, en préservant vos services existants",
+        "hosting": "Configuration du projet chez l'hébergeur",
+        "deployment": "Premier déploiement du site",
+        "checks": "Vérifications de base : HTTPS actif, pages et liens essentiels",
+        "access": "Transmission des accès"
       },
+      "exclusion": "Migration d'un site existant ou configuration complexe : sur devis.",
       "ownership": "Vous restez propriétaire du nom de domaine et titulaire des comptes fournisseurs. Megahana dispose des accès nécessaires pour effectuer la mise en ligne.",
       "externalFees": "Les frais de domaine, d'hébergement, d'email professionnel et d'abonnements tiers restent à votre charge.",
       "separation": "La création est couverte par votre formule. Cette option concerne uniquement la mise en ligne ponctuelle. Le suivi et la maintenance sont facultatifs et font l'objet d'un accord séparé, avec une durée et un périmètre définis.",
@@ -397,7 +400,7 @@
         },
         {
           "question": "La mise en ligne est-elle incluse ?",
-          "answer": "Non. Votre formule couvre la création du site et la remise des fichiers sources. L'option mise en ligne, au prix de base de {amount} € confirmé dans le devis, couvre la configuration et le déploiement. Les frais fournisseurs et le suivi ou la maintenance ne sont pas inclus. Consultez l'encart « Option mise en ligne » sur cette page pour le détail."
+          "answer": "Non. Votre formule couvre la création du site et la remise des fichiers sources. L'option mise en ligne standard, au prix de {amount} €, couvre la configuration du domaine et de l'hébergeur, le premier déploiement et les vérifications de base. La migration d'un site existant ou une configuration complexe sont hors périmètre et font l'objet d'un devis séparé. Les frais fournisseurs et le suivi ou la maintenance ne sont pas inclus. Consultez l'encart « Option mise en ligne » sur cette page pour le détail."
         },
         {
           "question": "Vais-je recevoir les fichiers sources ?",
@@ -422,6 +425,10 @@
         {
           "question": "Comment se passe le paiement en direct ?",
           "answer": "Vous pouvez régler par carte bancaire via Stripe ou par virement bancaire. Un acompte est demandé à la validation du devis. Le solde est réglé à la livraison, après votre validation du site et avant la remise des fichiers sources et l'éventuelle mise en ligne. Les montants et modalités figurent dans le devis."
+        },
+        {
+          "question": "Qu'est-ce qu'une révision ?",
+          "answer": "Une révision correspond à un lot de retours que vous nous envoyez groupés en une seule fois, et non des allers-retours illimités au fil de l'eau. Regroupez vos demandes avant de nous les transmettre pour que chaque révision compte pleinement."
         }
       ]
     }

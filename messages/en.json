@@ -302,15 +302,18 @@
     "launch": {
       "eyebrow": "Alongside your package",
       "titleLead": "Optional",
-      "titleHighlight": "website launch",
+      "titleHighlight": "standard website launch",
       "description": "Would you like us to handle your website's setup and publication? This option can be added to any package.",
-      "priceLabel": "Base price",
-      "priceNote": "The amount is confirmed in your quote based on your setup.",
+      "priceLabel": "Price",
+      "priceNote": "Fixed price for this scope.",
       "items": {
-        "domain": "Domain and DNS configuration",
-        "hosting": "Hosting and HTTPS configuration",
-        "deployment": "Website deployment and launch checks"
+        "domain": "Domain and DNS configuration, preserving your existing services",
+        "hosting": "Project configuration with your host",
+        "deployment": "First deployment of the website",
+        "checks": "Basic checks: HTTPS active, essential pages and links",
+        "access": "Handover of access credentials"
       },
+      "exclusion": "Migrating an existing site or complex setup: quoted separately.",
       "ownership": "You retain ownership of the domain and hold the provider accounts in your name. Megahana has the access needed to launch your website.",
       "externalFees": "Domain, hosting, professional email and third-party subscription fees remain your responsibility.",
       "separation": "Website creation is covered by your package. This option covers the one-off launch only. Ongoing support and maintenance are optional and require a separate agreement with a defined scope and duration.",
@@ -397,7 +400,7 @@
         },
         {
           "question": "Is website launch included?",
-          "answer": "No. Your package covers website creation and delivery of the source files. The website launch option, with a base price of {amount} € confirmed in your quote, covers setup and deployment. Provider fees and ongoing support or maintenance are not included. See the \"Optional website launch\" section on this page for details."
+          "answer": "No. Your package covers website creation and delivery of the source files. The standard website launch option, priced at {amount} €, covers domain and host configuration, the first deployment and basic checks. Migrating an existing site or a complex setup are out of scope and are quoted separately. Provider fees and ongoing support or maintenance are not included. See the \"Optional website launch\" section on this page for details."
         },
         {
           "question": "Will I receive the source files?",
@@ -422,6 +425,10 @@
         {
           "question": "How do direct payments work?",
           "answer": "You can pay by card via Stripe or by bank transfer. A deposit is requested when you accept the quote. The balance is paid at delivery, after you approve the website and before the source files are handed over and any optional launch takes place. Amounts and payment terms are set out in your quote."
+        },
+        {
+          "question": "What counts as one revision?",
+          "answer": "A revision is a batch of feedback you send us grouped together in a single message, not unlimited back-and-forth as you go. Group your requests together before sending them so each revision counts in full."
         }
       ]
     }

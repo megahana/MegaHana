@@ -5,7 +5,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
 import { launchOption } from "@/lib/services-offers";
 
-const ITEM_KEYS = ["domain", "hosting", "deployment"] as const;
+const ITEM_KEYS = ["domain", "hosting", "deployment", "checks", "access"] as const;
 
 export function LaunchOption() {
   const t = useTranslations("Services.launch");
@@ -50,6 +50,10 @@ export function LaunchOption() {
                   </li>
                 ))}
               </ul>
+
+              <p className="mt-4 text-xs text-text-muted leading-relaxed italic">
+                {t("exclusion")}
+              </p>
 
               <div className="mt-6 space-y-3 text-xs text-text-muted leading-relaxed">
                 <p>{t("ownership")}</p>

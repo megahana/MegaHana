@@ -32,5 +32,11 @@ export const directOffers: Record<TierId, DirectOffer> = {
   advanced: { price: 990, currency: "EUR" },
 };
 
-/** Option "mise en ligne" — prix de base, ajusté au cas par cas au devis. */
-export const launchOption: DirectOffer = { price: 600, currency: "EUR" };
+/**
+ * Option "mise en ligne standard" — périmètre fixe (domaine/DNS, config
+ * hébergeur, premier déploiement, vérifications de base, transmission des
+ * accès). Migration d'un site existant ou configuration complexe (DNS
+ * multi-sous-domaines, reprise d'un hébergeur tiers) : hors périmètre,
+ * devis séparé (voir Services.launch dans les catalogues i18n).
+ */
+export const launchOption: DirectOffer = { price: 150, currency: "EUR" };
