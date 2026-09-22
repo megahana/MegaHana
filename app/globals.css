@@ -477,6 +477,21 @@ h3,
   outline: 2px solid rgb(var(--accent-accessible));
   outline-offset: 2px;
 }
+
+/* Carte projet cliquable de /portfolio (ShowcaseGrid.tsx) — même convention
+   que .card--real ci-dessus : toute la carte est un <a>, l'anneau de focus
+   clavier doit donc porter sur cet <a> (pas sur un enfant), sans quoi il
+   serait rogné par overflow-hidden. */
+.showcase-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.showcase-card:focus-visible {
+  outline: 2px solid rgb(var(--accent-accessible));
+  outline-offset: 2px;
+  border-radius: 1rem;
+}
 .real-hint {
   position: absolute;
   top: 12px;

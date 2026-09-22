@@ -84,62 +84,77 @@ export function ShowcaseGrid({ projects }: { projects: Project[] }) {
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {visibleProjects.map((p, i) => (
-          <AnimateIn key={p.id} delay={i * 0.06}>
-            <div className="relative group h-full">
-              <div className="relative rounded-2xl overflow-hidden h-full flex flex-col card-border">
-                <div className="relative w-full aspect-[16/9] overflow-hidden bg-surface-2">
-                  {p.images?.homepage ? (
-                    <ImageWithLoader
-                      src={p.images.homepage}
-                      alt={p.title}
-                      fill
-                      sizes={SHOWCASE_IMAGE_SIZES}
-                      className={cn(
-                        "object-cover object-top",
-                        "transition-transform duration-700",
-                        "motion-safe:group-hover:scale-[1.03]",
-                        "motion-reduce:transition-none",
-                      )}
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <p className="text-xs text-text-muted">{t("captureSoon")}</p>
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-surface-2 to-transparent" />
-                  {p.sector && (
-                    <span className="absolute top-3 left-3 inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium border border-border bg-surface/90 backdrop-blur-sm text-text-secondary">
-                      {tSectors(p.sector)}
+        {visibleProjects.map((p, i) => {
+          // Carte entièrement cliquable quand une démo est en ligne (p.url) :
+          // un seul <a> englobe image + titre + description, le libellé
+          // "voir le site" devient un simple <span> à l'intérieur (jamais de
+          // <a> imbriqué). Sans p.url (démo pas encore prête), la carte reste
+          // un <div> non interactif, comportement inchangé.
+          const content = (
+            <div className="relative rounded-2xl overflow-hidden h-full flex flex-col card-border">
+              <div className="relative w-full aspect-[16/9] overflow-hidden bg-surface-2">
+                {p.images?.homepage ? (
+                  <ImageWithLoader
+                    src={p.images.homepage}
+                    alt={p.title}
+                    fill
+                    sizes={SHOWCASE_IMAGE_SIZES}
+                    className={cn(
+                      "object-cover object-top",
+                      "transition-transform duration-700",
+                      "motion-safe:group-hover:scale-[1.03]",
+                      "motion-reduce:transition-none",
+                    )}
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <p className="text-xs text-text-muted">{t("captureSoon")}</p>
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-surface-2 to-transparent" />
+                {p.sector && (
+                  <span className="absolute top-3 left-3 inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium border border-border bg-surface/90 backdrop-blur-sm text-text-secondary">
+                    {tSectors(p.sector)}
+                  </span>
+                )}
+              </div>
+
+              <div className="p-5 flex flex-col gap-3 flex-1">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="font-bold text-lg">{p.title}</h3>
+                    <p className="text-sm mt-1 leading-relaxed">
+                      {t(`showcase.${p.id}.description`)}
+                    </p>
+                  </div>
+                  {p.url && (
+                    <span className="flex items-center gap-1.5 text-xs font-medium shrink-0 mt-0.5 transition-colors group-hover:opacity-80">
+                      {tc("viewSite")}
+                      <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </span>
                   )}
                 </div>
-
-                <div className="p-5 flex flex-col gap-3 flex-1">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <h3 className="font-bold text-lg">{p.title}</h3>
-                      <p className="text-sm mt-1 leading-relaxed">
-                        {t(`showcase.${p.id}.description`)}
-                      </p>
-                    </div>
-                    {p.url && (
-                      <a
-                        href={p.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 text-xs font-medium shrink-0 group/lnk mt-0.5 transition-colors hover:opacity-80"
-                      >
-                        {tc("viewSite")}
-                        <ExternalLink className="w-3.5 h-3.5 group-hover/lnk:translate-x-0.5 group-hover/lnk:-translate-y-0.5 transition-transform" />
-                      </a>
-                    )}
-                  </div>
-                </div>
               </div>
             </div>
-          </AnimateIn>
-        ))}
+          );
+
+          return (
+            <AnimateIn key={p.id} delay={i * 0.06}>
+              {p.url ? (
+                <a
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative group h-full showcase-card"
+                >
+                  {content}
+                </a>
+              ) : (
+                <div className="relative group h-full">{content}</div>
+              )}
+            </AnimateIn>
+          );
+        })}
 
         {/* Placeholder futur projet — uniquement visible sans filtre actif,
             pour ne pas laisser un "Prochain projet" orphelin dans une liste
