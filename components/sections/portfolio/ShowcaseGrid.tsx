@@ -111,7 +111,6 @@ export function ShowcaseGrid({ projects }: { projects: Project[] }) {
                     <p className="text-xs text-text-muted">{t("captureSoon")}</p>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-surface-2 to-transparent" />
                 {p.sector && (
                   <span className="absolute top-3 left-3 inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium border border-border bg-surface/90 backdrop-blur-sm text-text-secondary">
                     {tSectors(p.sector)}
