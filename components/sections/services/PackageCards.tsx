@@ -1,17 +1,30 @@
-import { Check, Info } from "lucide-react";
+"use client";
+
+import { Check, Info, CheckCircle2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { Button } from "@/components/ui/Button";
-import { directOffers, tierIds } from "@/lib/services-offers";
+import { cn } from "@/lib/utils";
+import { directOffers, tierIds, type TierId } from "@/lib/services-offers";
 
 const FEATURE_KEYS = ["design", "content", "performance", "sources", "social"] as const;
 
-export function PackageCards() {
+interface PackageCardsProps {
+  selectedTier: TierId | null;
+  onSelectTier: (tier: TierId) => void;
+}
+
+export function PackageCards({ selectedTier, onSelectTier }: PackageCardsProps) {
   const t = useTranslations("Services.packages");
-  const tc = useTranslations("Common");
 
   return (
+    // Padding symétrique standard (identique à LaunchOption/FaqAccordion/
+    // ProjectProcess/QualitySection) — un correctif du 25/09 l'avait resserré
+    // en haut pour repousser "LES FORMULES" hors du premier écran, mais le
+    // correctif du 26/09 (voir app/[locale]/services/page.tsx, section hero+
+    // intro en min-height calc) règle ça à la source : cette section démarre
+    // maintenant toujours après le fold, son propre padding n'a plus besoin
+    // d'être spécial.
     <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <AnimateIn>
         <SectionHeader
@@ -25,10 +38,27 @@ export function PackageCards() {
       <div className="grid gap-6 md:grid-cols-3 mt-10">
         {tierIds.map((tier, i) => {
           const offer = directOffers[tier];
+          const isSelected = selectedTier === tier;
           return (
             <AnimateIn key={tier} delay={i * 0.1}>
-              <div className="card-border rounded-2xl p-px h-full">
-                <div className="bg-surface rounded-2xl h-full p-6 sm:p-8 flex flex-col">
+              <label className="tier-card card-border rounded-2xl p-px h-full block cursor-pointer">
+                <input
+                  type="radio"
+                  name="tier"
+                  value={tier}
+                  checked={isSelected}
+                  onChange={() => onSelectTier(tier)}
+                  aria-label={t(`${tier}.name`)}
+                  className="sr-only"
+                />
+                <div className="relative bg-surface rounded-2xl h-full p-6 sm:p-8 flex flex-col">
+                  <CheckCircle2
+                    aria-hidden="true"
+                    className={cn(
+                      "absolute top-4 right-4 w-6 h-6",
+                      isSelected ? "text-accent-accessible" : "text-text-muted",
+                    )}
+                  />
                   <h3 className="text-xl font-semibold text-text-primary">{t(`${tier}.name`)}</h3>
                   <p className="mt-2 text-sm text-text-secondary leading-relaxed">
                     {t(`${tier}.description`)}
@@ -65,17 +95,8 @@ export function PackageCards() {
                   </ul>
 
                   <p className="mt-6 text-xs text-text-muted">{t("schedule")}</p>
-
-                  <Button
-                    href="/contact#discuss"
-                    variant="primary"
-                    className="mt-6 w-full"
-                    ariaLabel={t("ctaLabel", { tier: t(`${tier}.name`) })}
-                  >
-                    {tc("discussProject")}
-                  </Button>
                 </div>
-              </div>
+              </label>
             </AnimateIn>
           );
         })}

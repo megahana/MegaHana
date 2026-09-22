@@ -269,7 +269,6 @@
       "commonNote": "Chaque formule comprend un site adapté aux mobiles, l'intégration des contenus fournis, l'optimisation des performances et les fichiers sources complets.",
       "externalNote": "La mise en ligne est optionnelle. Les frais de domaine, d'hébergement, d'email professionnel et d'abonnements externes ne sont pas inclus.",
       "schedule": "Calendrier et révisions confirmés dans le devis.",
-      "ctaLabel": "Discuter de mon projet — formule {tier}",
       "features": {
         "design": "Design adapté à votre identité",
         "content": "Intégration de vos contenus",
@@ -316,8 +315,15 @@
       "exclusion": "Migration d'un site existant ou configuration complexe : sur devis.",
       "ownership": "Vous restez propriétaire du nom de domaine et titulaire des comptes fournisseurs. Megahana dispose des accès nécessaires pour effectuer la mise en ligne.",
       "externalFees": "Les frais de domaine, d'hébergement, d'email professionnel et d'abonnements tiers restent à votre charge.",
-      "separation": "La création est couverte par votre formule. Cette option concerne uniquement la mise en ligne ponctuelle. Le suivi et la maintenance sont facultatifs et font l'objet d'un accord séparé, avec une durée et un périmètre définis.",
-      "cta": "Discuter de la mise en ligne"
+      "separation": "La création est couverte par votre formule. Cette option concerne uniquement la mise en ligne ponctuelle. Le suivi et la maintenance sont facultatifs et font l'objet d'un accord séparé, avec une durée et un périmètre définis."
+    },
+    "configurator": {
+      "emptyState": "Sélectionnez un forfait pour voir le récapitulatif.",
+      "totalLabel": "Total estimé",
+      "tierLine": "Formule {tier} : {price} €",
+      "launchIncluded": "Mise en ligne standard incluse : {price} €",
+      "launchExcluded": "Sans l'option mise en ligne.",
+      "cta": "Demander mon devis"
     },
     "upwork": {
       "title": "Vous préférez passer par Upwork ?",
@@ -728,6 +734,10 @@
       },
       "messageLabel": "Message — obligatoire",
       "messagePlaceholder": "Présentez votre activité et ce dont vous avez besoin. Si vous avez déjà un site ou une date souhaitée, vous pouvez les préciser ici.",
+      "prefill": {
+        "withLaunch": "Je suis intéressé(e) par la formule {tier} ({price} €), avec l'option mise en ligne standard ({launchPrice} €). Voici mon projet : ",
+        "withoutLaunch": "Je suis intéressé(e) par la formule {tier} ({price} €), sans l'option mise en ligne. Voici mon projet : "
+      },
       "submit": "Envoyer mon message",
       "submitting": "Envoi en cours…",
       "successTitle": "Merci pour votre message",

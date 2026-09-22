@@ -4,9 +4,10 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { useTranslations } from "next-intl";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { HashFocus } from "@/components/ui/HashFocus";
-import { ContactForm } from "@/components/sections/contact/ContactForm";
+import { ContactForm, type SubjectOption } from "@/components/sections/contact/ContactForm";
 import { localizedMetadata, LINKEDIN_STUDIO_URL, CONTACT_FORM_EMAIL } from "@/lib/site";
 import { UPWORK_PRODUCT_URL } from "@/lib/upwork";
+import { directOffers, launchOption, tierIds, type TierId } from "@/lib/services-offers";
 
 export async function generateMetadata({
   params,
@@ -22,7 +23,13 @@ export async function generateMetadata({
   };
 }
 
-function ContactContent() {
+function ContactContent({
+  initialSubjectOption,
+  initialMessage,
+}: {
+  initialSubjectOption?: SubjectOption;
+  initialMessage?: string;
+}) {
   const t = useTranslations("Contact");
   const tc = useTranslations("Common");
 
@@ -30,7 +37,9 @@ function ContactContent() {
     <div className="pt-20">
       {/* Focus clavier sur #discuss après un clic /services → /contact#discuss
           (transition client-side) — le scroll fonctionnait déjà, pas le
-          focus. Voir HashFocus.tsx. */}
+          focus. Voir HashFocus.tsx. Fonctionne aussi quand l'URL porte en plus
+          des query params (?tier=...&launch=...) : HashFocus ne lit que le
+          hash, les query params sont traités indépendamment ci-dessous. */}
       <HashFocus />
 
       <section className="pt-8 pb-10 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto text-center">
@@ -54,7 +63,10 @@ function ContactContent() {
         <div className="md:col-span-2">
           <AnimateIn>
             <h2 className="text-xl font-bold text-text-primary mb-6">{t("form.heading")}</h2>
-            <ContactForm />
+            <ContactForm
+              initialSubjectOption={initialSubjectOption}
+              initialMessage={initialMessage}
+            />
           </AnimateIn>
 
           <AnimateIn delay={0.1}>
@@ -114,8 +126,42 @@ function ContactContent() {
   );
 }
 
-export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
+function isValidTier(value: string | undefined): value is TierId {
+  return !!value && (tierIds as readonly string[]).includes(value);
+}
+
+export default async function ContactPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ tier?: string; launch?: string }>;
+}) {
   const { locale } = await params;
   setRequestLocale(locale);
-  return <ContactContent />;
+
+  const sp = await searchParams;
+  const tier = isValidTier(sp.tier) ? sp.tier : null;
+  const launchEnabled = sp.launch === "1";
+
+  let initialSubjectOption: SubjectOption | undefined;
+  let initialMessage: string | undefined;
+
+  if (tier) {
+    const [tPrefill, tPackages] = await Promise.all([
+      getTranslations({ locale, namespace: "Contact.form.prefill" }),
+      getTranslations({ locale, namespace: "Services.packages" }),
+    ]);
+    const tierName = tPackages(`${tier}.name`);
+    const price = directOffers[tier].price;
+
+    initialSubjectOption = "package";
+    initialMessage = launchEnabled
+      ? tPrefill("withLaunch", { tier: tierName, price, launchPrice: launchOption.price })
+      : tPrefill("withoutLaunch", { tier: tierName, price });
+  }
+
+  return (
+    <ContactContent initialSubjectOption={initialSubjectOption} initialMessage={initialMessage} />
+  );
 }

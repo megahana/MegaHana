@@ -1,13 +1,20 @@
-import { Check, Globe } from "lucide-react";
+"use client";
+
+import { Check, Globe, CheckCircle2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { Button } from "@/components/ui/Button";
+import { cn } from "@/lib/utils";
 import { launchOption } from "@/lib/services-offers";
 
 const ITEM_KEYS = ["domain", "hosting", "deployment", "checks", "access"] as const;
 
-export function LaunchOption() {
+interface LaunchOptionProps {
+  enabled: boolean;
+  onToggle: () => void;
+}
+
+export function LaunchOption({ enabled, onToggle }: LaunchOptionProps) {
   const t = useTranslations("Services.launch");
 
   return (
@@ -25,8 +32,22 @@ export function LaunchOption() {
       </AnimateIn>
 
       <AnimateIn>
-        <div className="card-border rounded-2xl p-px mt-10 max-w-4xl mx-auto">
-          <div className="bg-surface rounded-2xl p-6 sm:p-8 grid gap-8 md:grid-cols-2">
+        <label className="launch-toggle card-border rounded-2xl p-px mt-10 max-w-4xl mx-auto block cursor-pointer">
+          <input
+            type="checkbox"
+            checked={enabled}
+            onChange={onToggle}
+            aria-label={t("titleHighlight")}
+            className="sr-only"
+          />
+          <div className="relative bg-surface rounded-2xl p-6 sm:p-8 grid gap-8 md:grid-cols-2">
+            <CheckCircle2
+              aria-hidden="true"
+              className={cn(
+                "absolute top-4 right-4 w-6 h-6",
+                enabled ? "text-accent-accessible" : "text-text-muted",
+              )}
+            />
             <div className="flex flex-col">
               <Globe className="w-8 h-8 text-gold" />
               <p className="mt-4 text-sm font-medium text-text-muted">{t("priceLabel")}</p>
@@ -35,10 +56,6 @@ export function LaunchOption() {
                 <span className="text-sm text-text-muted">€</span>
               </div>
               <p className="mt-2 text-xs text-text-muted">{t("priceNote")}</p>
-
-              <Button href="/contact#discuss" variant="primary" className="mt-6">
-                {t("cta")}
-              </Button>
             </div>
 
             <div className="flex flex-col">
@@ -62,7 +79,7 @@ export function LaunchOption() {
               </div>
             </div>
           </div>
-        </div>
+        </label>
       </AnimateIn>
     </section>
   );

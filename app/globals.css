@@ -492,6 +492,55 @@ h3,
   outline-offset: 2px;
   border-radius: 1rem;
 }
+
+/* Configurateur /services (Configurator.tsx) — cartes de forfait et case
+   "mise en ligne" : radio/checkbox natifs cachés en sr-only, le <label>
+   englobe toute la carte. Le focus réel porte sur l'<input>, jamais sur le
+   <label> : l'anneau de focus et le surlignage de sélection portent donc
+   sur le conteneur via :has(), déjà utilisé ailleurs sur le site (voir
+   .marquee-viewport:has(...) plus bas).
+   Retour utilisateur (test réel, 24/09) : au survol, rien n'indiquait que la
+   carte est cliquable ; une fois cliquée, le contour seul était trop discret
+   comme retour de sélection. Renforcé ici avec : au survol, une ombre teintée
+   accent (même vocabulaire que Button.tsx variant primary : shadow-primary/25
+   → hover:shadow-primary/40) ; sélectionné, un anneau plus épais (3px, contre
+   2px pour le focus, pour rester visuellement distincts) + un fond légèrement
+   teinté sur la carte intérieure + l'icône CheckCircle2 ajoutée en JSX dans
+   PackageCards.tsx/LaunchOption.tsx (aria-hidden : l'état coché est déjà
+   annoncé nativement par le rôle radio/checkbox, l'icône est décorative). */
+.tier-card,
+.launch-toggle {
+  transition: box-shadow 0.2s ease;
+}
+.tier-card:hover,
+.launch-toggle:hover {
+  box-shadow: 0 8px 20px -6px rgb(var(--accent-accessible) / 0.35);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tier-card,
+  .launch-toggle {
+    transition-property: box-shadow, transform;
+  }
+  .tier-card:hover,
+  .launch-toggle:hover {
+    transform: translateY(-3px);
+  }
+}
+.tier-card:has(input:focus-visible),
+.launch-toggle:has(input:focus-visible) {
+  outline: 2px solid rgb(var(--accent-accessible));
+  outline-offset: 2px;
+  border-radius: 1rem;
+}
+.tier-card:has(input:checked),
+.launch-toggle:has(input:checked) {
+  box-shadow: 0 0 0 3px rgb(var(--accent-accessible));
+  border-radius: 1rem;
+}
+.tier-card:has(input:checked) > div,
+.launch-toggle:has(input:checked) > div {
+  background-color: rgb(var(--accent-accessible) / 0.06);
+}
 .real-hint {
   position: absolute;
   top: 12px;

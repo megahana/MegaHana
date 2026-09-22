@@ -112,8 +112,11 @@ export function ThemeToggle({ className }: { className?: string }) {
         className,
       )}
     >
-      {/* Avant montage : icône neutre (évite tout flash d'état) */}
-      {mounted && !isDark ? (
+      {/* Icône = thème ACTUELLEMENT actif (soleil visible = clair actif, lune
+          visible = sombre actif) — pas l'icône de "vers quoi bascule le
+          clic". Avant montage : icône neutre par défaut (évite tout flash
+          d'état), cohérente avec le thème clair par défaut du site. */}
+      {mounted && isDark ? (
         <Moon className="w-[18px] h-[18px]" />
       ) : (
         <Sun className="w-[18px] h-[18px]" />

@@ -12,14 +12,23 @@ const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 // Sujets de la demande (affichés au visiteur) — distincts du "subject" Web3Forms
 // (objet de l'email reçu par Megahana, construit à partir du choix ci-dessous).
 const SUBJECT_OPTIONS = ["website", "package", "other"] as const;
-type SubjectOption = (typeof SUBJECT_OPTIONS)[number];
+export type SubjectOption = (typeof SUBJECT_OPTIONS)[number];
 
 type Status = "idle" | "submitting" | "success" | "invalid" | "error";
 type FieldErrors = Partial<Record<"name" | "email" | "message", string>>;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export function ContactForm() {
+interface ContactFormProps {
+  /** Pré-sélection du sujet (ex. venant du configurateur /services). */
+  initialSubjectOption?: SubjectOption;
+  /** Texte initial du message (ex. récapitulatif du configurateur /services).
+   *  Formulaire non contrôlé : valeur initiale uniquement (defaultValue),
+   *  jamais resynchronisée après le premier rendu. */
+  initialMessage?: string;
+}
+
+export function ContactForm({ initialSubjectOption, initialMessage }: ContactFormProps = {}) {
   const t = useTranslations("Contact.form");
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<FieldErrors>({});
@@ -207,7 +216,7 @@ export function ContactForm() {
         <select
           id="contact-subject"
           name="subjectOption"
-          defaultValue=""
+          defaultValue={initialSubjectOption ?? ""}
           className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm text-text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
         >
           <option value="">{t("subjectPlaceholder")}</option>
@@ -230,6 +239,7 @@ export function ContactForm() {
           id="contact-message"
           name="message"
           rows={5}
+          defaultValue={initialMessage}
           placeholder={t("messagePlaceholder")}
           aria-invalid={!!errors.message || undefined}
           aria-describedby={errors.message ? "contact-message-error" : undefined}

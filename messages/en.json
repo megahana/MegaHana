@@ -269,7 +269,6 @@
       "commonNote": "Every package includes a responsive website, integration of the content you provide, performance optimisation and the complete source files.",
       "externalNote": "Website launch is optional. Domain, hosting, professional email and external subscription fees are not included.",
       "schedule": "Timeline and revisions confirmed in your quote.",
-      "ctaLabel": "Discuss your project — {tier} package",
       "features": {
         "design": "Design tailored to your identity",
         "content": "Integration of your content",
@@ -316,8 +315,15 @@
       "exclusion": "Migrating an existing site or complex setup: quoted separately.",
       "ownership": "You retain ownership of the domain and hold the provider accounts in your name. Megahana has the access needed to launch your website.",
       "externalFees": "Domain, hosting, professional email and third-party subscription fees remain your responsibility.",
-      "separation": "Website creation is covered by your package. This option covers the one-off launch only. Ongoing support and maintenance are optional and require a separate agreement with a defined scope and duration.",
-      "cta": "Discuss your website launch"
+      "separation": "Website creation is covered by your package. This option covers the one-off launch only. Ongoing support and maintenance are optional and require a separate agreement with a defined scope and duration."
+    },
+    "configurator": {
+      "emptyState": "Select a package to see the summary.",
+      "totalLabel": "Estimated total",
+      "tierLine": "{tier} package: {price} €",
+      "launchIncluded": "Standard website launch included: {price} €",
+      "launchExcluded": "Without the website launch option.",
+      "cta": "Request my quote"
     },
     "upwork": {
       "title": "Prefer to use Upwork?",
@@ -716,6 +722,10 @@
       },
       "messageLabel": "Message — required",
       "messagePlaceholder": "Tell us about your business and what you need. If you already have a website or a preferred date, you can include them here.",
+      "prefill": {
+        "withLaunch": "I'm interested in the {tier} package ({price} €), with the standard website launch option ({launchPrice} €). Here is my project: ",
+        "withoutLaunch": "I'm interested in the {tier} package ({price} €), without the website launch option. Here is my project: "
+      },
       "submit": "Send message",
       "submitting": "Sending…",
       "successTitle": "Thank you for your message",
