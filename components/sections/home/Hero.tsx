@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -18,8 +18,17 @@ export function Hero() {
   // Jamais un délai fixe deviné : l'Intro peut être sautée à tout moment ou
   // ne jamais s'afficher, et un délai basé sur sa durée jouerait l'effet
   // derrière l'overlay ou trop tôt/tard par rapport à sa vraie fin.
+  //
+  // Écouteur posé en useLayoutEffect, pas en useEffect : sur les sorties
+  // "session déjà jouée" et "reduced-motion", Intro émet l'événement dans un
+  // setTimeout(0) programmé depuis son propre useLayoutEffect. Après
+  // l'hydratation, React 19 peut exécuter les effets passifs (useEffect)
+  // APRÈS ce setTimeout(0) — mesuré sur build de prod : événement à ~266ms,
+  // écouteur posé à ~267ms, dégradé jamais déclenché. Un useLayoutEffect
+  // s'exécute dans la même phase de commit synchrone que celui d'Intro, donc
+  // forcément avant que le moindre setTimeout(0) ne puisse partir.
   const [heroReady, setHeroReady] = useState(false);
-  useEffect(() => {
+  useLayoutEffect(() => {
     function onIntroDone() {
       setHeroReady(true);
     }

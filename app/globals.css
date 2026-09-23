@@ -768,10 +768,10 @@ h3,
    est déjà présent dans le <head> au premier octet. Contenu strictement
    identique, seule sa méthode de livraison change.
 
-   Les durées de transition ci-dessous (650ms / 300ms) sont dupliquées
-   depuis MOVE_DURATION_MS / FADE_DURATION_MS dans Intro.tsx — CSS plat, pas
-   moyen de les référencer depuis une constante JS. Si l'un change, changer
-   l'autre. ═══ */
+   La durée du fondu de sortie ci-dessous (280ms) est dupliquée depuis
+   FADE_DURATION_MS dans Intro.tsx — CSS plat, pas moyen de la référencer
+   depuis une constante JS. Si l'un change, changer l'autre. Les pétales,
+   eux, sont animés en JS (attributs SVG), pas ici. ═══ */
 .mh-intro-overlay {
   position: fixed;
   inset: 0;
@@ -786,8 +786,8 @@ h3,
   display: none;
 }
 .mh-intro-overlay--fading {
-  background: rgb(var(--bg) / 0);
-  transition: background 300ms ease;
+  opacity: 0;
+  transition: opacity 280ms ease-out;
 }
 
 .mh-intro-logo {
@@ -797,8 +797,6 @@ h3,
   align-items: center;
   justify-content: center;
   gap: 22px;
-  transform: scale(1) translate(0, 0);
-  transition: transform 650ms cubic-bezier(0.65, 0, 0.35, 1);
 }
 .mh-intro-svg {
   width: 260px;
@@ -811,34 +809,6 @@ h3,
   font-size: 46px;
   color: rgb(var(--text));
   line-height: 1;
-  opacity: 1;
-  transition: opacity 0.45s ease;
-}
-.mh-intro-logo--wordmark-out .mh-intro-wordmark {
-  opacity: 0;
-}
-
-.mh-intro-petal-glow {
-  opacity: 1;
-  transition: opacity 0.22s ease;
-}
-.mh-intro-overlay--wave .mh-intro-petal-glow {
-  opacity: 0;
-}
-.mh-intro-overlay--wave .mh-intro-petal-glow[data-i="0"] {
-  transition-delay: 0ms;
-}
-.mh-intro-overlay--wave .mh-intro-petal-glow[data-i="1"] {
-  transition-delay: 70ms;
-}
-.mh-intro-overlay--wave .mh-intro-petal-glow[data-i="2"] {
-  transition-delay: 140ms;
-}
-.mh-intro-overlay--wave .mh-intro-petal-glow[data-i="3"] {
-  transition-delay: 210ms;
-}
-.mh-intro-overlay--wave .mh-intro-petal-glow[data-i="4"] {
-  transition-delay: 280ms;
 }
 
 .mh-intro-skip {
@@ -871,9 +841,7 @@ h3,
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mh-intro-logo,
-  .mh-intro-overlay,
-  .mh-intro-petal-glow {
+  .mh-intro-overlay {
     transition: none !important;
   }
 }

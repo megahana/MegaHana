@@ -1,81 +1,138 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef } from "react";
+import { animate, cubicBezier, motionValue, type AnimationPlaybackControls } from "framer-motion";
 import { useTranslations } from "next-intl";
 
 /**
- * Transposition de docs/prototypes/intro-animation.html, piste D (chorégraphie
- * validée le 03/09) : ouverture glow plein sur les 5 pétales → vague
- * séquentielle glow→aplat, pétale par pétale → recul dans le header (mesure de
- * position réelle via getBoundingClientRect contre #mh-header-logo, cf.
- * Header.tsx). Même grammaire visuelle qu'à l'origine.
+ * Intro d'accueil — chorégraphie "Éclosion contenue" (piste B, choisie le
+ * 23/09 après comparaison de 4 pistes dans un labo interne, depuis retiré) :
+ * chaque pétale s'ouvre depuis le point d'attache jusqu'à sa forme exacte,
+ * l'un après l'autre dans le sens horaire, puis la fleur complète est tenue
+ * un court instant et tout l'overlay (fond + fleur + mot « megahana »)
+ * s'efface d'un bloc. Plus de recul vers le logo du header. Total ≈ 1,28s
+ * depuis le montage (détail dans le bloc "Chorégraphie" plus bas).
  *
- * Timing retravaillé pour laisser un vrai temps de lecture (~1s, logo+texte
- * bien lisibles) avant que quoi que ce soit ne bouge — contrairement à
- * l'itération précédente qui visait la vitesse pure (~1,3s total). Total visé
- * ici : ~2,35s. Voir le bloc de constantes plus bas pour le détail des
- * fenêtres.
+ * Logo : SVG fidèle à app/icon.png (5 ellipses, cf. PETALS). Séparations et
+ * cœur réellement transparents via un <mask> — et non plus peints en couleur
+ * de fond, ce qui ne tenait que sur un fond opaque.
  *
- * Le recul lui-même reste un translate()/scale() calculé une seule fois
- * (getBoundingClientRect contre le logo header, dont le layout est déjà stable
- * à ce stade — Header est monté dès le premier paint, cf. layout.tsx) : aucune
- * mesure en boucle, aucun rayon de flou animé en continu pour le glow (couche
- * radialGradient précalculée, seule l'opacité varie). Ce qui atterrit dans le
- * header à la fin du recul est visuellement déjà la couche "aplat" (glow à
- * opacité 0 depuis la fin de la vague) : pas de séparateur "pixel vs aplat" à
- * gérer ici, et le vrai logo du header (/icon.png, toujours monté en dessous,
- * jamais cette texture) n'apparaît que quand l'overlay disparaît par-dessus.
+ * Animation des pétales : un MotionValue `time` (ms) animé par framer-motion,
+ * dont chaque valeur est traduite en attributs SVG `transform`/`opacity`
+ * écrits directement sur les groupes de pétales (aucun re-rendu React par
+ * frame). L'attribut SVG — et non le transform CSS que framer-motion pose sur
+ * les éléments SVG avec transform-box: fill-box — garantit que les échelles
+ * sont ancrées sur le point d'attache commun, pas au centre de chaque ellipse.
  *
- * Séquencement recul → fondu → masquage basé sur transitionend (pas des
- * délais fixes) : chaque étape écoute la fin de la transition CSS dont elle
- * dépend réellement, avec un setTimeout de secours (durée CSS + marge) au cas
- * où la transition serait annulée ou ne se déclencherait jamais (onglet
- * backgrounded, élément retiré du DOM, etc.) — cf. afterTransition().
+ * Sortie séquencée sur transitionend (pas un délai fixe) : le fondu CSS de
+ * l'overlay déclenche finish() à sa fin réelle, avec un setTimeout de secours
+ * (durée CSS + marge) au cas où la transition serait annulée ou ne se
+ * déclencherait jamais (onglet en arrière-plan, élément retiré…) — cf.
+ * afterTransition().
  *
  * Le CSS (.mh-intro-*) vit dans app/globals.css, pas dans un <style jsx>
  * local : un bloc styled-jsx s'injecte après l'hydratation, ce qui provoquait
  * un flash non stylé (FOUC) au premier paint et brièvement après la fin de
- * l'intro (le temps que React réhydrate). Contenu identique, juste déplacé —
- * même raison que Galerie.tsx/ChalkText.tsx cette session.
+ * l'intro (le temps que React réhydrate).
  */
 
 const SESSION_KEY = "introPlayed";
 const HEADER_LOGO_ID = "mh-header-logo";
 
-/** Coordonnées exactes des 5 pétales (clipPath ip0..ip4 + ellipses glow du prototype) — ne rien recalculer. */
-const PETALS = [
-  { cx: 0, cy: -52, rx: 25, ry: 50, rotate: -8, hue: "sakura" as const },
-  { cx: 4, cy: -40, rx: 19, ry: 36, rotate: 65, hue: "gold" as const },
-  { cx: -2, cy: -54, rx: 21, ry: 50, rotate: 155, hue: "sakura" as const },
-  { cx: 3, cy: -32, rx: 15, ry: 30, rotate: 218, hue: "gold" as const },
-  { cx: -3, cy: -44, rx: 18, ry: 40, rotate: 292, hue: "sakura" as const },
+/* ── Géométrie du logo ─────────────────────────────────────────────────────
+   Fidélité mesurée contre app/icon.png (rendu 1254 px, masques alpha comparés
+   pixel par pixel, sans réajustement) : 99,66 % de recouvrement, couleurs
+   identiques à --sakura / --gold. */
+
+/** Taille du viewBox carré (unités SVG). */
+const LOGO_VIEWBOX = 200;
+
+/** Point d'attache des pétales : reproduit exactement le cadrage de app/icon.png. */
+const LOGO_ORIGIN = { x: 104, y: 103.45 };
+
+type PetalHue = "sakura" | "gold";
+
+interface Petal {
+  cx: number;
+  cy: number;
+  rx: number;
+  ry: number;
+  /** Rotation (degrés) autour du point d'attache. */
+  rotate: number;
+  hue: PetalHue;
+}
+
+/** Coordonnées exactes des 5 pétales — ordre = sens horaire depuis le haut, et ordre de peinture. */
+const PETALS: readonly Petal[] = [
+  { cx: 0, cy: -52, rx: 25, ry: 50, rotate: -8, hue: "sakura" },
+  { cx: 4, cy: -40, rx: 19, ry: 36, rotate: 65, hue: "gold" },
+  { cx: -2, cy: -54, rx: 21, ry: 50, rotate: 155, hue: "sakura" },
+  { cx: 3, cy: -32, rx: 15, ry: 30, rotate: 218, hue: "gold" },
+  { cx: -3, cy: -44, rx: 18, ry: 40, rotate: 292, hue: "sakura" },
 ];
 
-/* ── Timing (ms) ──────────────────────────────────────────────────────────
-   t=0                          : mount, glow plein déjà visible, logo+texte+
-                                   bouton lisibles — rien ne bouge encore.
-   t=SESSION_MARK_DELAY (50)    : session marquée jouée (déféré pour survivre
-                                   au double-montage StrictMode en dev — cf.
-                                   commentaire plus bas, la valeur exacte
-                                   importe peu tant qu'elle est > 0).
-   t=+WAVE_DELAY (1000 absolu)  : la vague démarre (classe --wave). Termine à
-                                   1000 + 4×70ms (décalage/pétale, CSS) +
-                                   220ms (durée/pétale, CSS) = 1500ms.
-   t=+MOVE_DELAY (1400 absolu)  : le recul démarre — 100ms AVANT la fin de la
-                                   vague (1500ms), léger chevauchement
-                                   volontaire. Durée de la transition
-                                   transform (CSS, MOVE_DURATION_MS) : 650ms.
-   transitionend(transform)     : ~2050ms — déclenche le fondu du fond
-                                   (durée CSS FADE_DURATION_MS : 300ms).
-   transitionend(background)    : ~2350ms — déclenche finish() (overlay
-                                   masqué + focus rendu). Total ≈ 2,35s.
-   Secours : chaque étape a aussi un setTimeout (durée CSS + ~100ms) au cas
-   où transitionend ne se déclencherait jamais (cf. afterTransition()). */
+/** Cœur transparent, relatif au point d'attache. */
+const LOGO_CENTER = { cx: 5, cy: 1, r: 14 };
+
+/** Épaisseur des séparations transparentes entre pétales (unités SVG). */
+const SEPARATOR_WIDTH = 3;
+
+const HUE_CLASS: Record<PetalHue, string> = { sakura: "fill-sakura", gold: "fill-gold" };
+
+/* ── Chorégraphie (ms) ─────────────────────────────────────────────────────
+   t=0                         : mount — overlay plein, mot « megahana »
+                                  visible, pétales refermés et invisibles.
+   t=SESSION_MARK_DELAY (50)   : session marquée jouée (déféré pour survivre
+                                  au double-montage StrictMode en dev — cf.
+                                  commentaire plus bas), l'éclosion démarre.
+   +MOTION_MS (850)            : 5 pétales × 650ms, décalés de 50ms.
+   +HOLD_MS (100)              : fleur complète tenue.
+   +FADE_DURATION_MS (280)     : fondu de tout l'overlay (CSS), puis
+                                  finish() sur transitionend. Total ≈ 1,28s
+                                  depuis le montage.
+   Secours : setTimeout (durée CSS + marge) si transitionend ne vient jamais. */
 const SESSION_MARK_DELAY = 50;
-const WAVE_DELAY = 950;
-const MOVE_DELAY = 1350;
-const MOVE_DURATION_MS = 650;
-const FADE_DURATION_MS = 300;
+/** Longueur de départ d'un pétale (fraction de sa longueur finale). */
+const PETAL_START_LENGTH = 0.35;
+/** Largeur de départ d'un pétale (fraction de sa largeur finale). */
+const PETAL_START_WIDTH = 0.6;
+/** Angle de départ, légèrement refermé (≤ 5° : au-delà, lecture "spinner"). */
+const PETAL_START_ANGLE_DEG = -5;
+const PETAL_DURATION_MS = 650;
+const PETAL_FADE_MS = 250;
+const PETAL_STAGGER_MS = 50;
+const MOTION_MS = (PETALS.length - 1) * PETAL_STAGGER_MS + PETAL_DURATION_MS;
+const HOLD_MS = 100;
+/** Dupliqué dans app/globals.css (.mh-intro-overlay--fading). */
+const FADE_DURATION_MS = 280;
+
+/** Décélération douce, sans dépassement (pas de rebond élastique). */
+const easeOutSoft = cubicBezier(0.22, 1, 0.36, 1);
+
+function progress(t: number, startMs: number, durationMs: number): number {
+  return Math.min(1, Math.max(0, (t - startMs) / durationMs));
+}
+
+function lerp(from: number, to: number, p: number): number {
+  return from + (to - from) * p;
+}
+
+function round(n: number): number {
+  return Math.round(n * 1000) / 1000;
+}
+
+/** État d'un pétale à l'instant t, dans son propre repère (ancré au point d'attache). */
+function petalState(index: number, t: number) {
+  const start = index * PETAL_STAGGER_MS;
+  const p = easeOutSoft(progress(t, start, PETAL_DURATION_MS));
+  const rotate = round(PETAL_START_ANGLE_DEG * (1 - p));
+  const sx = round(lerp(PETAL_START_WIDTH, 1, p));
+  const sy = round(lerp(PETAL_START_LENGTH, 1, p));
+  return {
+    transform: `rotate(${rotate}) scale(${sx} ${sy})`,
+    opacity: round(easeOutSoft(progress(t, start, PETAL_FADE_MS))),
+  };
+}
 
 // useLayoutEffect ne fait rien côté serveur (React émet un warning dev sinon) :
 // alias isomorphe standard, pour rester sur useEffect pendant le SSR.
@@ -84,21 +141,22 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
 export function Intro() {
   const t = useTranslations("Common");
   const overlayRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
-  const svgRef = useRef<SVGSVGElement>(null);
   const skipButtonRef = useRef<HTMLButtonElement>(null);
+  // Un groupe de remplissage et un contour découpé (dans le masque) par
+  // pétale, animés ensemble : les séparations suivent leur pétale.
+  const fillRefs = useRef<(SVGGElement | null)[]>([]);
+  const cutRefs = useRef<(SVGGElement | null)[]>([]);
 
   useIsomorphicLayoutEffect(() => {
     const overlay = overlayRef.current;
-    const logo = logoRef.current;
-    const svg = svgRef.current;
     const skipButton = skipButtonRef.current;
-    if (!overlay || !logo || !svg || !skipButton) return;
+    if (!overlay || !skipButton) return;
 
     const timers: ReturnType<typeof setTimeout>[] = [];
     const after = (ms: number, fn: () => void) => {
       timers.push(setTimeout(fn, ms));
     };
+    let controls: AnimationPlaybackControls | null = null;
 
     // Séquence une étape sur la fin réelle de sa transition CSS plutôt que
     // sur un délai fixe : écoute transitionend (filtré sur la bonne
@@ -143,6 +201,7 @@ export function Intro() {
 
     function skip() {
       timers.forEach(clearTimeout);
+      controls?.stop();
       finish();
     }
     overlay.addEventListener("click", skip);
@@ -151,79 +210,6 @@ export function Intro() {
       skip();
     }
     skipButton.addEventListener("click", onSkipButtonClick);
-
-    // Garde anti-double-appel : moveToHeader est déclenché par un seul
-    // timer, mais reste défensif si jamais appelé deux fois (ex. futur appel
-    // manuel en plus du timer).
-    let moved = false;
-    function moveToHeader() {
-      if (moved) return;
-      moved = true;
-
-      const headerLogo = document.getElementById(HEADER_LOGO_ID);
-      if (!headerLogo || !svg || !logo) {
-        // Anomalie réelle (pas un DEBUG temporaire) : ce garde-fou n'est
-        // jamais censé se déclencher en usage normal (Header monté dès le
-        // premier paint, cf. layout.tsx) — signal à garder en prod.
-        console.warn("[intro] moveToHeader: repli anticipé, élément manquant", {
-          hasHeaderLogo: !!headerLogo,
-          hasSvg: !!svg,
-          hasLogo: !!logo,
-        });
-        finish();
-        return;
-      }
-      const headerRect = headerLogo.getBoundingClientRect();
-      const svgRect = svg.getBoundingClientRect();
-      const logoRect = logo.getBoundingClientRect();
-      const scale = headerRect.height / svgRect.height;
-
-      // Échec propre plutôt qu'un rendu cassé : layout pas encore stable,
-      // header pas encore à sa taille finale, ou dimensions nulles/négatives.
-      if (
-        !Number.isFinite(scale) ||
-        scale <= 0 ||
-        scale >= 1 ||
-        svgRect.width <= 0 ||
-        headerRect.width <= 0
-      ) {
-        // Même logique que ci-dessus : anomalie réelle à tracer, pas un log
-        // de développement à retirer.
-        console.warn("[intro] moveToHeader: repli anticipé, mesures incohérentes", {
-          scale,
-          svgWidth: svgRect.width,
-          svgHeight: svgRect.height,
-          headerWidth: headerRect.width,
-          headerHeight: headerRect.height,
-        });
-        finish();
-        return;
-      }
-
-      const dx = headerRect.left + headerRect.width / 2 - (svgRect.left + svgRect.width / 2);
-      const dy = headerRect.top + headerRect.height / 2 - (svgRect.top + svgRect.height / 2);
-
-      // Origine de la transformation sur le centre du SVG (pas du groupe
-      // logo+texte, dont le centre est décalé par le wordmark en dessous) :
-      // sinon le scale s'ancre au mauvais point et le recul dérive visuellement.
-      logo.style.transformOrigin = `${svgRect.left + svgRect.width / 2 - logoRect.left}px ${
-        svgRect.top + svgRect.height / 2 - logoRect.top
-      }px`;
-      logo.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
-      logo.classList.add("mh-intro-logo--wordmark-out");
-
-      afterTransition(logo, "transform", MOVE_DURATION_MS, () => {
-        // overlay est garanti non-null par le early-return en tête d'effet,
-        // mais TS ne propage pas cette narrowing jusque dans une closure
-        // aussi profondément imbriquée — re-vérifié ici pour le typer.
-        if (!overlay) return;
-        overlay.classList.add("mh-intro-overlay--fading");
-        // Transition sur le raccourci "background", mais seule sa couleur
-        // change ici : le navigateur rapporte transitionend sur la
-        // sous-propriété longhand réellement animée, "background-color".
-        afterTransition(overlay, "background-color", FADE_DURATION_MS, finish);
-      });
-    }
 
     let played = false;
     try {
@@ -234,11 +220,12 @@ export function Intro() {
     if (played) {
       overlay.classList.add("mh-intro-overlay--hidden");
       // Déféré d'un tick (pas dispatché synchronement ici) : cette branche
-      // tourne dans le useLayoutEffect de Intro, qui s'exécute pour TOUT
-      // l'arbre avant le useEffect de Hero (celui qui pose l'écouteur
-      // "mh:intro-done") — un dispatch synchrone ici partirait dans le vide,
-      // avant que Hero n'écoute. Vérifié en pratique : sans ce report, le
-      // dégradé ne se déclenchait jamais sur une session déjà jouée.
+      // tourne dans le useLayoutEffect de Intro, qui s'exécute avant celui de
+      // Hero (qui pose l'écouteur "mh:intro-done", frère suivant dans l'arbre)
+      // — un dispatch synchrone ici partirait dans le vide, avant que Hero
+      // n'écoute. Le setTimeout(0) part après toute la phase de layout ; Hero
+      // doit donc poser son écouteur en useLayoutEffect, pas en useEffect
+      // (cf. Hero.tsx : un useEffect peut s'exécuter après ce setTimeout).
       after(0, () => window.dispatchEvent(new Event("mh:intro-done")));
       return () => {
         timers.forEach(clearTimeout);
@@ -271,135 +258,122 @@ export function Intro() {
     // actionnable pendant qu'un overlay bloque la page).
     skipButton.focus({ preventScroll: true });
 
+    const time = motionValue(0);
+    const unsubscribe = time.on("change", (now) => {
+      PETALS.forEach((_, i) => {
+        const state = petalState(i, now);
+        fillRefs.current[i]?.setAttribute("transform", state.transform);
+        fillRefs.current[i]?.setAttribute("opacity", String(state.opacity));
+        cutRefs.current[i]?.setAttribute("transform", state.transform);
+        cutRefs.current[i]?.setAttribute("stroke-opacity", String(state.opacity));
+      });
+    });
+
+    function fadeOut() {
+      overlay?.classList.add("mh-intro-overlay--fading");
+      if (overlay) afterTransition(overlay, "opacity", FADE_DURATION_MS, finish);
+    }
+
     // Le marquage sessionStorage se fait DANS le premier timer (pas avant de le
     // programmer) : en dev, StrictMode invoque cet effet deux fois (mount →
     // cleanup → mount), et son cleanup annule les timers du premier passage
     // avant qu'ils ne se déclenchent — donc seul le passage qui "survit"
-    // exécute réellement ce setItem. L'écrire de façon synchrone avant
-    // after(WAVE_DELAY, ...) marquait la session comme jouée dès le premier
-    // passage (jetable), avant même que son cleanup n'ait annulé quoi que ce
-    // soit : le second passage (le vrai) se retrouvait alors avec
-    // sessionStorage déjà à "1" et se masquait instantanément, sans jamais
-    // jouer l'animation. La valeur de SESSION_MARK_DELAY elle-même n'a pas
-    // besoin d'être grande pour que ça marche : le double-montage StrictMode
-    // est synchrone, bien avant qu'aucun timer (même à 0ms) ne se déclenche.
+    // exécute réellement ce setItem. L'écrire de façon synchrone marquait la
+    // session comme jouée dès le premier passage (jetable) : le second passage
+    // (le vrai) se retrouvait alors avec sessionStorage déjà à "1" et se
+    // masquait instantanément, sans jamais jouer l'animation.
     after(SESSION_MARK_DELAY, () => {
       try {
         sessionStorage.setItem(SESSION_KEY, "1");
       } catch {
         /* sessionStorage indisponible — pas bloquant, juste pas de garde inter-pages. */
       }
-      // Temps 1 : tient le glow plein (rien à faire, état initial = glow visible).
-      // Temps 2 : vague séquentielle glow → aplat (délais gérés en CSS par pétale).
-      // Temps 3 : le recul démarre avant la fin de la vague (chevauchement).
-      after(WAVE_DELAY, () => {
-        overlay.classList.add("mh-intro-overlay--wave");
+      controls = animate(time, MOTION_MS, {
+        duration: MOTION_MS / 1000,
+        ease: "linear",
+        onComplete: () => after(HOLD_MS, fadeOut),
       });
-      after(MOVE_DELAY, moveToHeader);
     });
 
     return () => {
       timers.forEach(clearTimeout);
+      controls?.stop();
+      unsubscribe();
       overlay.removeEventListener("click", skip);
       skipButton.removeEventListener("click", onSkipButtonClick);
     };
   }, []);
 
+  // Premier rendu (serveur et client) : pétales dans leur état de départ.
+  const initial = PETALS.map((_, i) => petalState(i, 0));
+
   return (
     <div ref={overlayRef} className="mh-intro-overlay">
-      <div ref={logoRef} className="mh-intro-logo" aria-hidden="true">
-        <svg ref={svgRef} className="mh-intro-svg" width={260} height={260} viewBox="0 0 200 200">
+      <div className="mh-intro-logo" aria-hidden="true">
+        <svg
+          className="mh-intro-svg"
+          width={260}
+          height={260}
+          viewBox={`0 0 ${LOGO_VIEWBOX} ${LOGO_VIEWBOX}`}
+        >
           <defs>
-            {/* Fond plein derrière le carré arrondi, même teinte : sans lui, l'interstice
-                entre tuiles (9x9, carré 7.5x7.5) reste transparent → effet "carrelage". */}
-            <pattern
-              id="mh-intro-pattern-sakura"
-              width="9"
-              height="9"
-              patternUnits="userSpaceOnUse"
+            {/* Blanc = visible. Le contour de chaque pétale et le cœur sont
+                découpés (noir) : séparations et centre transparents. */}
+            <mask
+              id="mh-intro-cut"
+              maskUnits="userSpaceOnUse"
+              x={-LOGO_VIEWBOX}
+              y={-LOGO_VIEWBOX}
+              width={LOGO_VIEWBOX * 2}
+              height={LOGO_VIEWBOX * 2}
             >
-              <rect width="9" height="9" fill="rgb(var(--sakura))" />
-              <rect width="7.5" height="7.5" rx="2" fill="rgb(var(--sakura))" />
-            </pattern>
-            <pattern id="mh-intro-pattern-gold" width="9" height="9" patternUnits="userSpaceOnUse">
-              <rect width="9" height="9" fill="rgb(var(--gold))" />
-              <rect width="7.5" height="7.5" rx="2" fill="rgb(var(--gold))" />
-            </pattern>
-            {/* Centres quasi-blancs volontairement en dur (teintes d'accent, pas de thème). */}
-            <radialGradient id="mh-intro-glow-sakura" cx="50%" cy="78%" r="85%">
-              <stop offset="0%" stopColor="#fff2f4" stopOpacity={1} />
-              <stop offset="55%" stopColor="#f4b8c1" stopOpacity={0.9} />
-              <stop offset="100%" stopColor="rgb(var(--sakura))" stopOpacity={0.04} />
-            </radialGradient>
-            <radialGradient id="mh-intro-glow-gold" cx="50%" cy="78%" r="85%">
-              <stop offset="0%" stopColor="#fdf6e8" stopOpacity={1} />
-              <stop offset="55%" stopColor="#e0c48f" stopOpacity={0.9} />
-              <stop offset="100%" stopColor="rgb(var(--gold))" stopOpacity={0.04} />
-            </radialGradient>
-            {PETALS.map((p, i) => (
-              <clipPath id={`mh-intro-clip-${i}`} key={`clip-${i}`}>
-                <ellipse
-                  cx={p.cx}
-                  cy={p.cy}
-                  rx={p.rx}
-                  ry={p.ry}
-                  transform={`rotate(${p.rotate})`}
-                />
-              </clipPath>
-            ))}
-          </defs>
-          <g transform="translate(100,106)">
-            {/* Couche aplat — toujours présente, en dessous. Le rect est juste
-                la source de remplissage du pattern ; chaque pétale garde sa
-                forme exacte via son propre clipPath (ellipse rotate(angle)).
-                Doit donc couvrir TOUTE position atteignable après rotation
-                autour de l'origine — la rotation reloge le centre (cx,cy) de
-                chaque pétale, pas seulement la forme sur place : rotate(155°)
-                et rotate(218°) (pétales 2 et 3) déplacent leur centre en y
-                positif (~+48 et ~+23). Un rect asymétrique x:[-70,70]
-                y:[-140,0] (couvrant seulement y négatif) les laissait donc
-                sans remplissage — glow qui s'estompe sur du vide. Rect
-                recentré et agrandi (x/y:[-100,100]) pour couvrir les 5. */}
-            {PETALS.map((p, i) => (
-              <g key={`flat-${i}`} clipPath={`url(#mh-intro-clip-${i})`}>
-                <rect
-                  x={-100}
-                  y={-100}
-                  width={200}
-                  height={200}
-                  fill={`url(#mh-intro-pattern-${p.hue})`}
-                />
-              </g>
-            ))}
-            {/* Couche glow — au-dessus, s'estompe pétale par pétale. Ellipse remplie
-                directement (même géométrie que les clipPath), pas de rect+clip séparé :
-                le fill et la forme partagent le même transform, donc le même repère. */}
-            {PETALS.map((p, i) => (
-              <ellipse
-                key={`glow-${i}`}
-                className="mh-intro-petal-glow"
-                data-i={i}
-                cx={p.cx}
-                cy={p.cy}
-                rx={p.rx}
-                ry={p.ry}
-                transform={`rotate(${p.rotate})`}
-                fill={`url(#mh-intro-glow-${p.hue})`}
+              <rect
+                x={-LOGO_VIEWBOX}
+                y={-LOGO_VIEWBOX}
+                width={LOGO_VIEWBOX * 2}
+                height={LOGO_VIEWBOX * 2}
+                fill="white"
               />
-            ))}
-            <g fill="none" stroke="rgb(var(--bg))" strokeWidth={3}>
               {PETALS.map((p, i) => (
-                <ellipse
-                  key={`sep-${i}`}
-                  cx={p.cx}
-                  cy={p.cy}
-                  rx={p.rx}
-                  ry={p.ry}
-                  transform={`rotate(${p.rotate})`}
-                />
+                <g key={i} transform={`rotate(${p.rotate})`}>
+                  <g
+                    ref={(el) => {
+                      cutRefs.current[i] = el;
+                    }}
+                    transform={initial[i].transform}
+                    strokeOpacity={initial[i].opacity}
+                  >
+                    <ellipse
+                      cx={p.cx}
+                      cy={p.cy}
+                      rx={p.rx}
+                      ry={p.ry}
+                      fill="none"
+                      stroke="black"
+                      strokeWidth={SEPARATOR_WIDTH}
+                    />
+                  </g>
+                </g>
+              ))}
+              <circle cx={LOGO_CENTER.cx} cy={LOGO_CENTER.cy} r={LOGO_CENTER.r} fill="black" />
+            </mask>
+          </defs>
+          <g transform={`translate(${LOGO_ORIGIN.x} ${LOGO_ORIGIN.y})`}>
+            <g mask="url(#mh-intro-cut)">
+              {PETALS.map((p, i) => (
+                <g key={i} transform={`rotate(${p.rotate})`}>
+                  <g
+                    ref={(el) => {
+                      fillRefs.current[i] = el;
+                    }}
+                    transform={initial[i].transform}
+                    opacity={initial[i].opacity}
+                  >
+                    <ellipse cx={p.cx} cy={p.cy} rx={p.rx} ry={p.ry} className={HUE_CLASS[p.hue]} />
+                  </g>
+                </g>
               ))}
             </g>
-            <circle cx={5} cy={1} r={14} fill="rgb(var(--bg))" />
           </g>
         </svg>
         <span className="mh-intro-wordmark">megahana</span>
