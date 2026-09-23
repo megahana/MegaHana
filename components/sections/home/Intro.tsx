@@ -3,6 +3,14 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { animate, cubicBezier, motionValue, type AnimationPlaybackControls } from "framer-motion";
 import { useTranslations } from "next-intl";
+import {
+  LOGO_CENTER,
+  LOGO_ORIGIN,
+  LOGO_VIEWBOX,
+  PETALS,
+  PETAL_FILL_CLASS,
+  SEPARATOR_WIDTH,
+} from "@/lib/logo-geometry";
 
 /**
  * Intro d'accueil — chorégraphie "Éclosion contenue" (piste B, choisie le
@@ -13,7 +21,7 @@ import { useTranslations } from "next-intl";
  * s'efface d'un bloc. Plus de recul vers le logo du header. Total ≈ 1,28s
  * depuis le montage (détail dans le bloc "Chorégraphie" plus bas).
  *
- * Logo : SVG fidèle à app/icon.png (5 ellipses, cf. PETALS). Séparations et
+ * Logo : SVG fidèle à app/icon.png (géométrie partagée : lib/logo-geometry.ts). Séparations et
  * cœur réellement transparents via un <mask> — et non plus peints en couleur
  * de fond, ce qui ne tenait que sur un fond opaque.
  *
@@ -38,46 +46,6 @@ import { useTranslations } from "next-intl";
 
 const SESSION_KEY = "introPlayed";
 const HEADER_LOGO_ID = "mh-header-logo";
-
-/* ── Géométrie du logo ─────────────────────────────────────────────────────
-   Fidélité mesurée contre app/icon.png (rendu 1254 px, masques alpha comparés
-   pixel par pixel, sans réajustement) : 99,66 % de recouvrement, couleurs
-   identiques à --sakura / --gold. */
-
-/** Taille du viewBox carré (unités SVG). */
-const LOGO_VIEWBOX = 200;
-
-/** Point d'attache des pétales : reproduit exactement le cadrage de app/icon.png. */
-const LOGO_ORIGIN = { x: 104, y: 103.45 };
-
-type PetalHue = "sakura" | "gold";
-
-interface Petal {
-  cx: number;
-  cy: number;
-  rx: number;
-  ry: number;
-  /** Rotation (degrés) autour du point d'attache. */
-  rotate: number;
-  hue: PetalHue;
-}
-
-/** Coordonnées exactes des 5 pétales — ordre = sens horaire depuis le haut, et ordre de peinture. */
-const PETALS: readonly Petal[] = [
-  { cx: 0, cy: -52, rx: 25, ry: 50, rotate: -8, hue: "sakura" },
-  { cx: 4, cy: -40, rx: 19, ry: 36, rotate: 65, hue: "gold" },
-  { cx: -2, cy: -54, rx: 21, ry: 50, rotate: 155, hue: "sakura" },
-  { cx: 3, cy: -32, rx: 15, ry: 30, rotate: 218, hue: "gold" },
-  { cx: -3, cy: -44, rx: 18, ry: 40, rotate: 292, hue: "sakura" },
-];
-
-/** Cœur transparent, relatif au point d'attache. */
-const LOGO_CENTER = { cx: 5, cy: 1, r: 14 };
-
-/** Épaisseur des séparations transparentes entre pétales (unités SVG). */
-const SEPARATOR_WIDTH = 3;
-
-const HUE_CLASS: Record<PetalHue, string> = { sakura: "fill-sakura", gold: "fill-gold" };
 
 /* ── Chorégraphie (ms) ─────────────────────────────────────────────────────
    t=0                         : mount — overlay plein, mot « megahana »
@@ -369,7 +337,13 @@ export function Intro() {
                     transform={initial[i].transform}
                     opacity={initial[i].opacity}
                   >
-                    <ellipse cx={p.cx} cy={p.cy} rx={p.rx} ry={p.ry} className={HUE_CLASS[p.hue]} />
+                    <ellipse
+                      cx={p.cx}
+                      cy={p.cy}
+                      rx={p.rx}
+                      ry={p.ry}
+                      className={PETAL_FILL_CLASS[p.hue]}
+                    />
                   </g>
                 </g>
               ))}

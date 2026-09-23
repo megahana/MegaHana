@@ -847,52 +847,109 @@ h3,
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   ImageWithLoader (components/ui/ImageWithLoader.tsx) — animation de
-   chargement des images basée sur le logo, appliquée pour l'instant aux
-   seules cartes "Sites vitrines" de /portfolio (ShowcaseGrid.tsx). ═══ */
-.mh-image-loader {
-  --mh-image-loader-reveal-delay: 150ms;
-  --mh-image-loader-fade-duration: 200ms;
-  --mh-image-loader-breathe-duration: 1800ms;
-  --mh-image-loader-opacity-min: 0.55;
+   ImageWithLoader (components/ui/ImageWithLoader.tsx) — chargement des
+   images aux couleurs du logo, appliqué pour l'instant aux seules cartes
+   "Sites vitrines" de /portfolio (ShowcaseGrid.tsx).
 
+   Attente : voile --surface-2 + fleur du logo dont les pétales respirent.
+   Arrivée : le voile se dissout pendant que l'image passe du flou au net.
+   L'image n'est jamais à opacity 0 (seulement floutée sous le voile) : elle
+   est peinte dès son chargement, le LCP n'attend pas la révélation.
+
+   data-state (posé sur .mh-image-loader) : idle (avant montage — ni voile ni
+   flou, image visible sans JS) · loading · loaded · error. ═══ */
+.mh-image-loader {
+  /* Attente avant d'afficher le voile : rien ne clignote sur une image
+     rapide ou en cache. */
+  --mh-image-loader-reveal-delay: 120ms;
+  --mh-image-loader-veil-in: 200ms;
+  /* Le flou n'est posé qu'une fois le voile totalement opaque. */
+  --mh-image-loader-blur-delay: 320ms;
+  --mh-image-loader-blur: 12px;
+  --mh-image-loader-veil-out: 500ms;
+  --mh-image-loader-veil-out-delay: 80ms;
+  --mh-image-loader-sharpen: 550ms;
+  --mh-image-loader-breathe-duration: 2600ms;
+}
+
+.mh-image-loader-media {
+  transition: filter var(--mh-image-loader-sharpen) ease-out;
+}
+.mh-image-loader[data-state="loading"] .mh-image-loader-media {
+  filter: blur(var(--mh-image-loader-blur));
+  transition: filter 0s linear var(--mh-image-loader-blur-delay);
+}
+
+.mh-image-loader-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  background: rgb(var(--surface-2));
   opacity: 0;
   visibility: hidden;
-
   transition:
-    opacity var(--mh-image-loader-fade-duration) ease-out,
-    visibility 0s linear var(--mh-image-loader-fade-duration);
+    opacity var(--mh-image-loader-veil-out) ease-out var(--mh-image-loader-veil-out-delay),
+    visibility 0s linear
+      calc(var(--mh-image-loader-veil-out) + var(--mh-image-loader-veil-out-delay));
 }
-
-.mh-image-loader[data-visible="true"] {
+.mh-image-loader[data-state="loading"] .mh-image-loader-veil {
   opacity: 1;
   visibility: visible;
+  transition: opacity var(--mh-image-loader-veil-in) ease-out var(--mh-image-loader-reveal-delay);
 }
 
-/* Évite de faire clignoter la fleur sur un chargement rapide/en cache. */
 .mh-image-loader-mark {
   opacity: 0;
+  animation: mh-image-loader-fade-in 300ms ease-out var(--mh-image-loader-reveal-delay) forwards;
+}
+/* Transform CSS ancré sur l'origine du repère SVG local (= point d'attache
+   du pétale, cf. le <g rotate()> parent) : view-box + 0 0 reproduit le
+   comportement d'un attribut transform SVG. Tous les pétales ensemble. */
+.mh-image-loader-petal {
+  transform-box: view-box;
+  transform-origin: 0 0;
   animation: mh-image-loader-breathe var(--mh-image-loader-breathe-duration) ease-in-out
     var(--mh-image-loader-reveal-delay) infinite;
 }
+/* Plus d'animation sous un voile devenu invisible. */
+.mh-image-loader:not([data-state="loading"]) .mh-image-loader-petal {
+  animation-play-state: paused;
+}
 
+@keyframes mh-image-loader-fade-in {
+  to {
+    opacity: 1;
+  }
+}
 @keyframes mh-image-loader-breathe {
   0%,
   100% {
-    opacity: var(--mh-image-loader-opacity-min);
+    transform: scale(1, 1);
   }
   50% {
-    opacity: 1;
+    transform: scale(0.82, 0.7);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mh-image-loader {
+  .mh-image-loader-media,
+  .mh-image-loader-veil,
+  .mh-image-loader[data-state="loading"] .mh-image-loader-veil {
     transition: none;
+  }
+  .mh-image-loader[data-state="loading"] .mh-image-loader-media {
+    filter: none;
   }
   .mh-image-loader-mark {
     animation: none;
     opacity: 1;
+  }
+  .mh-image-loader-petal {
+    animation: none;
   }
 }
 
