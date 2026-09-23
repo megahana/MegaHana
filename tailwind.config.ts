@@ -6,6 +6,11 @@ const config: Config = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    // lib/ contient aussi des noms de classes (ex. PETAL_FILL_CLASS dans
+    // lib/logo-geometry.ts : fill-sakura / fill-gold) : sans ce chemin, ces
+    // classes ne sont jamais générées et les pétales du logo s'affichent en
+    // noir (fill SVG par défaut).
+    "./lib/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {

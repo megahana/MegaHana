@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowDown, ArrowRight, CheckCircle2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -112,9 +112,10 @@ export function Hero() {
           globals.css), lien réel vers #galerie (id posé sur Galerie.tsx). */}
       <a href="#galerie" className="hero-scroll-cue">
         <span>{t("scrollCue")}</span>
-        <span className="hero-scroll-cue-arrow" aria-hidden="true">
-          ↓
-        </span>
+        {/* Icône vectorielle et non le caractère « ↓ » : Fraunces (sous-ensemble latin)
+            n'a pas ce glyphe, le navigateur le dessinait dans une police système
+            (Times New Roman sous Windows). */}
+        <ArrowDown className="hero-scroll-cue-arrow" aria-hidden="true" strokeWidth={1.75} />
       </a>
     </section>
   );
