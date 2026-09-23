@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fraunces, Inter, Inter_Tight } from "next/font/google";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
+import { Analytics } from "@vercel/analytics/next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import "../globals.css";
@@ -39,6 +40,7 @@ const themeScript = `(function(){try{
   if(!cookieVal&&stored){document.cookie='theme='+stored+'; path=/; max-age=31536000; samesite=lax';}
 }catch(e){}})();`;
 import { SITE_URL, LINKEDIN_STUDIO_URL } from "@/lib/site";
+import { introSkipScript } from "@/lib/intro";
 import { cn } from "@/lib/utils";
 import { routing } from "@/i18n/routing";
 import { Header } from "@/components/layout/Header";
@@ -120,7 +122,11 @@ export default async function LocaleLayout({
       )}
     >
       <body className="bg-background text-text-primary antialiased">
-        <InsertedScripts themeScript={themeScript} jsonLd={JSON.stringify(organizationJsonLd)} />
+        <InsertedScripts
+          themeScript={themeScript}
+          introSkipScript={introSkipScript}
+          jsonLd={JSON.stringify(organizationJsonLd)}
+        />
         <NextIntlClientProvider>
           <MotionConfigProvider>
             <Header />
@@ -129,6 +135,14 @@ export default async function LocaleLayout({
             <MobileCtaBanner />
           </MotionConfigProvider>
         </NextIntlClientProvider>
+        {/* Vercel Web Analytics (sans cookie, statistiques agrégées). Rendu en
+            production seulement : en dev, le composant charge un script de
+            débogage depuis va.vercel-scripts.com, bloqué par la CSP
+            (script-src 'self', next.config.mjs). En production, script et
+            envois passent par /_vercel/insights (même origine). Monté une
+            fois ici ; même si ce layout se remonte au changement de langue,
+            inject() ne réinsère pas un script déjà présent dans <head>. */}
+        {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
     </html>
   );

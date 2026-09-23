@@ -11,6 +11,7 @@ import {
   PETAL_FILL_CLASS,
   SEPARATOR_WIDTH,
 } from "@/lib/logo-geometry";
+import { INTRO_SESSION_KEY } from "@/lib/intro";
 
 /**
  * Intro d'accueil — chorégraphie "Éclosion contenue" (piste B, choisie le
@@ -44,7 +45,6 @@ import {
  * l'intro (le temps que React réhydrate).
  */
 
-const SESSION_KEY = "introPlayed";
 const HEADER_LOGO_ID = "mh-header-logo";
 
 /* ── Chorégraphie (ms) ─────────────────────────────────────────────────────
@@ -181,7 +181,7 @@ export function Intro() {
 
     let played = false;
     try {
-      played = sessionStorage.getItem(SESSION_KEY) === "1";
+      played = sessionStorage.getItem(INTRO_SESSION_KEY) === "1";
     } catch {
       played = false;
     }
@@ -206,7 +206,7 @@ export function Intro() {
     if (reduced) {
       overlay.classList.add("mh-intro-overlay--hidden");
       try {
-        sessionStorage.setItem(SESSION_KEY, "1");
+        sessionStorage.setItem(INTRO_SESSION_KEY, "1");
       } catch {
         /* sessionStorage indisponible (navigation privée…) — tant pis, l'intro rejouera. */
       }
@@ -252,7 +252,7 @@ export function Intro() {
     // masquait instantanément, sans jamais jouer l'animation.
     after(SESSION_MARK_DELAY, () => {
       try {
-        sessionStorage.setItem(SESSION_KEY, "1");
+        sessionStorage.setItem(INTRO_SESSION_KEY, "1");
       } catch {
         /* sessionStorage indisponible — pas bloquant, juste pas de garde inter-pages. */
       }
