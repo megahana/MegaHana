@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useMobileMarqueeAutoScroll } from "./useMobileMarqueeAutoScroll";
 
 /**
  * Seule partie interactive de la Galerie : l'état pause/lecture et le
@@ -11,6 +12,10 @@ import { cn } from "@/lib/utils";
  * poser dans son propre wrapper .marquee-stack et d'y toggler la classe
  * .paused (cf. sélecteur CSS partagé avec :hover/:focus-within dans
  * Galerie.tsx, les trois méthodes de pause coexistent).
+ *
+ * En mobile, le défilement n'est plus une animation CSS mais un défilement
+ * réel piloté par useMobileMarqueeAutoScroll (swipe natif conservé) : le
+ * même état `paused` le suspend, pour que le bouton ait le même effet partout.
  */
 export function MarqueeControls({
   pauseLabel,
@@ -22,6 +27,8 @@ export function MarqueeControls({
   children: React.ReactNode;
 }) {
   const [paused, setPaused] = useState(false);
+  const stackRef = useRef<HTMLDivElement>(null);
+  useMobileMarqueeAutoScroll(stackRef, paused);
 
   return (
     <>
@@ -39,7 +46,9 @@ export function MarqueeControls({
           )}
         </button>
       </div>
-      <div className={cn("marquee-stack", paused && "paused")}>{children}</div>
+      <div ref={stackRef} className={cn("marquee-stack", paused && "paused")}>
+        {children}
+      </div>
     </>
   );
 }
