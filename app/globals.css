@@ -35,7 +35,10 @@
   --accent-light: 165 84 37;
   --accent-contrast: 250 247 242;
   /* Variante accessible du terracotta — WCAG AA (~4.8:1 sur ivoire), usage
-     ciblé là où --accent seul échoue le contraste (voir tailwind.config.ts). */
+     ciblé là où --accent seul échoue le contraste (voir tailwind.config.ts).
+     Rôle : FOND sous texte ivoire (--accent-contrast), contours de focus,
+     icônes. Pas pour du texte courant : en sombre il ne fait que 3,35:1 sur
+     --bg — le texte accent passe par --accent-light (AA dans les 2 thèmes). */
   --accent-accessible: 176 82 38;
 
   /* Accents décoratifs de marque — jamais en fond plein sur de grandes surfaces */
@@ -277,11 +280,25 @@ h3,
   font-size: 15px;
   color: rgb(var(--accent-accessible));
   text-decoration: none;
-  transition: opacity 0.2s ease;
 }
-.hero-scroll-cue:hover,
-.hero-scroll-cue:focus-visible {
-  opacity: 0.75;
+/* Sombre : --accent-accessible est un token de FOND (texte ivoire posé
+   dessus, 4,82:1) et ne peut pas servir en même temps de couleur de texte
+   sur le charbon (3,35:1, sous l'AA 4,5:1) — aucune valeur unique ne
+   satisfait les deux rôles (texte accent ≥4,5:1 sur charbon ⇒ luminance
+   ≥0,224 ; texte ivoire ≥4,5:1 sur l'accent ⇒ ≤0,168). Le texte passe donc
+   par --accent-light, le token texte accessible du site (6,19:1 ici). Clair
+   inchangé. */
+.dark .hero-scroll-cue {
+  color: rgb(var(--accent-light));
+}
+/* Survol/focus : soulignement du mot, couleur pleine conservée. Une baisse
+   d'opacité (0.75 auparavant) faisait retomber le contraste sous l'AA
+   (3,4:1 en clair). */
+.hero-scroll-cue:hover > span,
+.hero-scroll-cue:focus-visible > span {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
 }
 .hero-scroll-cue:focus-visible {
   outline: 2px solid rgb(var(--accent-accessible));
@@ -714,7 +731,9 @@ h3,
 }
 
 /* Sous 920px (et hors reduced-motion, géré séparément ci-dessus) : plus
-   d'auto-scroll du tout — défilement manuel au doigt à la place. Condition
+   d'animation CSS — un vrai conteneur défilant au doigt à la place, que
+   useMobileMarqueeAutoScroll (MarqueeControls.tsx) fait avancer tout seul
+   (même vitesse que le desktop, pause au toucher, reprise 2,5s après). Condition
    sur (prefers-reduced-motion: no-preference), pas juste (max-width:
    920px), pour ne jamais entrer en conflit avec le bloc reduced-motion
    (source order oblige sinon) : les deux media queries sont mutuellement
@@ -733,8 +752,19 @@ h3,
   .card {
     scroll-snap-align: start;
   }
-  .marquee-dup {
+  /* Copies dupliquées visibles : elles servent la boucle infinie de
+     l'auto-défilement (toujours aria-hidden, liens hors tabulation). */
+  /* Pas de barre de défilement native (le swipe, lui, reste intact). */
+  .marquee-viewport {
+    scrollbar-width: none;
+  }
+  .marquee-viewport::-webkit-scrollbar {
     display: none;
+  }
+  /* Aimantation coupée pendant l'auto-défilement seulement : elle ramènerait
+     sinon sans cesse la rangée sur la carte la plus proche. */
+  .marquee-viewport[data-autoscroll="on"] {
+    scroll-snap-type: none;
   }
 }
 @media (max-width: 920px) and (prefers-reduced-motion: reduce) {
@@ -784,6 +814,14 @@ h3,
   cursor: pointer;
 }
 .mh-intro-overlay--hidden {
+  display: none;
+}
+/* Anti-flash : data-intro="skip" est posé sur <html> AVANT le premier paint
+   (script inline, lib/intro.ts) quand l'intro ne jouera pas — session déjà
+   vue ou mouvement réduit. Sans cette règle, le HTML serveur peignait
+   l'overlay (mot « megahana » + bouton « Passer l'intro ») jusqu'à
+   l'hydratation, Intro.tsx ne le masquant qu'après. */
+html[data-intro="skip"] .mh-intro-overlay {
   display: none;
 }
 .mh-intro-overlay--fading {
