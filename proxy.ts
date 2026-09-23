@@ -8,6 +8,9 @@ export default createMiddleware(routing);
 
 export const config = {
   // Applique le proxy à toutes les routes sauf API, fichiers Next internes,
-  // et les fichiers statiques racine (sitemap, robots, icônes, images, og…).
-  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
+  // fichiers statiques racine (sitemap, robots, icônes, images, og…), et le
+  // labo interne /dev/* (app/dev/, gitignoré, hors [locale] : jamais préfixé
+  // par une langue). "dev/" et non "dev" : une future page /devis ou
+  // /developpement doit garder son routage FR/EN.
+  matcher: ["/((?!api|_next|_vercel|dev/|.*\\..*).*)"],
 };

@@ -10,3 +10,7 @@ build/
 *.tsbuildinfo
 .DS_Store
 .claude/
+CLAUDE.md
+
+# Labo interne permanent (/dev/lab), local uniquement — voir app/dev/lab/README.md
+app/dev/

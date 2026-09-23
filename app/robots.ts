@@ -6,7 +6,10 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: "/api/",
+      // /dev/ : labo interne (app/dev/, gitignoré, jamais déployé). Exclusion
+      // permanente en défense en profondeur, au cas où il serait un jour
+      // publié par erreur (noindex et absence du sitemap s'y ajoutent).
+      disallow: ["/api/", "/dev/"],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
   };
