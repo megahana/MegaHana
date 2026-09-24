@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef } from "react";
-import { animate, cubicBezier, motionValue, type AnimationPlaybackControls } from "framer-motion";
+import { animate, motionValue, type AnimationPlaybackControls } from "framer-motion";
 import { useTranslations } from "next-intl";
 import {
   LOGO_CENTER,
@@ -12,6 +12,7 @@ import {
   SEPARATOR_WIDTH,
 } from "@/lib/logo-geometry";
 import { INTRO_SESSION_KEY } from "@/lib/intro";
+import { BLOOM_TOTAL_MS, bloomState } from "@/lib/logo-bloom";
 
 /**
  * Intro d'accueil — chorégraphie "Éclosion contenue" (piste B, choisie le
@@ -22,7 +23,8 @@ import { INTRO_SESSION_KEY } from "@/lib/intro";
  * s'efface d'un bloc. Plus de recul vers le logo du header. Total ≈ 1,28s
  * depuis le montage (détail dans le bloc "Chorégraphie" plus bas).
  *
- * Logo : SVG fidèle à app/icon.png (géométrie partagée : lib/logo-geometry.ts). Séparations et
+ * Logo : SVG fidèle à app/icon.png (géométrie partagée : lib/logo-geometry.ts ;
+ * chorégraphie d'éclosion partagée avec le formulaire de contact : lib/logo-bloom.ts). Séparations et
  * cœur réellement transparents via un <mask> — et non plus peints en couleur
  * de fond, ce qui ne tenait que sur un fond opaque.
  *
@@ -60,47 +62,10 @@ const HEADER_LOGO_ID = "mh-header-logo";
                                   depuis le montage.
    Secours : setTimeout (durée CSS + marge) si transitionend ne vient jamais. */
 const SESSION_MARK_DELAY = 50;
-/** Longueur de départ d'un pétale (fraction de sa longueur finale). */
-const PETAL_START_LENGTH = 0.35;
-/** Largeur de départ d'un pétale (fraction de sa largeur finale). */
-const PETAL_START_WIDTH = 0.6;
-/** Angle de départ, légèrement refermé (≤ 5° : au-delà, lecture "spinner"). */
-const PETAL_START_ANGLE_DEG = -5;
-const PETAL_DURATION_MS = 650;
-const PETAL_FADE_MS = 250;
-const PETAL_STAGGER_MS = 50;
-const MOTION_MS = (PETALS.length - 1) * PETAL_STAGGER_MS + PETAL_DURATION_MS;
+const MOTION_MS = BLOOM_TOTAL_MS;
 const HOLD_MS = 100;
 /** Dupliqué dans app/globals.css (.mh-intro-overlay--fading). */
 const FADE_DURATION_MS = 280;
-
-/** Décélération douce, sans dépassement (pas de rebond élastique). */
-const easeOutSoft = cubicBezier(0.22, 1, 0.36, 1);
-
-function progress(t: number, startMs: number, durationMs: number): number {
-  return Math.min(1, Math.max(0, (t - startMs) / durationMs));
-}
-
-function lerp(from: number, to: number, p: number): number {
-  return from + (to - from) * p;
-}
-
-function round(n: number): number {
-  return Math.round(n * 1000) / 1000;
-}
-
-/** État d'un pétale à l'instant t, dans son propre repère (ancré au point d'attache). */
-function petalState(index: number, t: number) {
-  const start = index * PETAL_STAGGER_MS;
-  const p = easeOutSoft(progress(t, start, PETAL_DURATION_MS));
-  const rotate = round(PETAL_START_ANGLE_DEG * (1 - p));
-  const sx = round(lerp(PETAL_START_WIDTH, 1, p));
-  const sy = round(lerp(PETAL_START_LENGTH, 1, p));
-  return {
-    transform: `rotate(${rotate}) scale(${sx} ${sy})`,
-    opacity: round(easeOutSoft(progress(t, start, PETAL_FADE_MS))),
-  };
-}
 
 // useLayoutEffect ne fait rien côté serveur (React émet un warning dev sinon) :
 // alias isomorphe standard, pour rester sur useEffect pendant le SSR.
@@ -229,7 +194,7 @@ export function Intro() {
     const time = motionValue(0);
     const unsubscribe = time.on("change", (now) => {
       PETALS.forEach((_, i) => {
-        const state = petalState(i, now);
+        const state = bloomState(i, now);
         fillRefs.current[i]?.setAttribute("transform", state.transform);
         fillRefs.current[i]?.setAttribute("opacity", String(state.opacity));
         cutRefs.current[i]?.setAttribute("transform", state.transform);
@@ -273,7 +238,7 @@ export function Intro() {
   }, []);
 
   // Premier rendu (serveur et client) : pétales dans leur état de départ.
-  const initial = PETALS.map((_, i) => petalState(i, 0));
+  const initial = PETALS.map((_, i) => bloomState(i, 0));
 
   return (
     <div ref={overlayRef} className="mh-intro-overlay">

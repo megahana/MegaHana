@@ -992,6 +992,49 @@ html[data-intro="skip"] .mh-intro-overlay {
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════════════
+   Envoi du formulaire de contact (ContactForm.tsx) — bourgeon du bouton.
+   N'apparaît qu'après 150ms (un envoi confirmé plus vite ne montre rien),
+   puis respire : échelle ancrée au point d'attache de chaque pétale, tous
+   ensemble (jamais en vague autour du cœur), même principe que la fleur
+   d'ImageWithLoader. ═══ */
+.mh-send-bud {
+  opacity: 0;
+  animation: mh-send-bud-in 200ms ease-out 150ms forwards;
+}
+.mh-send-bud-petal {
+  transform-box: view-box;
+  transform-origin: 0 0;
+  animation: mh-send-bud-breathe 1.8s ease-in-out 150ms infinite;
+}
+/* Confirmation reçue : l'apparition du bourgeon est figée. Pendant le fondu
+   de sortie du formulaire, framer-motion garde le formulaire tel qu'il était
+   (bouton « envoi », bourgeon compris) : sans ça, un envoi confirmé en moins
+   de 150ms laisserait le bourgeon apparaître pendant ce fondu. Déjà visible,
+   il s'efface simplement avec le formulaire. */
+[data-contact-status="success"] .mh-send-bud {
+  animation-play-state: paused;
+}
+@keyframes mh-send-bud-in {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes mh-send-bud-breathe {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(0.88, 0.8);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mh-send-bud {
+    display: none;
+  }
+}
+
 /* Étude de cas MegaReco (ProjectCaseStudy.tsx) — fond toujours sombre, y
    compris en thème clair du site (identité MegaReco, indépendante du thème
    Megahana, voir MEGARECO_DARK_BG). "Problème"/"résultat" distingués par un

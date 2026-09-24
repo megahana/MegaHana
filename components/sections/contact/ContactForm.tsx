@@ -1,11 +1,15 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useCallback, useEffect, useState, type FormEvent } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
+import { BloomingLogoFlower, LogoFlower } from "@/components/ui/LogoFlower";
+import { PetalDispersion } from "@/components/sections/contact/PetalDispersion";
 import { cn } from "@/lib/utils";
 import { CONTACT_FORM_EMAIL } from "@/lib/site";
+import { BLOOM_EASE, BUD_PETAL_STATE } from "@/lib/logo-bloom";
 
 const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 
@@ -16,6 +20,22 @@ export type SubjectOption = (typeof SUBJECT_OPTIONS)[number];
 
 type Status = "idle" | "submitting" | "success" | "invalid" | "error";
 type FieldErrors = Partial<Record<"name" | "email" | "message", string>>;
+
+/* Animation d'envoi (choisie au labo interne : « éclosion + dispersion
+   contenue »). Attente : un bourgeon respire dans le bouton, seulement si
+   l'envoi dure (apparition après 150ms, CSS .mh-send-bud dans globals.css).
+   Confirmation : le formulaire s'efface (FORM_EXIT_MS), puis le bloc de succès
+   entre (SUCCESS_ENTER_MS, léger glissé) avec une fleur qui éclot
+   (lib/logo-bloom.ts, comme l'intro) et 5 pétales qui se dispersent derrière
+   lui (PetalDispersion). L'annonce part à la confirmation ; le focus suit
+   quand le bloc apparaît (≈FORM_EXIT_MS plus tard — décalage accepté).
+   Mouvement réduit : ni bourgeon ni pétales, fleur ouverte, bascule
+   instantanée. Chemin d'erreur : aucune animation. */
+const FORM_EXIT_MS = 200;
+const SUCCESS_ENTER_MS = 300;
+const SUCCESS_ENTER_OFFSET_PX = 8;
+const BUD_SIZE_PX = 28;
+const SUCCESS_FLOWER_SIZE_PX = 40;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -32,8 +52,26 @@ export function ContactForm({ initialSubjectOption, initialMessage }: ContactFor
   const t = useTranslations("Contact.form");
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<FieldErrors>({});
-
   const isSubmitting = status === "submitting";
+
+  // Mouvement réduit : garde-fou "mounted" (même pattern que ThemeToggle.tsx) —
+  // useReducedMotion() vaut null côté serveur mais sa vraie valeur dès le
+  // premier rendu client ; avant montage, on suppose "pas de préférence".
+  const prefersReducedMotion = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
+  const reduceMotion = mounted && !!prefersReducedMotion;
+
+  // Le bouton d'envoi (qui avait le focus) disparaît avec le formulaire au
+  // succès : sans ça, le focus retombait en haut de page. On le pose sur le
+  // titre du bloc de succès dès que celui-ci est monté (il n'arrive qu'après
+  // le fondu du formulaire) : il devient le point de départ du Tab suivant.
+  const focusSuccessHeading = useCallback((heading: HTMLHeadingElement | null) => {
+    heading?.focus();
+  }, []);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -119,158 +157,222 @@ export function ContactForm({ initialSubjectOption, initialMessage }: ContactFor
     }
   }
 
-  if (status === "success") {
-    return (
-      <div role="status" className="rounded-2xl border border-border bg-surface-2 p-6 sm:p-8">
-        <h3 className="text-lg font-bold text-text-primary mb-2">{t("successTitle")}</h3>
-        <p className="text-text-secondary leading-relaxed">{t("successText")}</p>
-      </div>
-    );
-  }
-
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-5">
-      {/* Honeypot anti-spam : caché visuellement ET hors du parcours clavier
+    // data-contact-status : fige l'apparition du bourgeon dès la confirmation
+    // (le formulaire en cours de fondu garde son bouton « envoi », cf. globals.css).
+    <div data-contact-status={status}>
+      {/* Zone d'annonce du succès, TOUJOURS montée et vide jusqu'à la
+          confirmation : les lecteurs d'écran (NVDA/JAWS notamment)
+          n'annoncent de façon fiable que le texte qui arrive dans une zone
+          live déjà présente — pas une zone insérée avec son texte déjà dedans
+          (ce que faisait l'ancien bloc de succès role="status"). Même élément
+          au même emplacement quel que soit l'état : React ne la recrée
+          jamais. Visuellement masquée, et indépendante de l'animation du
+          bloc visible ci-dessous (qui n'arrive qu'après le fondu du
+          formulaire) : l'annonce n'est jamais retardée. */}
+      <p role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+        {status === "success" ? `${t("successTitle")}. ${t("successText")}` : ""}
+      </p>
+
+      <AnimatePresence mode="wait" initial={false}>
+        {status === "success" ? (
+          <motion.div
+            key="success"
+            initial={{ opacity: 0, y: SUCCESS_ENTER_OFFSET_PX }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: reduceMotion ? 0 : SUCCESS_ENTER_MS / 1000, ease: BLOOM_EASE }}
+          >
+            {/* isolate : la dispersion (z-0) reste sous la carte (z-10) sans
+                passer sous le reste de la page. */}
+            <div className="relative isolate">
+              {!reduceMotion && <PetalDispersion />}
+              <div className="relative z-10 rounded-2xl border border-border bg-surface-2 p-6 sm:p-8">
+                <div className="flex items-start gap-4">
+                  <BloomingLogoFlower
+                    size={SUCCESS_FLOWER_SIZE_PX}
+                    reducedMotion={reduceMotion}
+                    className="shrink-0"
+                  />
+                  <div>
+                    {/* Cible du focus après confirmation (non interactif : pas dans
+              l'ordre de tabulation, contour de focus neutralisé pour ne rien
+              changer visuellement). scroll-mt : quand le focus ramène le
+              titre à l'écran (formulaire long remplacé par ce bloc court), il
+              s'arrête sous le header fixe au lieu de passer dessous — même
+              marge que la section #discuss de la page. */}
+                    <h3
+                      ref={focusSuccessHeading}
+                      tabIndex={-1}
+                      className="text-lg font-bold text-text-primary mb-2 focus:outline-none scroll-mt-20 md:scroll-mt-24"
+                    >
+                      {t("successTitle")}
+                    </h3>
+                    <p className="text-text-secondary leading-relaxed">{t("successText")}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="form"
+            exit={{ opacity: 0 }}
+            transition={{ duration: reduceMotion ? 0 : FORM_EXIT_MS / 1000, ease: "easeOut" }}
+          >
+            <form onSubmit={handleSubmit} noValidate className="space-y-5">
+              {/* Honeypot anti-spam : caché visuellement ET hors du parcours clavier
           (tabIndex={-1}, aria-hidden), en plus de la protection native
           Web3Forms (hCaptcha/reCAPTCHA v3 côté service). */}
-      <div className="hidden" aria-hidden="true">
-        <label htmlFor="botcheck">{t("honeypotLabel")}</label>
-        <input type="text" id="botcheck" name="botcheck" tabIndex={-1} autoComplete="off" />
-      </div>
+              <div className="hidden" aria-hidden="true">
+                <label htmlFor="botcheck">{t("honeypotLabel")}</label>
+                <input type="text" id="botcheck" name="botcheck" tabIndex={-1} autoComplete="off" />
+              </div>
 
-      <p className="text-sm text-text-muted">{t("requiredNote")}</p>
+              <p className="text-sm text-text-muted">{t("requiredNote")}</p>
 
-      {status === "error" && (
-        <div role="alert" className="rounded-xl border border-primary/30 bg-primary/5 p-4">
-          <p className="text-sm text-text-primary">{t("errorGeneral")}</p>
-          <a
-            href={`mailto:${CONTACT_FORM_EMAIL}`}
-            className="inline-block mt-2 text-sm font-medium text-primary-light hover:underline"
-          >
-            {CONTACT_FORM_EMAIL}
-          </a>
-        </div>
-      )}
+              {status === "error" && (
+                <div role="alert" className="rounded-xl border border-primary/30 bg-primary/5 p-4">
+                  <p className="text-sm text-text-primary">{t("errorGeneral")}</p>
+                  <a
+                    href={`mailto:${CONTACT_FORM_EMAIL}`}
+                    className="inline-block mt-2 text-sm font-medium text-primary-light hover:underline"
+                  >
+                    {CONTACT_FORM_EMAIL}
+                  </a>
+                </div>
+              )}
 
-      <div>
-        <label
-          htmlFor="contact-name"
-          className="block text-sm font-medium text-text-primary mb-1.5"
-        >
-          {t("nameLabel")}
-        </label>
-        <input
-          id="contact-name"
-          name="name"
-          type="text"
-          autoComplete="name"
-          placeholder={t("namePlaceholder")}
-          aria-invalid={!!errors.name || undefined}
-          aria-describedby={errors.name ? "contact-name-error" : undefined}
-          className={cn(
-            "w-full rounded-xl border bg-surface px-4 py-2.5 text-sm text-text-primary placeholder:text-text-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
-            errors.name ? "border-primary" : "border-border",
-          )}
-        />
-        {errors.name && (
-          <p id="contact-name-error" className="mt-1.5 text-xs text-primary-light">
-            {errors.name}
-          </p>
+              <div>
+                <label
+                  htmlFor="contact-name"
+                  className="block text-sm font-medium text-text-primary mb-1.5"
+                >
+                  {t("nameLabel")}
+                </label>
+                <input
+                  id="contact-name"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  placeholder={t("namePlaceholder")}
+                  aria-invalid={!!errors.name || undefined}
+                  aria-describedby={errors.name ? "contact-name-error" : undefined}
+                  className={cn(
+                    "w-full rounded-xl border bg-surface px-4 py-2.5 text-sm text-text-primary placeholder:text-text-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
+                    errors.name ? "border-primary" : "border-border",
+                  )}
+                />
+                {errors.name && (
+                  <p id="contact-name-error" className="mt-1.5 text-xs text-primary-light">
+                    {errors.name}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="contact-email"
+                  className="block text-sm font-medium text-text-primary mb-1.5"
+                >
+                  {t("emailLabel")}
+                </label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder={t("emailPlaceholder")}
+                  aria-invalid={!!errors.email || undefined}
+                  aria-describedby={errors.email ? "contact-email-error" : undefined}
+                  className={cn(
+                    "w-full rounded-xl border bg-surface px-4 py-2.5 text-sm text-text-primary placeholder:text-text-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
+                    errors.email ? "border-primary" : "border-border",
+                  )}
+                />
+                {errors.email && (
+                  <p id="contact-email-error" className="mt-1.5 text-xs text-primary-light">
+                    {errors.email}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="contact-subject"
+                  className="block text-sm font-medium text-text-primary mb-1.5"
+                >
+                  {t("subjectLabel")}
+                </label>
+                <select
+                  id="contact-subject"
+                  name="subjectOption"
+                  defaultValue={initialSubjectOption ?? ""}
+                  className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm text-text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                >
+                  <option value="">{t("subjectPlaceholder")}</option>
+                  {SUBJECT_OPTIONS.map((option) => (
+                    <option key={option} value={option}>
+                      {t(`subjectOptions.${option}`)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="contact-message"
+                  className="block text-sm font-medium text-text-primary mb-1.5"
+                >
+                  {t("messageLabel")}
+                </label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  rows={5}
+                  defaultValue={initialMessage}
+                  placeholder={t("messagePlaceholder")}
+                  aria-invalid={!!errors.message || undefined}
+                  aria-describedby={errors.message ? "contact-message-error" : undefined}
+                  className={cn(
+                    "w-full rounded-xl border bg-surface px-4 py-2.5 text-sm text-text-primary placeholder:text-text-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 resize-y",
+                    errors.message ? "border-primary" : "border-border",
+                  )}
+                />
+                {errors.message && (
+                  <p id="contact-message-error" className="mt-1.5 text-xs text-primary-light">
+                    {errors.message}
+                  </p>
+                )}
+              </div>
+
+              <Button
+                type="submit"
+                variant="primary"
+                size="lg"
+                disabled={isSubmitting}
+                className="w-full sm:w-auto"
+              >
+                {isSubmitting && !reduceMotion && (
+                  <LogoFlower
+                    size={BUD_SIZE_PX}
+                    state={() => BUD_PETAL_STATE}
+                    petalWrapperClassName="mh-send-bud-petal"
+                    className="mh-send-bud shrink-0"
+                  />
+                )}
+                {isSubmitting ? t("submitting") : t("submit")}
+              </Button>
+
+              <p className="text-xs text-text-muted leading-relaxed">
+                {t("privacyNote")}{" "}
+                <Link href="/privacy" className="underline hover:text-text-secondary">
+                  {t("privacyLink")}
+                </Link>
+              </p>
+            </form>
+          </motion.div>
         )}
-      </div>
-
-      <div>
-        <label
-          htmlFor="contact-email"
-          className="block text-sm font-medium text-text-primary mb-1.5"
-        >
-          {t("emailLabel")}
-        </label>
-        <input
-          id="contact-email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          placeholder={t("emailPlaceholder")}
-          aria-invalid={!!errors.email || undefined}
-          aria-describedby={errors.email ? "contact-email-error" : undefined}
-          className={cn(
-            "w-full rounded-xl border bg-surface px-4 py-2.5 text-sm text-text-primary placeholder:text-text-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
-            errors.email ? "border-primary" : "border-border",
-          )}
-        />
-        {errors.email && (
-          <p id="contact-email-error" className="mt-1.5 text-xs text-primary-light">
-            {errors.email}
-          </p>
-        )}
-      </div>
-
-      <div>
-        <label
-          htmlFor="contact-subject"
-          className="block text-sm font-medium text-text-primary mb-1.5"
-        >
-          {t("subjectLabel")}
-        </label>
-        <select
-          id="contact-subject"
-          name="subjectOption"
-          defaultValue={initialSubjectOption ?? ""}
-          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm text-text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-        >
-          <option value="">{t("subjectPlaceholder")}</option>
-          {SUBJECT_OPTIONS.map((option) => (
-            <option key={option} value={option}>
-              {t(`subjectOptions.${option}`)}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div>
-        <label
-          htmlFor="contact-message"
-          className="block text-sm font-medium text-text-primary mb-1.5"
-        >
-          {t("messageLabel")}
-        </label>
-        <textarea
-          id="contact-message"
-          name="message"
-          rows={5}
-          defaultValue={initialMessage}
-          placeholder={t("messagePlaceholder")}
-          aria-invalid={!!errors.message || undefined}
-          aria-describedby={errors.message ? "contact-message-error" : undefined}
-          className={cn(
-            "w-full rounded-xl border bg-surface px-4 py-2.5 text-sm text-text-primary placeholder:text-text-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 resize-y",
-            errors.message ? "border-primary" : "border-border",
-          )}
-        />
-        {errors.message && (
-          <p id="contact-message-error" className="mt-1.5 text-xs text-primary-light">
-            {errors.message}
-          </p>
-        )}
-      </div>
-
-      <Button
-        type="submit"
-        variant="primary"
-        size="lg"
-        disabled={isSubmitting}
-        className="w-full sm:w-auto"
-      >
-        {isSubmitting ? t("submitting") : t("submit")}
-      </Button>
-
-      <p className="text-xs text-text-muted leading-relaxed">
-        {t("privacyNote")}{" "}
-        <Link href="/privacy" className="underline hover:text-text-secondary">
-          {t("privacyLink")}
-        </Link>
-      </p>
-    </form>
+      </AnimatePresence>
+    </div>
   );
 }
