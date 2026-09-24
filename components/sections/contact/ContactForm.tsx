@@ -5,11 +5,14 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
-import { BloomingLogoFlower, LogoFlower } from "@/components/ui/LogoFlower";
+import { BloomingLogoFlower } from "@/components/ui/LogoFlower";
 import { PetalDispersion } from "@/components/sections/contact/PetalDispersion";
+import { ButtonPetals } from "@/components/sections/contact/ButtonPetals";
+import { useRequiredFieldsProgress } from "@/components/sections/contact/useRequiredFieldsProgress";
 import { cn } from "@/lib/utils";
 import { CONTACT_FORM_EMAIL } from "@/lib/site";
-import { BLOOM_EASE, BUD_PETAL_STATE } from "@/lib/logo-bloom";
+import { BLOOM_EASE } from "@/lib/logo-bloom";
+import { isContactFieldValid } from "@/lib/contact-validation";
 
 const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 
@@ -21,23 +24,26 @@ export type SubjectOption = (typeof SUBJECT_OPTIONS)[number];
 type Status = "idle" | "submitting" | "success" | "invalid" | "error";
 type FieldErrors = Partial<Record<"name" | "email" | "message", string>>;
 
-/* Animation d'envoi (choisie au labo interne : « éclosion + dispersion
-   contenue »). Attente : un bourgeon respire dans le bouton, seulement si
-   l'envoi dure (apparition après 150ms, CSS .mh-send-bud dans globals.css).
+/* Progression (choisie au labo interne : « pétales derrière le bouton ») :
+   pendant la saisie, 1 pétale sakura sort de sous le bouton d'envoi par champ
+   obligatoire valide, autour de 2 pétales or fixes (ButtonPetals.tsx,
+   décoratif). À l'envoi, les pétales rentrent sous le bouton ; échec :
+   retour instantané.
+   Animation d'envoi (choisie au labo interne : « éclosion + dispersion
+   contenue »). Attente : le bouton affiche seulement « Envoi en cours… »
+   (état loading : inactif, pleine opacité, aria-busy), sans icône.
    Confirmation : le formulaire s'efface (FORM_EXIT_MS), puis le bloc de succès
    entre (SUCCESS_ENTER_MS, léger glissé) avec une fleur qui éclot
    (lib/logo-bloom.ts, comme l'intro) et 5 pétales qui se dispersent derrière
    lui (PetalDispersion). L'annonce part à la confirmation ; le focus suit
    quand le bloc apparaît (≈FORM_EXIT_MS plus tard — décalage accepté).
-   Mouvement réduit : ni bourgeon ni pétales, fleur ouverte, bascule
-   instantanée. Chemin d'erreur : aucune animation. */
+   Mouvement réduit : pétales de progression instantanés (et laissés sortis
+   pendant l'envoi), pas de dispersion, fleur ouverte, bascule instantanée.
+   Chemin d'erreur : aucune animation. */
 const FORM_EXIT_MS = 200;
 const SUCCESS_ENTER_MS = 300;
 const SUCCESS_ENTER_OFFSET_PX = 8;
-const BUD_SIZE_PX = 28;
 const SUCCESS_FLOWER_SIZE_PX = 40;
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 interface ContactFormProps {
   /** Pré-sélection du sujet (ex. venant du configurateur /services). */
@@ -65,6 +71,22 @@ export function ContactForm({ initialSubjectOption, initialMessage }: ContactFor
   }, []);
   const reduceMotion = mounted && !!prefersReducedMotion;
 
+  // Champs obligatoires valides (pétales de progression) : écouteurs
+  // délégués sur le <form>, champs non contrôlés, mêmes règles que la
+  // validation ci-dessous. État relu au montage (pré-remplissage depuis
+  // /services, auto-remplissage du navigateur). Visuel uniquement.
+  const {
+    formRef,
+    count: validFieldCount,
+    onInput: onProgressInput,
+    onBlur: onProgressBlur,
+    syncAll: syncProgress,
+  } = useRequiredFieldsProgress({
+    name: false,
+    email: false,
+    message: isContactFieldValid("message", initialMessage ?? ""),
+  });
+
   // Le bouton d'envoi (qui avait le focus) disparaît avec le formulaire au
   // succès : sans ça, le focus retombait en haut de page. On le pose sur le
   // titre du bloc de succès dès que celui-ci est monté (il n'arrive qu'après
@@ -78,6 +100,10 @@ export function ContactForm({ initialSubjectOption, initialMessage }: ContactFor
 
     const form = event.currentTarget;
     const data = new FormData(form);
+    // Pétales recalés sur l'état exact (un champ en cours de correction peut
+    // encore compter tant qu'il n'a pas été quitté). N'influence pas la
+    // validation, qui relit les champs elle-même.
+    syncProgress();
 
     // Honeypot : un humain ne remplit jamais ce champ (caché, hors parcours
     // clavier). S'il est rempli, on abandonne silencieusement sans appeler
@@ -92,9 +118,11 @@ export function ContactForm({ initialSubjectOption, initialMessage }: ContactFor
     const subjectOption = String(data.get("subjectOption") ?? "") as SubjectOption | "";
 
     const nextErrors: FieldErrors = {};
-    if (!name) nextErrors.name = t("errorName");
-    if (!email || !EMAIL_PATTERN.test(email)) nextErrors.email = t("errorEmail");
-    if (!message) nextErrors.message = t("errorMessage");
+    // Règles partagées (lib/contact-validation.ts) : toute future indication
+    // de progression utilise exactement les mêmes.
+    if (!isContactFieldValid("name", name)) nextErrors.name = t("errorName");
+    if (!isContactFieldValid("email", email)) nextErrors.email = t("errorEmail");
+    if (!isContactFieldValid("message", message)) nextErrors.message = t("errorMessage");
 
     if (Object.keys(nextErrors).length > 0) {
       // Erreurs de validation locales, pas un échec du service : pas de
@@ -158,9 +186,7 @@ export function ContactForm({ initialSubjectOption, initialMessage }: ContactFor
   }
 
   return (
-    // data-contact-status : fige l'apparition du bourgeon dès la confirmation
-    // (le formulaire en cours de fondu garde son bouton « envoi », cf. globals.css).
-    <div data-contact-status={status}>
+    <div>
       {/* Zone d'annonce du succès, TOUJOURS montée et vide jusqu'à la
           confirmation : les lecteurs d'écran (NVDA/JAWS notamment)
           n'annoncent de façon fiable que le texte qui arrive dans une zone
@@ -219,7 +245,14 @@ export function ContactForm({ initialSubjectOption, initialMessage }: ContactFor
             exit={{ opacity: 0 }}
             transition={{ duration: reduceMotion ? 0 : FORM_EXIT_MS / 1000, ease: "easeOut" }}
           >
-            <form onSubmit={handleSubmit} noValidate className="space-y-5">
+            <form
+              ref={formRef}
+              onSubmit={handleSubmit}
+              onInput={onProgressInput}
+              onBlur={onProgressBlur}
+              noValidate
+              className="space-y-5"
+            >
               {/* Honeypot anti-spam : caché visuellement ET hors du parcours clavier
           (tabIndex={-1}, aria-hidden), en plus de la protection native
           Web3Forms (hCaptcha/reCAPTCHA v3 côté service). */}
@@ -345,23 +378,28 @@ export function ContactForm({ initialSubjectOption, initialMessage }: ContactFor
                 )}
               </div>
 
-              <Button
-                type="submit"
-                variant="primary"
-                size="lg"
-                disabled={isSubmitting}
-                className="w-full sm:w-auto"
-              >
-                {isSubmitting && !reduceMotion && (
-                  <LogoFlower
-                    size={BUD_SIZE_PX}
-                    state={() => BUD_PETAL_STATE}
-                    petalWrapperClassName="mh-send-bud-petal"
-                    className="mh-send-bud shrink-0"
-                  />
-                )}
-                {isSubmitting ? t("submitting") : t("submit")}
-              </Button>
+              {/* isolate : les pétales (z-0) restent sous le bouton (z-10, fond
+                  opaque) sans passer sous le reste de la page — seule la partie
+                  qui dépasse est visible, jamais devant le libellé. Marges
+                  haute et basse : les pétales ne touchent ni le champ message
+                  ni la mention de confidentialité (« ! » : sinon le space-y du
+                  formulaire impose ses propres marges). */}
+              <div className="relative isolate !my-7 w-full sm:w-fit">
+                <ButtonPetals
+                  count={validFieldCount}
+                  sending={isSubmitting}
+                  reducedMotion={reduceMotion}
+                />
+                <Button
+                  type="submit"
+                  variant="primary"
+                  size="lg"
+                  loading={isSubmitting}
+                  className="relative z-10 w-full"
+                >
+                  {isSubmitting ? t("submitting") : t("submit")}
+                </Button>
+              </div>
 
               <p className="text-xs text-text-muted leading-relaxed">
                 {t("privacyNote")}{" "}

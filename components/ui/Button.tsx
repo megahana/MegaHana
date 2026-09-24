@@ -12,6 +12,13 @@ interface ButtonProps {
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
+  /** Action en cours (ex. envoi du formulaire de contact) : bouton inactif
+   *  (pas de double envoi) mais PAS estompé — à la différence de `disabled`,
+   *  qui signifie "indisponible" (ex. CTA du configurateur tant qu'aucune
+   *  formule n'est choisie) et garde son opacité réduite. Pleine opacité :
+   *  le libellé (ex. « Envoi en cours… ») garde son contraste AA.
+   *  aria-busy en plus. */
+  loading?: boolean;
   className?: string;
   external?: boolean;
   /** Libellé accessible optionnel — utile quand plusieurs boutons de la même
@@ -43,6 +50,7 @@ export function Button({
   onClick,
   type = "button",
   disabled,
+  loading = false,
   className,
   external,
   ariaLabel,
@@ -52,6 +60,8 @@ export function Button({
     "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100",
     variants[variant],
     sizes[size],
+    // Placé après : tailwind-merge remplace l'opacité/le curseur "indisponible".
+    loading && "disabled:opacity-100 disabled:cursor-progress",
     className,
   );
 
@@ -84,10 +94,11 @@ export function Button({
     <motion.button
       type={type}
       onClick={onClick}
-      disabled={disabled}
+      disabled={disabled || loading}
+      aria-busy={loading || undefined}
       className={classes}
       aria-label={ariaLabel}
-      whileTap={{ scale: disabled ? 1 : 0.97 }}
+      whileTap={{ scale: disabled || loading ? 1 : 0.97 }}
     >
       {children}
     </motion.button>

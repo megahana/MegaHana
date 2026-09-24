@@ -4,7 +4,7 @@ import { PETALS } from "./logo-geometry";
 /**
  * Chorégraphie d'éclosion du logo (piste B "Éclosion contenue") — source
  * unique, partagée par l'intro d'accueil (components/sections/home/Intro.tsx)
- * et l'animation d'envoi du formulaire de contact (ContactForm.tsx).
+ * et la fleur de confirmation du formulaire de contact (ContactForm.tsx).
  *
  * Chaque pétale part refermé (35 % de sa longueur, 60 % de sa largeur,
  * -5°) et s'ouvre depuis le point d'attache jusqu'à sa forme exacte, l'un
@@ -61,9 +61,3 @@ export function bloomState(index: number, t: number): PetalState {
 
 /** Fleur ouverte (état final, et état statique en mouvement réduit). */
 export const OPEN_PETAL_STATE: PetalState = { transform: "rotate(0) scale(1 1)", opacity: 1 };
-
-/** Bourgeon : forme de départ de l'éclosion, visible (attente de l'envoi du formulaire). */
-export const BUD_PETAL_STATE: PetalState = {
-  transform: `rotate(0) scale(${BLOOM_START_WIDTH} ${BLOOM_START_LENGTH})`,
-  opacity: 1,
-};
