@@ -32,6 +32,10 @@ const config: Config = {
         // Accents de marque décoratifs — jamais en fond plein sur de grandes surfaces.
         sakura: "rgb(var(--sakura) / <alpha-value>)",
         gold: "rgb(var(--gold) / <alpha-value>)",
+        // Or lisible (≥4,5:1 en clair, or normal en sombre) : pour un
+        // pictogramme porteur d'information (coches des formules /services),
+        // jamais pour la déco. Même token que le dégradé accessible du hero.
+        "gold-accessible": "rgb(var(--gold-accessible) / <alpha-value>)",
         // Alias locaux (pas des tokens de marque) : distinguent "problème"/"résultat"
         // dans l'étude de cas MegaReco sans introduire de teinte rouge/verte globale
         // type erreur/succès. Valeur réelle définie par .mh-case-study (voir globals.css),

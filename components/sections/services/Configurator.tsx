@@ -2,80 +2,85 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { AnimateIn } from "@/components/ui/AnimateIn";
-import { Button } from "@/components/ui/Button";
 import { PackageCards } from "@/components/sections/services/PackageCards";
 import { LaunchOption } from "@/components/sections/services/LaunchOption";
-import { directOffers, launchOption, type TierId } from "@/lib/services-offers";
+import { SelectionPanel } from "@/components/sections/services/SelectionPanel";
+import {
+  directOffers,
+  formatRoutePrice,
+  launchOption,
+  type OrderRoute,
+  type TierId,
+} from "@/lib/services-offers";
+import { upworkPackageFor } from "@/lib/upwork";
 
 /**
- * Configurateur de devis : pilote PackageCards (radios) et LaunchOption
- * (checkbox) via un état local partagé, puis affiche un récapitulatif dont
- * le CTA final construit l'URL vers /contact avec la sélection en query
- * params (tier/launch) — seul mécanisme retenu pour transmettre la
- * sélection (compatible Server Components, aucune dépendance ajoutée).
- * Voir ContactPage (app/[locale]/contact/page.tsx) côté lecture.
+ * Configurateur de /services : état partagé entre PackageCards (radios des
+ * formules + sélecteur de parcours), LaunchOption (checkbox) et le panneau
+ * flottant "Votre sélection" (SelectionPanel), qui remplace l'ancien
+ * récapitulatif en flux de page.
+ *
+ * - Aucune formule présélectionnée ; le panneau n'apparaît qu'après une
+ *   première interaction (formule ou mise en ligne).
+ * - Deux parcours, pas deux devises : "direct" (EUR, devis) / "upwork"
+ *   (USD, annonces). Changer de parcours ne décoche jamais la mise en ligne :
+ *   sur Upwork elle passe visiblement à "non comprise, à discuter".
+ * - Parcours direct : le CTA transmet la sélection à /contact en query
+ *   params (tier/launch), lue côté serveur par ContactPage
+ *   (app/[locale]/contact/page.tsx) pour pré-remplir sujet et message.
+ * - Zone live (toujours montée, vide avant la première sélection) : annonce
+ *   le montant à chaque changement, sans voler le focus.
  */
 export function Configurator() {
-  const t = useTranslations("Services.configurator");
+  const t = useTranslations("Services.selection");
   const tPackages = useTranslations("Services.packages");
   const [selectedTier, setSelectedTier] = useState<TierId | null>(null);
   const [launchEnabled, setLaunchEnabled] = useState(false);
+  const [route, setRoute] = useState<OrderRoute>("direct");
+  const [hasInteracted, setHasInteracted] = useState(false);
 
-  const total = selectedTier
-    ? directOffers[selectedTier].price + (launchEnabled ? launchOption.price : 0)
-    : null;
+  const selectTier = (tier: TierId) => {
+    setSelectedTier(tier);
+    setHasInteracted(true);
+  };
+  const toggleLaunch = () => {
+    setLaunchEnabled((v) => !v);
+    setHasInteracted(true);
+  };
+
+  // Texte annoncé : une seule grille par parcours, jamais de somme mélangée.
+  let liveText = "";
+  if (selectedTier) {
+    if (route === "direct") {
+      const total = directOffers[selectedTier].price + (launchEnabled ? launchOption.price : 0);
+      liveText = t("liveDirect", { price: formatRoutePrice(total, "direct") });
+    } else {
+      liveText = t("liveUpwork", {
+        name: tPackages(`${selectedTier}.name`),
+        price: formatRoutePrice(upworkPackageFor(selectedTier).price, "upwork"),
+      });
+      // Point entre les deux phrases : une pause à l'oreille (lecteur d'écran).
+      if (launchEnabled) liveText += `. ${t("launchNotIncluded")}`;
+    }
+  }
 
   return (
     <>
-      <PackageCards selectedTier={selectedTier} onSelectTier={setSelectedTier} />
-      <LaunchOption enabled={launchEnabled} onToggle={() => setLaunchEnabled((v) => !v)} />
+      <PackageCards
+        selectedTier={selectedTier}
+        onSelectTier={selectTier}
+        route={route}
+        onRouteChange={setRoute}
+      />
+      <LaunchOption enabled={launchEnabled} onToggle={toggleLaunch} route={route} />
 
-      <section className="pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <AnimateIn>
-          <div className="card-border rounded-2xl p-px max-w-2xl mx-auto">
-            <div className="bg-surface rounded-2xl p-6 sm:p-8 flex flex-col items-center text-center">
-              {selectedTier === null || total === null ? (
-                <p className="text-sm text-text-secondary">{t("emptyState")}</p>
-              ) : (
-                <>
-                  <p className="text-sm font-medium text-text-muted">{t("totalLabel")}</p>
-                  <div className="mt-1 flex items-baseline gap-1.5">
-                    <span className="text-4xl font-bold gradient-text">{total}</span>
-                    <span className="text-sm text-text-muted">€</span>
-                  </div>
-                  <p className="mt-3 text-xs text-text-muted">
-                    {t("tierLine", {
-                      tier: tPackages(`${selectedTier}.name`),
-                      price: directOffers[selectedTier].price,
-                    })}
-                  </p>
-                  <p className="text-xs text-text-muted">
-                    {launchEnabled
-                      ? t("launchIncluded", { price: launchOption.price })
-                      : t("launchExcluded")}
-                  </p>
-                </>
-              )}
+      <p role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+        {liveText}
+      </p>
 
-              {selectedTier ? (
-                <Button
-                  href={`/contact?tier=${selectedTier}&launch=${launchEnabled ? 1 : 0}#discuss`}
-                  variant="primary"
-                  size="lg"
-                  className="mt-6"
-                >
-                  {t("cta")}
-                </Button>
-              ) : (
-                <Button type="button" variant="primary" size="lg" disabled className="mt-6">
-                  {t("cta")}
-                </Button>
-              )}
-            </div>
-          </div>
-        </AnimateIn>
-      </section>
+      {hasInteracted && (
+        <SelectionPanel route={route} selectedTier={selectedTier} launchEnabled={launchEnabled} />
+      )}
     </>
   );
 }

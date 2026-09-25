@@ -26,7 +26,7 @@ export function UpworkAlternative() {
                     href={pkg.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`${linkText} (${tc("newTab")})`}
+                    aria-label={`${linkText} ${tc("newTab")}`}
                     className="inline-flex items-center gap-1.5 text-sm font-medium px-3.5 py-2 rounded-lg bg-surface-2 text-text-secondary hover:text-text-primary hover:border-primary/50 border border-border-light transition-colors"
                   >
                     {linkText}

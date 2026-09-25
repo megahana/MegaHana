@@ -296,6 +296,15 @@
         "pages": "Up to 6 pages",
         "languages": "Up to 2 languages",
         "responsive": "Responsive website with up to 6 pages"
+      },
+      "differences": {
+        "multiplePages": "Multiple pages",
+        "multilingual": "Multilingual (2 languages)"
+      },
+      "route": {
+        "legend": "How you order",
+        "direct": "Direct · €",
+        "upwork": "On Upwork · $"
       }
     },
     "launch": {
@@ -313,21 +322,36 @@
         "access": "Handover of access credentials"
       },
       "exclusion": "Migrating an existing site or complex setup: quoted separately.",
-      "ownership": "You retain ownership of the domain and hold the provider accounts in your name. Megahana has the access needed to launch your website.",
-      "externalFees": "Domain, hosting, professional email and third-party subscription fees remain your responsibility.",
-      "separation": "Website creation is covered by your package. This option covers the one-off launch only. Ongoing support and maintenance are optional and require a separate agreement with a defined scope and duration."
-    },
-    "configurator": {
-      "emptyState": "Select a package to see the summary.",
-      "totalLabel": "Estimated total",
-      "tierLine": "{tier} package: {price} €",
-      "launchIncluded": "Standard website launch included: {price} €",
-      "launchExcluded": "Without the website launch option.",
-      "cta": "Request my quote"
+      "ownership": "You retain ownership of the domain in both cases. With your own hosting, you also hold the hosting account in your name. Megahana has the access needed to launch your website.",
+      "externalFees": "Domain, professional email and third-party subscription fees remain your responsibility, as does the host's subscription if you host the website yourself.",
+      "separation": "Website creation is covered by your package. This option covers the one-off launch only. Ongoing support and maintenance are optional and require a separate agreement with a defined scope and duration.",
+      "hosting": {
+        "title": "Hosting",
+        "criterion": "Criterion",
+        "self": "Your own hosting",
+        "megahana": "Hosted by Megahana",
+        "rows": {
+          "includedAtStart": {
+            "label": "Hosting included at launch",
+            "self": "subscription with your host",
+            "megahana": "{months} months included"
+          },
+          "noSubscription": {
+            "label": "No Megahana subscription",
+            "megahana": "then €{price}/month (indicative)"
+          },
+          "ownAccount": {
+            "label": "Hosting account in your name",
+            "megahana": "Megahana account"
+          }
+        },
+        "upworkNote": "On Upwork, only the “your own hosting” option is available."
+      },
+      "edits": "Changes after delivery: €{price}/month (indicative price)."
     },
     "upwork": {
       "title": "Prefer to use Upwork?",
-      "description": "The same packages are also available on Upwork, with prices in USD. The timeline, revisions and terms are specified in your Upwork order.",
+      "description": "The 3 website packages are also available on Upwork, with prices in USD. On Upwork, the standard website launch is only available with hosting in your own name. The timeline, revisions and terms are specified in your Upwork order.",
       "link": "{tier} on Upwork"
     },
     "process": {
@@ -402,7 +426,7 @@
         },
         {
           "question": "Are the domain name and hosting included?",
-          "answer": "No. Domain, hosting, professional email and external subscription fees remain your responsibility. Their configuration can be handled through the website launch option: this service does not include provider fees."
+          "answer": "Not in the packages. Domain, professional email and external subscription fees remain your responsibility, and the domain stays in your name. For hosting, the website launch option offers two choices: host the website on your own account (the host's subscription then remains your responsibility), or let Megahana host it, with {months} months of hosting included, then a subscription of €{price}/month (indicative price, coming soon). On Upwork, only hosting on your own account is available."
         },
         {
           "question": "Is website launch included?",
@@ -437,6 +461,28 @@
           "answer": "A revision is a batch of feedback you send us grouped together in a single message, not unlimited back-and-forth as you go. Group your requests together before sending them so each revision counts in full."
         }
       ]
+    },
+    "marks": {
+      "included": "Included:",
+      "notIncluded": "Not included:"
+    },
+    "soon": "Coming soon",
+    "onRequest": "On request",
+    "selection": {
+      "title": "Your selection",
+      "empty": "Choose a package to see your selection appear.",
+      "tierLine": "{name} package",
+      "launchLine": "Standard website launch",
+      "launchNotIncluded": "Website launch not included in the price above — no dedicated Upwork listing yet.",
+      "total": "Estimated total",
+      "ctaDirect": "Request my quote",
+      "ctaUpwork": "View the package on Upwork",
+      "ctaUpworkLaunch": "Discuss the website launch on Upwork",
+      "collapse": "Collapse your selection summary",
+      "expand": "Show your selection summary",
+      "viewDetails": "View details",
+      "liveDirect": "Estimated total: {price}",
+      "liveUpwork": "{name} package on Upwork: {price}"
     }
   },
   "Portfolio": {

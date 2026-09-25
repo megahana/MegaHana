@@ -4,17 +4,23 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 
 export function MobileCtaBanner() {
   const [visible, setVisible] = useState(false);
   const t = useTranslations("MobileCta");
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 400);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Pas sur /services : le bouton y renverrait vers la page elle-même, et la
+  // barre fixe du panneau "Votre sélection" occupe déjà le bas de l'écran
+  // mobile (SelectionPanel.tsx) — les deux se superposeraient.
+  if (pathname === "/services") return null;
 
   const sharedClass =
     "flex items-center justify-center gap-2 w-full py-4 rounded-2xl bg-accent-accessible text-accent-contrast font-semibold text-sm shadow-2xl shadow-primary/30";

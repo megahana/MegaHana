@@ -296,6 +296,15 @@
         "pages": "Jusqu'à 6 pages",
         "languages": "Jusqu'à 2 langues",
         "responsive": "Site jusqu'à 6 pages adapté aux mobiles"
+      },
+      "differences": {
+        "multiplePages": "Plusieurs pages",
+        "multilingual": "Multilingue (2 langues)"
+      },
+      "route": {
+        "legend": "Parcours de commande",
+        "direct": "En direct · €",
+        "upwork": "Sur Upwork · $"
       }
     },
     "launch": {
@@ -313,21 +322,36 @@
         "access": "Transmission des accès"
       },
       "exclusion": "Migration d'un site existant ou configuration complexe : sur devis.",
-      "ownership": "Vous restez propriétaire du nom de domaine et titulaire des comptes fournisseurs. Megahana dispose des accès nécessaires pour effectuer la mise en ligne.",
-      "externalFees": "Les frais de domaine, d'hébergement, d'email professionnel et d'abonnements tiers restent à votre charge.",
-      "separation": "La création est couverte par votre formule. Cette option concerne uniquement la mise en ligne ponctuelle. Le suivi et la maintenance sont facultatifs et font l'objet d'un accord séparé, avec une durée et un périmètre définis."
-    },
-    "configurator": {
-      "emptyState": "Sélectionnez un forfait pour voir le récapitulatif.",
-      "totalLabel": "Total estimé",
-      "tierLine": "Formule {tier} : {price} €",
-      "launchIncluded": "Mise en ligne standard incluse : {price} €",
-      "launchExcluded": "Sans l'option mise en ligne.",
-      "cta": "Demander mon devis"
+      "ownership": "Vous restez propriétaire du nom de domaine dans les deux cas. En hébergement chez vous, vous êtes aussi titulaire du compte d'hébergement. Megahana dispose des accès nécessaires pour effectuer la mise en ligne.",
+      "externalFees": "Les frais de domaine, d'email professionnel et d'abonnements tiers restent à votre charge, ainsi que l'abonnement de l'hébergeur si vous hébergez le site chez vous.",
+      "separation": "La création est couverte par votre formule. Cette option concerne uniquement la mise en ligne ponctuelle. Le suivi et la maintenance sont facultatifs et font l'objet d'un accord séparé, avec une durée et un périmètre définis.",
+      "hosting": {
+        "title": "Hébergement",
+        "criterion": "Critère",
+        "self": "Chez vous",
+        "megahana": "Par Megahana",
+        "rows": {
+          "includedAtStart": {
+            "label": "Hébergement inclus au démarrage",
+            "self": "abonnement chez votre hébergeur",
+            "megahana": "{months} mois inclus"
+          },
+          "noSubscription": {
+            "label": "Sans abonnement Megahana",
+            "megahana": "puis {price} €/mois (indicatif)"
+          },
+          "ownAccount": {
+            "label": "Compte d'hébergement à votre nom",
+            "megahana": "compte Megahana"
+          }
+        },
+        "upworkNote": "Sur Upwork, seule l'option « hébergement chez vous » est proposée."
+      },
+      "edits": "Modifications après livraison : {price} €/mois (tarif indicatif)."
     },
     "upwork": {
       "title": "Vous préférez passer par Upwork ?",
-      "description": "Les mêmes formules sont également disponibles sur Upwork, avec des tarifs en USD. Le calendrier, les révisions et les modalités sont précisés dans la commande Upwork.",
+      "description": "Les 3 formules de création sont également disponibles sur Upwork, avec des tarifs en USD. Sur Upwork, la mise en ligne standard se fait uniquement avec un hébergement à votre nom. Le calendrier, les révisions et les modalités sont précisés dans la commande Upwork.",
       "link": "{tier} sur Upwork"
     },
     "process": {
@@ -402,7 +426,7 @@
         },
         {
           "question": "Le nom de domaine et l'hébergement sont-ils inclus ?",
-          "answer": "Non. Les frais de nom de domaine, d'hébergement, d'email professionnel et d'abonnements externes restent à votre charge. Leur configuration peut être prise en charge dans l'option mise en ligne : cette prestation ne comprend pas les frais des fournisseurs."
+          "answer": "Pas dans les formules. Les frais de nom de domaine, d'email professionnel et d'abonnements externes restent à votre charge, et le nom de domaine reste à votre nom. Pour l'hébergement, l'option mise en ligne propose deux possibilités : héberger le site sur votre propre compte (l'abonnement de l'hébergeur reste alors à votre charge), ou le confier à Megahana, avec {months} mois d'hébergement inclus puis un abonnement de {price} €/mois (tarif indicatif, bientôt disponible). Sur Upwork, seul l'hébergement sur votre propre compte est proposé."
         },
         {
           "question": "La mise en ligne est-elle incluse ?",
@@ -437,6 +461,28 @@
           "answer": "Une révision correspond à un lot de retours que vous nous envoyez groupés en une seule fois, et non des allers-retours illimités au fil de l'eau. Regroupez vos demandes avant de nous les transmettre pour que chaque révision compte pleinement."
         }
       ]
+    },
+    "marks": {
+      "included": "Inclus :",
+      "notIncluded": "Non inclus :"
+    },
+    "soon": "Bientôt disponible",
+    "onRequest": "Sur demande",
+    "selection": {
+      "title": "Votre sélection",
+      "empty": "Choisissez une formule pour voir apparaître votre sélection.",
+      "tierLine": "Formule {name}",
+      "launchLine": "Mise en ligne standard",
+      "launchNotIncluded": "Mise en ligne non comprise dans le prix ci-dessus — pas d'annonce Upwork dédiée pour l'instant.",
+      "total": "Total estimé",
+      "ctaDirect": "Demander mon devis",
+      "ctaUpwork": "Voir la formule sur Upwork",
+      "ctaUpworkLaunch": "Discuter de la mise en ligne sur Upwork",
+      "collapse": "Réduire le résumé de votre sélection",
+      "expand": "Afficher le résumé de votre sélection",
+      "viewDetails": "Voir le détail",
+      "liveDirect": "Total estimé : {price}",
+      "liveUpwork": "Formule {name} sur Upwork : {price}"
     }
   },
   "Portfolio": {

@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { FaqAccordionList } from "@/components/sections/services/FaqAccordionList";
-import { launchOption } from "@/lib/services-offers";
+import { launchOption, megahanaHosting } from "@/lib/services-offers";
 
 /**
  * Server Component : ne fait que récupérer les traductions (getTranslations,
@@ -14,15 +14,22 @@ import { launchOption } from "@/lib/services-offers";
 export async function FaqAccordion() {
   const t = await getTranslations("Services.faq");
   const rawItems = t.raw("items") as { question: string; answer: string }[];
-  // Item d'index 4 ("La mise en ligne est-elle incluse ?") contient un prix à
-  // interpoler (lib/services-offers.ts, source unique du prix de base de
-  // l'option mise en ligne). Les autres items sont utilisés tels quels : on
-  // garde le contrat "items = tableau" inchangé pour ne pas toucher
-  // FaqAccordionList.tsx (composant client déjà en place).
+  // Items à valeurs interpolées (source unique : lib/services-offers.ts) :
+  // - 3 ("Le nom de domaine et l'hébergement sont-ils inclus ?") : durée
+  //   d'hébergement incluse et abonnement indicatif (hébergement Megahana) ;
+  // - 4 ("La mise en ligne est-elle incluse ?") : prix de l'option.
+  // Les autres items sont utilisés tels quels : on garde le contrat
+  // "items = tableau" inchangé pour ne pas toucher FaqAccordionList.tsx.
+  const interpolated: Record<number, () => string> = {
+    3: () =>
+      t("items.3.answer", {
+        months: megahanaHosting.includedMonths,
+        price: megahanaHosting.monthlyPrice,
+      }),
+    4: () => t("items.4.answer", { amount: launchOption.price }),
+  };
   const faqItems = rawItems.map((item, i) =>
-    i === 4
-      ? { question: item.question, answer: t("items.4.answer", { amount: launchOption.price }) }
-      : item,
+    interpolated[i] ? { question: item.question, answer: interpolated[i]() } : item,
   );
 
   return (

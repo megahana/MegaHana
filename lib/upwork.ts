@@ -3,9 +3,14 @@
  * Données STRUCTURELLES uniquement ; les libellés traduisibles vivent
  * dans les catalogues i18n sous "Services.packages".
  *
- * ⚠️ Prix indicatifs : vérifier/ajuster pour correspondre EXACTEMENT aux
- * tiers Upwork si nécessaire.
+ * Grille USD affichée sur /services (bascule EUR/USD) : 430/720/1150 $.
+ * ⚠️ Écart TEMPORAIRE assumé (24/09/2026) : les annonces Upwork en ligne
+ * sont encore à l'ancienne grille (150/350/650 $) — Ahmed les aligne une
+ * par une. Tant que ce n'est pas fait, le prix affiché ici diffère de celui
+ * vu sur Upwork.
  */
+
+import type { TierId } from "@/lib/services-offers";
 
 // Fiche produit Upwork (lien de base = tier Starter).
 export const UPWORK_PRODUCT_URL =
@@ -38,7 +43,7 @@ export const upworkOffer = {
     {
       name: "Starter",
       label: "One-page website",
-      price: 150,
+      price: 430,
       currency: "USD",
       delivery: 5,
       revisions: 2,
@@ -47,7 +52,7 @@ export const upworkOffer = {
     {
       name: "Standard",
       label: "Business website",
-      price: 350,
+      price: 720,
       currency: "USD",
       delivery: 10,
       revisions: 3,
@@ -57,7 +62,7 @@ export const upworkOffer = {
     {
       name: "Advanced",
       label: "Bilingual business website",
-      price: 650,
+      price: 1150,
       currency: "USD",
       delivery: 14,
       revisions: 4,
@@ -67,22 +72,23 @@ export const upworkOffer = {
   ] as UpworkPackage[],
 };
 
-/**
- * Stack technique commune affichée sur la page Services.
- * Valeurs STRUCTURELLES (icônes + noms techniques). Textes dans "Services.tech".
- */
-export const techCommonIcons = [
-  "Code2",
-  "Palette",
-  "Smartphone",
-  "ImageIcon",
-  "Search",
-  "FileCode2",
-] as const;
+/** Palier Upwork correspondant à chaque formule (même ordre, même périmètre). */
+const UPWORK_TIER_INDEX: Record<TierId, number> = { starter: 0, standard: 1, advanced: 2 };
+export function upworkPackageFor(tier: TierId): UpworkPackage {
+  return upworkOffer.packages[UPWORK_TIER_INDEX[tier]];
+}
 
-// Ordre des formules pour la section technique (clés de traduction).
-export const techPackageOrder = [
-  { name: "Starter", inherits: null },
-  { name: "Standard", inherits: "Starter" },
-  { name: "Advanced", inherits: "Standard" },
-] as const;
+/**
+ * Mise en ligne standard côté Upwork : AUCUN prix USD. Il n'existe pas
+ * encore d'annonce Upwork dédiée — la mise en ligne n'y a donc pas de prix
+ * (affichée "sur demande", jamais le prix EUR recopié en dollars).
+ *
+ * Lien du bouton "Discuter de la mise en ligne sur Upwork" : ⚠️ TODO
+ * BLOQUANT avant mise en production. Le seul lien Upwork du site est
+ * l'annonce Starter (UPWORK_PRODUCT_URL) — pas de profil ni de page de
+ * contact générique. Tant que cette valeur commence par "#", le bouton est
+ * rendu désactivé (jamais un lien mort). Remplacer par l'URL fournie par
+ * Ahmed.
+ */
+export const UPWORK_CONTACT_URL_TODO = "#todo-upwork-contact-url";
+export const isUpworkContactUrlReady = !UPWORK_CONTACT_URL_TODO.startsWith("#");
