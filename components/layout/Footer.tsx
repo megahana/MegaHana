@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Linkedin, Instagram, Facebook, ExternalLink } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
@@ -7,11 +6,9 @@ import {
   BEHANCE_STUDIO_URL,
   INSTAGRAM_STUDIO_URL,
   FACEBOOK_STUDIO_URL,
-  LOGO_URL,
-  LOGO_WIDTH,
-  LOGO_HEIGHT,
 } from "@/lib/site";
 import { UPWORK_PRODUCT_URL } from "@/lib/upwork";
+import { LogoLink } from "@/components/ui/LogoLink";
 
 const navItems = [
   { href: "/services", key: "services" },
@@ -32,20 +29,9 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <Link href="/" className="inline-flex mb-4">
-              {/* sizes obligatoire ici aussi — même cause que Header.tsx :
-                  sans lui, next/image dimensionne le srcset sur width/height
-                  (1254px, taille du fichier source) plutôt que sur la taille
-                  CSS réellement affichée (36px). */}
-              <Image
-                src={LOGO_URL}
-                alt="Megahana"
-                width={LOGO_WIDTH}
-                height={LOGO_HEIGHT}
-                sizes="36px"
-                className="h-9 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
-              />
-            </Link>
+            {/* Logo SVG (LogoLink, partagé avec le header) : même rendu et même
+                survol qu'en haut de page. */}
+            <LogoLink size={36} className="mb-4" />
             <p className="text-sm text-text-secondary leading-relaxed">{t("description")}</p>
           </div>
 
@@ -163,7 +149,6 @@ export function Footer() {
 
           <div className="flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-text-muted">
             <p>{t("rights", { year })}</p>
-            <p>{t("madeWith")}</p>
           </div>
         </div>
       </div>

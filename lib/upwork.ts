@@ -79,16 +79,15 @@ export function upworkPackageFor(tier: TierId): UpworkPackage {
 }
 
 /**
- * Mise en ligne standard côté Upwork : AUCUN prix USD. Il n'existe pas
- * encore d'annonce Upwork dédiée — la mise en ligne n'y a donc pas de prix
- * (affichée "sur demande", jamais le prix EUR recopié en dollars).
+ * Annonce Upwork "Website Launch" (mise en ligne standard) — cible du
+ * bouton "Voir la mise en ligne sur Upwork" du panneau "Votre sélection"
+ * (parcours Upwork, mise en ligne cochée). Hébergement chez le client
+ * uniquement côté Upwork (règle de non-contournement).
  *
- * Lien du bouton "Discuter de la mise en ligne sur Upwork" : ⚠️ TODO
- * BLOQUANT avant mise en production. Le seul lien Upwork du site est
- * l'annonce Starter (UPWORK_PRODUCT_URL) — pas de profil ni de page de
- * contact générique. Tant que cette valeur commence par "#", le bouton est
- * rendu désactivé (jamais un lien mort). Remplacer par l'URL fournie par
- * Ahmed.
+ * Prix fixe de l'annonce (USD), affiché sur /services (carte mise en ligne
+ * et panneau) — commande Upwork SÉPARÉE : jamais additionné au prix de la
+ * formule, jamais dérivé du prix EUR.
  */
-export const UPWORK_CONTACT_URL_TODO = "#todo-upwork-contact-url";
-export const isUpworkContactUrlReady = !UPWORK_CONTACT_URL_TODO.startsWith("#");
+export const upworkLaunchOption = { price: 180, currency: "USD" as const };
+export const UPWORK_LAUNCH_URL =
+  "https://www.upwork.com/services/product/development-it-website-connected-to-a-live-domain-and-deployed-2103502174460233826?ref=project_share";

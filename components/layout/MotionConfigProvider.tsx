@@ -12,7 +12,7 @@ import { MotionConfig } from "framer-motion";
  * left/right/bottom en plus des props de transform) — l'opacité continue de
  * s'animer normalement, ce qui reste un fondu acceptable en accessibilité.
  *
- * Couvre ainsi AnimateIn.tsx, ProjectDetailsDrawer.tsx, FaqAccordionList.tsx,
+ * Couvre ainsi AnimateIn.tsx, ProjectDetailsDrawer.tsx, FaqList.tsx (/faq),
  * le menu mobile du Header et MobileCtaBanner.tsx (tous animent height/x/y
  * en plus de l'opacité) sans avoir à modifier chacun individuellement.
  *

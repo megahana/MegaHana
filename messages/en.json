@@ -5,6 +5,7 @@
     "portfolio": "Portfolio",
     "about": "About",
     "contact": "Contact",
+    "faq": "FAQ",
     "cta": "View services",
     "switchToFr": "Switch to French",
     "switchToEn": "Switch to English",
@@ -230,7 +231,6 @@
     "instagram": "Megahana on Instagram",
     "facebook": "Megahana on Facebook",
     "rights": "© {year} Megahana. All rights reserved.",
-    "madeWith": "Built with Next.js and Tailwind CSS.",
     "legal": {
       "notice": "Legal notice",
       "privacy": "Privacy policy",
@@ -349,11 +349,6 @@
       },
       "edits": "Changes after delivery: €{price}/month (indicative price)."
     },
-    "upwork": {
-      "title": "Prefer to use Upwork?",
-      "description": "The 3 website packages are also available on Upwork, with prices in USD. On Upwork, the standard website launch is only available with hosting in your own name. The timeline, revisions and terms are specified in your Upwork order.",
-      "link": "{tier} on Upwork"
-    },
     "process": {
       "eyebrow": "The process",
       "titleLead": "How your",
@@ -406,84 +401,88 @@
       "extrasTitle": "Need something extra?",
       "extrasDescription": "An additional page or revision, or faster delivery: we assess feasibility and pricing in your quote. No extra work is charged without your agreement."
     },
-    "faq": {
-      "eyebrow": "FAQ",
-      "titleLead": "Your questions,",
-      "titleHighlight": "answered",
-      "description": "What you need to know to choose your package and prepare your project.",
-      "items": [
-        {
-          "question": "Which package should I choose?",
-          "answer": "Starter is for a single-page website, Standard for a website with up to 4 pages, and Advanced for a bilingual website with up to 6 pages. Compare the scopes in the package cards on this page."
-        },
-        {
-          "question": "How do I order?",
-          "answer": "To work with us directly, start by telling us about your project. We prepare a quote setting out the scope, timeline and terms. Work begins once you have accepted the quote, paid the deposit and provided the required materials. You can also order your chosen package on Upwork."
-        },
-        {
-          "question": "What do I need to provide before we start?",
-          "answer": "Your text, logo, images, social media links, colours and visual preferences, as well as your legal information where needed."
-        },
-        {
-          "question": "Are the domain name and hosting included?",
-          "answer": "Not in the packages. Domain, professional email and external subscription fees remain your responsibility, and the domain stays in your name. For hosting, the website launch option offers two choices: host the website on your own account (the host's subscription then remains your responsibility), or let Megahana host it, with {months} months of hosting included, then a subscription of €{price}/month (indicative price, coming soon). On Upwork, only hosting on your own account is available."
-        },
-        {
-          "question": "Is website launch included?",
-          "answer": "No. Your package covers website creation and delivery of the source files. The standard website launch option, priced at {amount} €, covers domain and host configuration, the first deployment and basic checks. Migrating an existing site or a complex setup are out of scope and are quoted separately. Provider fees and ongoing support or maintenance are not included. See the \"Optional website launch\" section on this page for details."
-        },
-        {
-          "question": "Will I receive the source files?",
-          "answer": "Yes. Every package is delivered with the complete website source files."
-        },
-        {
-          "question": "How many languages are included?",
-          "answer": "Starter and Standard include one language. Advanced includes a structure for up to 2 languages."
-        },
-        {
-          "question": "How do multilingual content and translation work?",
-          "answer": "You provide the text in each language you want. Translation is not included by default: if needed, it is discussed separately or added to the scope."
-        },
-        {
-          "question": "Are advanced forms or email marketing included?",
-          "answer": "No. Advanced forms, newsletters, email automations and external integrations are not included and require a separate agreement."
-        },
-        {
-          "question": "What are the timelines and revisions?",
-          "answer": "For direct projects, the timeline and number of revisions are confirmed in your quote. The delivery timeline starts once you have accepted the quote, paid the deposit and provided all the required project materials. For Upwork orders, the timeline and revisions are specified in the order on the platform."
-        },
-        {
-          "question": "How do direct payments work?",
-          "answer": "You can pay by card via Stripe or by bank transfer. A deposit is requested when you accept the quote. The balance is paid at delivery, after you approve the website and before the source files are handed over and any optional launch takes place. Amounts and payment terms are set out in your quote."
-        },
-        {
-          "question": "What counts as one revision?",
-          "answer": "A revision is a batch of feedback you send us grouped together in a single message, not unlimited back-and-forth as you go. Group your requests together before sending them so each revision counts in full."
-        }
-      ]
-    },
     "marks": {
       "included": "Included:",
       "notIncluded": "Not included:"
     },
     "soon": "Coming soon",
-    "onRequest": "On request",
     "selection": {
       "title": "Your selection",
       "empty": "Choose a package to see your selection appear.",
       "tierLine": "{name} package",
       "launchLine": "Standard website launch",
-      "launchNotIncluded": "Website launch not included in the price above — no dedicated Upwork listing yet.",
+      "launchSeparate": "Also available separately on Upwork",
       "total": "Estimated total",
       "ctaDirect": "Request my quote",
       "ctaUpwork": "View the package on Upwork",
-      "ctaUpworkLaunch": "Discuss the website launch on Upwork",
+      "ctaUpworkLaunch": "View the website launch on Upwork",
       "collapse": "Collapse your selection summary",
       "expand": "Show your selection summary",
       "viewDetails": "View details",
       "liveDirect": "Estimated total: {price}",
-      "liveUpwork": "{name} package on Upwork: {price}"
+      "liveUpwork": "{name} package on Upwork: {price}",
+      "liveUpworkLaunch": "Website launch also available separately on Upwork: {price}"
     }
+  },
+  "Faq": {
+    "meta": {
+      "title": "FAQ",
+      "description": "Frequently asked questions about Megahana showcase website packages: choosing a package, ordering, launch, hosting, timelines, revisions and payment."
+    },
+    "eyebrow": "FAQ",
+    "titleLead": "Your questions,",
+    "titleHighlight": "answered",
+    "description": "What you need to know to choose your package and prepare your project.",
+    "items": [
+      {
+        "question": "Which package should I choose?",
+        "answer": "Starter is for a single-page website, Standard for a website with up to 4 pages, and Advanced for a bilingual website with up to 6 pages. Compare the scopes in the package cards on the Services page."
+      },
+      {
+        "question": "How do I order?",
+        "answer": "To work with us directly, start by telling us about your project. We prepare a quote setting out the scope, timeline and terms. Work begins once you have accepted the quote, paid the deposit and provided the required materials. You can also order your chosen package on Upwork."
+      },
+      {
+        "question": "What do I need to provide before we start?",
+        "answer": "Your text, logo, images, social media links, colours and visual preferences, as well as your legal information where needed."
+      },
+      {
+        "question": "Are the domain name and hosting included?",
+        "answer": "Not in the packages. Domain, professional email and external subscription fees remain your responsibility, and the domain stays in your name. For hosting, the website launch option offers two choices: host the website on your own account (the host's subscription then remains your responsibility), or let Megahana host it, with {months} months of hosting included, then a subscription of €{price}/month (indicative price, coming soon). On Upwork, only hosting on your own account is available."
+      },
+      {
+        "question": "Is website launch included?",
+        "answer": "No. Your package covers website creation and delivery of the source files. The standard website launch option, priced at {amount} €, covers domain and host configuration, the first deployment and basic checks. Migrating an existing site or a complex setup are out of scope and are quoted separately. Provider fees and ongoing support or maintenance are not included. See the \"Optional website launch\" section on the Services page for details."
+      },
+      {
+        "question": "Will I receive the source files?",
+        "answer": "Yes. Every package is delivered with the complete website source files."
+      },
+      {
+        "question": "How many languages are included?",
+        "answer": "Starter and Standard include one language. Advanced includes a structure for up to 2 languages."
+      },
+      {
+        "question": "How do multilingual content and translation work?",
+        "answer": "You provide the text in each language you want. Translation is not included by default: if needed, it is discussed separately or added to the scope."
+      },
+      {
+        "question": "Are advanced forms or email marketing included?",
+        "answer": "No. Advanced forms, newsletters, email automations and external integrations are not included and require a separate agreement."
+      },
+      {
+        "question": "What are the timelines and revisions?",
+        "answer": "For direct projects, the timeline and number of revisions are confirmed in your quote. The delivery timeline starts once you have accepted the quote, paid the deposit and provided all the required project materials. For Upwork orders, the timeline and revisions are specified in the order on the platform."
+      },
+      {
+        "question": "How do direct payments work?",
+        "answer": "You can pay by card via Stripe or by bank transfer. A deposit is requested when you accept the quote. The balance is paid at delivery, after you approve the website and before the source files are handed over and any optional launch takes place. Amounts and payment terms are set out in your quote."
+      },
+      {
+        "question": "What counts as one revision?",
+        "answer": "A revision is a batch of feedback you send us grouped together in a single message, not unlimited back-and-forth as you go. Group your requests together before sending them so each revision counts in full."
+      }
+    ]
   },
   "Portfolio": {
     "meta": {

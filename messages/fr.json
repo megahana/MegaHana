@@ -5,6 +5,7 @@
     "portfolio": "Portfolio",
     "about": "À propos",
     "contact": "Contact",
+    "faq": "FAQ",
     "cta": "Voir les offres",
     "switchToFr": "Passer en français",
     "switchToEn": "Passer en anglais",
@@ -230,7 +231,6 @@
     "instagram": "Megahana sur Instagram",
     "facebook": "Megahana sur Facebook",
     "rights": "© {year} Megahana. Tous droits réservés.",
-    "madeWith": "Fait avec Next.js et Tailwind CSS.",
     "legal": {
       "notice": "Mentions légales",
       "privacy": "Politique de confidentialité",
@@ -349,11 +349,6 @@
       },
       "edits": "Modifications après livraison : {price} €/mois (tarif indicatif)."
     },
-    "upwork": {
-      "title": "Vous préférez passer par Upwork ?",
-      "description": "Les 3 formules de création sont également disponibles sur Upwork, avec des tarifs en USD. Sur Upwork, la mise en ligne standard se fait uniquement avec un hébergement à votre nom. Le calendrier, les révisions et les modalités sont précisés dans la commande Upwork.",
-      "link": "{tier} sur Upwork"
-    },
     "process": {
       "eyebrow": "Le déroulement",
       "titleLead": "Comment se déroule",
@@ -406,84 +401,88 @@
       "extrasTitle": "Un besoin supplémentaire ?",
       "extrasDescription": "Page ou révision supplémentaire, délai accéléré : nous évaluons la faisabilité et le tarif dans le devis. Aucun supplément n'est engagé sans votre accord."
     },
-    "faq": {
-      "eyebrow": "FAQ",
-      "titleLead": "Vos questions,",
-      "titleHighlight": "nos réponses",
-      "description": "Les informations utiles pour choisir votre formule et préparer votre projet.",
-      "items": [
-        {
-          "question": "Quelle formule choisir ?",
-          "answer": "Starter pour un site d'une page, Standard pour un site jusqu'à 4 pages, Advanced pour un site bilingue jusqu'à 6 pages. Comparez les périmètres dans les cartes des formules sur cette page."
-        },
-        {
-          "question": "Comment commander ?",
-          "answer": "En direct, commencez par nous parler de votre projet. Nous établissons un devis précisant le périmètre, le calendrier et les modalités. Le travail démarre après acceptation du devis, réception de l'acompte et des éléments nécessaires. Vous pouvez également commander la formule de votre choix sur Upwork."
-        },
-        {
-          "question": "Que dois-je fournir avant le démarrage ?",
-          "answer": "Vos textes, votre logo, vos images, les liens vers vos réseaux, vos couleurs et préférences visuelles, ainsi que vos informations légales si nécessaire."
-        },
-        {
-          "question": "Le nom de domaine et l'hébergement sont-ils inclus ?",
-          "answer": "Pas dans les formules. Les frais de nom de domaine, d'email professionnel et d'abonnements externes restent à votre charge, et le nom de domaine reste à votre nom. Pour l'hébergement, l'option mise en ligne propose deux possibilités : héberger le site sur votre propre compte (l'abonnement de l'hébergeur reste alors à votre charge), ou le confier à Megahana, avec {months} mois d'hébergement inclus puis un abonnement de {price} €/mois (tarif indicatif, bientôt disponible). Sur Upwork, seul l'hébergement sur votre propre compte est proposé."
-        },
-        {
-          "question": "La mise en ligne est-elle incluse ?",
-          "answer": "Non. Votre formule couvre la création du site et la remise des fichiers sources. L'option mise en ligne standard, au prix de {amount} €, couvre la configuration du domaine et de l'hébergeur, le premier déploiement et les vérifications de base. La migration d'un site existant ou une configuration complexe sont hors périmètre et font l'objet d'un devis séparé. Les frais fournisseurs et le suivi ou la maintenance ne sont pas inclus. Consultez l'encart « Option mise en ligne » sur cette page pour le détail."
-        },
-        {
-          "question": "Vais-je recevoir les fichiers sources ?",
-          "answer": "Oui. Chaque formule est livrée avec les fichiers sources complets du site."
-        },
-        {
-          "question": "Combien de langues sont incluses ?",
-          "answer": "Les formules Starter et Standard incluent une seule langue. La formule Advanced inclut une structure jusqu'à 2 langues."
-        },
-        {
-          "question": "Comment se passe le contenu multilingue et la traduction ?",
-          "answer": "Vous fournissez les textes dans chaque langue souhaitée. La traduction n'est pas incluse par défaut : si elle est nécessaire, elle est discutée séparément ou ajoutée au périmètre."
-        },
-        {
-          "question": "Les formulaires avancés ou l'emailing sont-ils inclus ?",
-          "answer": "Non. Les formulaires avancés, newsletters, automatisations email ou intégrations externes ne sont pas inclus et nécessitent un accord séparé."
-        },
-        {
-          "question": "Quels sont les délais et le nombre de révisions ?",
-          "answer": "En direct, le calendrier et le nombre de révisions sont confirmés dans le devis. Le délai de réalisation démarre après acceptation du devis, réception de l'acompte et de tous les éléments nécessaires au projet. Pour une commande Upwork, le calendrier et les révisions sont précisés dans la commande sur la plateforme."
-        },
-        {
-          "question": "Comment se passe le paiement en direct ?",
-          "answer": "Vous pouvez régler par carte bancaire via Stripe ou par virement bancaire. Un acompte est demandé à la validation du devis. Le solde est réglé à la livraison, après votre validation du site et avant la remise des fichiers sources et l'éventuelle mise en ligne. Les montants et modalités figurent dans le devis."
-        },
-        {
-          "question": "Qu'est-ce qu'une révision ?",
-          "answer": "Une révision correspond à un lot de retours que vous nous envoyez groupés en une seule fois, et non des allers-retours illimités au fil de l'eau. Regroupez vos demandes avant de nous les transmettre pour que chaque révision compte pleinement."
-        }
-      ]
-    },
     "marks": {
       "included": "Inclus :",
       "notIncluded": "Non inclus :"
     },
     "soon": "Bientôt disponible",
-    "onRequest": "Sur demande",
     "selection": {
       "title": "Votre sélection",
       "empty": "Choisissez une formule pour voir apparaître votre sélection.",
       "tierLine": "Formule {name}",
       "launchLine": "Mise en ligne standard",
-      "launchNotIncluded": "Mise en ligne non comprise dans le prix ci-dessus — pas d'annonce Upwork dédiée pour l'instant.",
+      "launchSeparate": "Mise en ligne disponible séparément sur Upwork",
       "total": "Total estimé",
       "ctaDirect": "Demander mon devis",
       "ctaUpwork": "Voir la formule sur Upwork",
-      "ctaUpworkLaunch": "Discuter de la mise en ligne sur Upwork",
+      "ctaUpworkLaunch": "Voir la mise en ligne sur Upwork",
       "collapse": "Réduire le résumé de votre sélection",
       "expand": "Afficher le résumé de votre sélection",
       "viewDetails": "Voir le détail",
       "liveDirect": "Total estimé : {price}",
-      "liveUpwork": "Formule {name} sur Upwork : {price}"
+      "liveUpwork": "Formule {name} sur Upwork : {price}",
+      "liveUpworkLaunch": "{separate} : {price}"
     }
+  },
+  "Faq": {
+    "meta": {
+      "title": "FAQ",
+      "description": "Questions fréquentes sur les formules de sites vitrines Megahana : choix de la formule, commande, mise en ligne, hébergement, délais, révisions et paiement."
+    },
+    "eyebrow": "FAQ",
+    "titleLead": "Vos questions,",
+    "titleHighlight": "nos réponses",
+    "description": "Les informations utiles pour choisir votre formule et préparer votre projet.",
+    "items": [
+      {
+        "question": "Quelle formule choisir ?",
+        "answer": "Starter pour un site d'une page, Standard pour un site jusqu'à 4 pages, Advanced pour un site bilingue jusqu'à 6 pages. Comparez les périmètres dans les cartes des formules sur la page Services."
+      },
+      {
+        "question": "Comment commander ?",
+        "answer": "En direct, commencez par nous parler de votre projet. Nous établissons un devis précisant le périmètre, le calendrier et les modalités. Le travail démarre après acceptation du devis, réception de l'acompte et des éléments nécessaires. Vous pouvez également commander la formule de votre choix sur Upwork."
+      },
+      {
+        "question": "Que dois-je fournir avant le démarrage ?",
+        "answer": "Vos textes, votre logo, vos images, les liens vers vos réseaux, vos couleurs et préférences visuelles, ainsi que vos informations légales si nécessaire."
+      },
+      {
+        "question": "Le nom de domaine et l'hébergement sont-ils inclus ?",
+        "answer": "Pas dans les formules. Les frais de nom de domaine, d'email professionnel et d'abonnements externes restent à votre charge, et le nom de domaine reste à votre nom. Pour l'hébergement, l'option mise en ligne propose deux possibilités : héberger le site sur votre propre compte (l'abonnement de l'hébergeur reste alors à votre charge), ou le confier à Megahana, avec {months} mois d'hébergement inclus puis un abonnement de {price} €/mois (tarif indicatif, bientôt disponible). Sur Upwork, seul l'hébergement sur votre propre compte est proposé."
+      },
+      {
+        "question": "La mise en ligne est-elle incluse ?",
+        "answer": "Non. Votre formule couvre la création du site et la remise des fichiers sources. L'option mise en ligne standard, au prix de {amount} €, couvre la configuration du domaine et de l'hébergeur, le premier déploiement et les vérifications de base. La migration d'un site existant ou une configuration complexe sont hors périmètre et font l'objet d'un devis séparé. Les frais fournisseurs et le suivi ou la maintenance ne sont pas inclus. Consultez l'encart « Option mise en ligne » de la page Services pour le détail."
+      },
+      {
+        "question": "Vais-je recevoir les fichiers sources ?",
+        "answer": "Oui. Chaque formule est livrée avec les fichiers sources complets du site."
+      },
+      {
+        "question": "Combien de langues sont incluses ?",
+        "answer": "Les formules Starter et Standard incluent une seule langue. La formule Advanced inclut une structure jusqu'à 2 langues."
+      },
+      {
+        "question": "Comment se passe le contenu multilingue et la traduction ?",
+        "answer": "Vous fournissez les textes dans chaque langue souhaitée. La traduction n'est pas incluse par défaut : si elle est nécessaire, elle est discutée séparément ou ajoutée au périmètre."
+      },
+      {
+        "question": "Les formulaires avancés ou l'emailing sont-ils inclus ?",
+        "answer": "Non. Les formulaires avancés, newsletters, automatisations email ou intégrations externes ne sont pas inclus et nécessitent un accord séparé."
+      },
+      {
+        "question": "Quels sont les délais et le nombre de révisions ?",
+        "answer": "En direct, le calendrier et le nombre de révisions sont confirmés dans le devis. Le délai de réalisation démarre après acceptation du devis, réception de l'acompte et de tous les éléments nécessaires au projet. Pour une commande Upwork, le calendrier et les révisions sont précisés dans la commande sur la plateforme."
+      },
+      {
+        "question": "Comment se passe le paiement en direct ?",
+        "answer": "Vous pouvez régler par carte bancaire via Stripe ou par virement bancaire. Un acompte est demandé à la validation du devis. Le solde est réglé à la livraison, après votre validation du site et avant la remise des fichiers sources et l'éventuelle mise en ligne. Les montants et modalités figurent dans le devis."
+      },
+      {
+        "question": "Qu'est-ce qu'une révision ?",
+        "answer": "Une révision correspond à un lot de retours que vous nous envoyez groupés en une seule fois, et non des allers-retours illimités au fil de l'eau. Regroupez vos demandes avant de nous les transmettre pour que chaque révision compte pleinement."
+      }
+    ]
   },
   "Portfolio": {
     "meta": {

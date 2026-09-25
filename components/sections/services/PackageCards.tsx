@@ -84,7 +84,7 @@ export function PackageCards({
   const t = useTranslations("Services.packages");
 
   return (
-    // Padding symétrique standard (identique à LaunchOption/FaqAccordion/
+    // Padding symétrique standard (identique à LaunchOption/
     // ProjectProcess/QualitySection) — un correctif du 25/09 l'avait resserré
     // en haut pour repousser "LES FORMULES" hors du premier écran, mais le
     // correctif du 26/09 (voir app/[locale]/services/page.tsx, section hero+

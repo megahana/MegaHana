@@ -12,7 +12,7 @@ import {
   type OrderRoute,
   type TierId,
 } from "@/lib/services-offers";
-import { upworkPackageFor } from "@/lib/upwork";
+import { upworkLaunchOption, upworkPackageFor } from "@/lib/upwork";
 
 /**
  * Configurateur de /services : état partagé entre PackageCards (radios des
@@ -24,7 +24,8 @@ import { upworkPackageFor } from "@/lib/upwork";
  *   première interaction (formule ou mise en ligne).
  * - Deux parcours, pas deux devises : "direct" (EUR, devis) / "upwork"
  *   (USD, annonces). Changer de parcours ne décoche jamais la mise en ligne :
- *   sur Upwork elle passe visiblement à "non comprise, à discuter".
+ *   sur Upwork elle passe visiblement à son annonce séparée (180 $, jamais
+ *   additionnée au prix de la formule).
  * - Parcours direct : le CTA transmet la sélection à /contact en query
  *   params (tier/launch), lue côté serveur par ContactPage
  *   (app/[locale]/contact/page.tsx) pour pré-remplir sujet et message.
@@ -60,7 +61,12 @@ export function Configurator() {
         price: formatRoutePrice(upworkPackageFor(selectedTier).price, "upwork"),
       });
       // Point entre les deux phrases : une pause à l'oreille (lecteur d'écran).
-      if (launchEnabled) liveText += `. ${t("launchNotIncluded")}`;
+      // Prix de l'annonce Website Launch lu à la fin, comme affiché.
+      if (launchEnabled)
+        liveText += `. ${t("liveUpworkLaunch", {
+          separate: t("launchSeparate"),
+          price: formatRoutePrice(upworkLaunchOption.price, "upwork"),
+        })}`;
     }
   }
 

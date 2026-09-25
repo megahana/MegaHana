@@ -886,6 +886,68 @@ html[data-intro="skip"] .mh-intro-overlay {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
+   Logo du header et du footer (components/ui/LogoLink.tsx) — survol et
+   focus clavier : "entrouverture discrète" (choisie au labo interne).
+
+   Chaque pétale existe deux fois dans LogoFlower : dans le <mask>
+   (séparations transparentes) et dans le groupe coloré. La classe
+   .mh-logo-link-petal est posée sur les deux : séparations et pétales
+   bougent ensemble. Repère d'un pétale : origine = point d'attache, pétale
+   orienté vers -y (unités du viewBox 200).
+
+   Effet : chaque pétale s'écarte de 3 unités le long de son axe (≈0,7px à
+   48px) et s'allonge de 3 %, décalage horaire de 25ms (même ordre que
+   l'éclosion de l'intro), aucune rotation. Aller 280ms courbe de
+   l'éclosion ; retour 220ms. Tenu tant que dure le survol / le focus.
+   Survol : pointeur fin uniquement (pas d'effet "collé" au tap tactile).
+   Mouvement réduit : aucun mouvement. ═══ */
+.mh-logo-link {
+  display: inline-flex;
+  border-radius: 0.75rem;
+}
+.mh-logo-link:focus-visible {
+  outline: 2px solid rgb(var(--accent-accessible));
+  outline-offset: 4px;
+}
+.mh-logo-link .mh-logo-link-petal {
+  transform-box: view-box;
+  transform-origin: 0 0;
+  transition-property: transform;
+  transition-duration: 220ms;
+  transition-timing-function: ease-out;
+}
+.mh-logo-link :is(mask, g[mask]) > g:nth-of-type(2) .mh-logo-link-petal {
+  transition-delay: 25ms;
+}
+.mh-logo-link :is(mask, g[mask]) > g:nth-of-type(3) .mh-logo-link-petal {
+  transition-delay: 50ms;
+}
+.mh-logo-link :is(mask, g[mask]) > g:nth-of-type(4) .mh-logo-link-petal {
+  transition-delay: 75ms;
+}
+.mh-logo-link :is(mask, g[mask]) > g:nth-of-type(5) .mh-logo-link-petal {
+  transition-delay: 100ms;
+}
+@media (hover: hover) and (pointer: fine) {
+  .mh-logo-link:hover .mh-logo-link-petal {
+    transform: translateY(-3px) scale(1, 1.03);
+    transition-duration: 280ms;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+.mh-logo-link:focus-visible .mh-logo-link-petal {
+  transform: translateY(-3px) scale(1, 1.03);
+  transition-duration: 280ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .mh-logo-link .mh-logo-link-petal {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
    ImageWithLoader (components/ui/ImageWithLoader.tsx) — chargement des
    images aux couleurs du logo, appliqué pour l'instant aux seules cartes
    "Sites vitrines" de /portfolio (ShowcaseGrid.tsx).

@@ -13,7 +13,7 @@ import {
   type OrderRoute,
   type TierId,
 } from "@/lib/services-offers";
-import { UPWORK_CONTACT_URL_TODO, isUpworkContactUrlReady, upworkPackageFor } from "@/lib/upwork";
+import { UPWORK_LAUNCH_URL, upworkLaunchOption, upworkPackageFor } from "@/lib/upwork";
 
 /**
  * Panneau flottant "Votre sélection" de /services (remplace l'ancien
@@ -25,8 +25,9 @@ import { UPWORK_CONTACT_URL_TODO, isUpworkContactUrlReady, upworkPackageFor } fr
  * - direct : formule + mise en ligne en EUR, "Total estimé", CTA devis
  *   (sélection transmise à /contact en query params, lue par ContactPage) ;
  * - upwork : prix USD de la formule seule + CTA vers son annonce ; si la
- *   mise en ligne est cochée, ligne "sur demande" + mention "non comprise"
- *   + CTA séparé "discuter" (pas d'annonce Upwork dédiée, aucun prix $).
+ *   mise en ligne est cochée, ligne à son prix d'annonce (180 $) + mention
+ *   "disponible séparément" + CTA séparé vers l'annonce Upwork "Website
+ *   Launch" (UPWORK_LAUNCH_URL) — deux commandes, jamais additionnées.
  *
  * Position : ordinateur (≥640px) fixe bas-droite, déplié à l'apparition ;
  * mobile, barre compacte fixe en bas, détail uniquement à la demande. Le
@@ -47,7 +48,6 @@ export function SelectionPanel({
 }) {
   const t = useTranslations("Services.selection");
   const tPackages = useTranslations("Services.packages");
-  const tServices = useTranslations("Services");
   const tc = useTranslations("Common");
   const titleId = useId();
   const bodyId = useId();
@@ -205,32 +205,24 @@ export function SelectionPanel({
                   <div className="flex items-baseline justify-between gap-4">
                     <dt className="text-text-secondary">{t("launchLine")}</dt>
                     <dd className="font-medium text-text-primary whitespace-nowrap">
-                      {tServices("onRequest")}
+                      {formatRoutePrice(upworkLaunchOption.price, "upwork")}
                     </dd>
                   </div>
                 </dl>
                 <p className="rounded-xl border border-border bg-surface-2 px-3 py-2 text-xs text-text-secondary leading-relaxed">
-                  {t("launchNotIncluded")}
+                  {t("launchSeparate")}
                 </p>
-                {isUpworkContactUrlReady ? (
-                  <Button
-                    href={UPWORK_CONTACT_URL_TODO}
-                    external
-                    variant="outline"
-                    size="md"
-                    ariaLabel={`${t("ctaUpworkLaunch")} ${tc("newTab")}`}
-                    className="w-full"
-                  >
-                    {t("ctaUpworkLaunch")}
-                    <ExternalLink className="w-4 h-4" aria-hidden="true" />
-                  </Button>
-                ) : (
-                  // TODO bloquant (lib/upwork.ts) : pas d'URL Upwork de contact
-                  // fournie — bouton désactivé plutôt qu'un lien mort.
-                  <Button type="button" variant="outline" size="md" disabled className="w-full">
-                    {t("ctaUpworkLaunch")}
-                  </Button>
-                )}
+                <Button
+                  href={UPWORK_LAUNCH_URL}
+                  external
+                  variant="outline"
+                  size="md"
+                  ariaLabel={`${t("ctaUpworkLaunch")} ${tc("newTab")}`}
+                  className="w-full"
+                >
+                  {t("ctaUpworkLaunch")}
+                  <ExternalLink className="w-4 h-4" aria-hidden="true" />
+                </Button>
               </div>
             )}
           </div>

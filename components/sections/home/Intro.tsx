@@ -47,8 +47,6 @@ import { BLOOM_TOTAL_MS, bloomState } from "@/lib/logo-bloom";
  * l'intro (le temps que React réhydrate).
  */
 
-const HEADER_LOGO_ID = "mh-header-logo";
-
 /* ── Chorégraphie (ms) ─────────────────────────────────────────────────────
    t=0                         : mount — overlay plein, mot « megahana »
                                   visible, pétales refermés et invisibles.
@@ -118,13 +116,13 @@ export function Intro() {
     }
 
     // Nettoyage partagé par la fin naturelle de l'intro ET par le skip :
-    // masque l'overlay et rend le focus à un élément sensé (le logo header,
-    // toujours monté — cf. layout.tsx). Ne touche pas au scroll : rien ne le
-    // verrouille dans ce composant (overlay fixed, mais jamais de
-    // `overflow:hidden` posé sur body), donc rien à libérer non plus.
+    // masque l'overlay. Aucun focus forcé ensuite (auparavant : focus posé par
+    // script sur le logo du header, qui affichait un contour de focus par
+    // défaut du navigateur sans action clavier) — le focus reste là où le
+    // navigateur le place. Ne touche pas au scroll : rien ne le verrouille
+    // dans ce composant (overlay fixed, jamais d'`overflow:hidden` sur body).
     function finish() {
       overlay?.classList.add("mh-intro-overlay--hidden");
-      document.getElementById(HEADER_LOGO_ID)?.closest("a")?.focus();
       // Hero.tsx écoute cet événement pour déclencher son dégradé animé
       // (une seule fois, jamais sur un délai deviné) — émis ici (fin
       // naturelle ou skip, finish() gère les deux) et aux deux autres

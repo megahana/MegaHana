@@ -4,10 +4,8 @@ import { useTranslations } from "next-intl";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { Configurator } from "@/components/sections/services/Configurator";
-import { UpworkAlternative } from "@/components/sections/services/UpworkAlternative";
 import { ProjectProcess } from "@/components/sections/services/ProjectProcess";
 import { QualitySection } from "@/components/sections/services/QualitySection";
-import { FaqAccordion } from "@/components/sections/services/FaqAccordion";
 import { CtaBanner } from "@/components/sections/home/CtaBanner";
 import { localizedMetadata } from "@/lib/site";
 
@@ -62,22 +60,20 @@ function ServicesContent() {
         </AnimateIn>
       </section>
 
-      {/* ── 3/4. Configurateur : formules + option mise en ligne + récapitulatif ── */}
+      {/* ── 3/4. Configurateur : formules, option mise en ligne, panneau
+          "Votre sélection" (bascule direct/Upwork incluse — l'ancien bloc
+          "Vous préférez passer par Upwork ?" est retiré, redondant) ── */}
       <Configurator />
 
-      {/* ── 5. Alternative Upwork (bloc compact) ── */}
-      <UpworkAlternative />
-
-      {/* ── 6. Déroulement du projet (canal direct) ── */}
+      {/* ── 5. Déroulement du projet (canal direct) ── */}
       <ProjectProcess />
 
-      {/* ── 7. Qualité et livraison ── */}
+      {/* ── 6. Qualité et livraison ── */}
       <QualitySection />
 
-      {/* ── 8. FAQ ── */}
-      <FaqAccordion />
+      {/* FAQ : page dédiée /faq (app/[locale]/faq/page.tsx). */}
 
-      {/* ── 9. CTA final ── */}
+      {/* ── 7. CTA final ── */}
       {/* "View services" n'a pas de sens sur la page Services elle-même — on
           renvoie vers le formulaire de contact (id="discuss", déjà en place
           sur /contact) avec un libellé qui correspond au tunnel devis-first. */}

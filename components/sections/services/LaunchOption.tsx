@@ -6,6 +6,7 @@ import { AnimateIn } from "@/components/ui/AnimateIn";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { cn } from "@/lib/utils";
 import { InclusionMark } from "@/components/sections/services/InclusionMark";
+import { upworkLaunchOption } from "@/lib/upwork";
 import {
   editsSubscription,
   launchOption,
@@ -151,13 +152,12 @@ function HostingComparison() {
 interface LaunchOptionProps {
   enabled: boolean;
   onToggle: () => void;
-  /** Parcours choisi : sur Upwork, la mise en ligne n'a pas de prix ("sur demande"). */
+  /** Parcours choisi : prix EUR (direct) ou prix de l'annonce Upwork Website Launch (USD). */
   route: OrderRoute;
 }
 
 export function LaunchOption({ enabled, onToggle, route }: LaunchOptionProps) {
   const t = useTranslations("Services.launch");
-  const tServices = useTranslations("Services");
 
   return (
     <section
@@ -193,19 +193,14 @@ export function LaunchOption({ enabled, onToggle, route }: LaunchOptionProps) {
             <div className="flex flex-col">
               <Globe className="w-8 h-8 text-gold" />
               <p className="mt-4 text-sm font-medium text-text-muted">{t("priceLabel")}</p>
-              {/* Parcours Upwork : pas d'annonce dédiée, donc pas de prix — jamais
-                  le prix EUR recopié en dollars (lib/upwork.ts). */}
-              {route === "direct" ? (
-                <>
-                  <div className="mt-1 flex items-baseline gap-1.5">
-                    <span className="text-4xl font-bold gradient-text">{launchOption.price}</span>
-                    <span className="text-sm text-text-muted">{ROUTE_CURRENCY_SYMBOL.direct}</span>
-                  </div>
-                  <p className="mt-2 text-xs text-text-muted">{t("priceNote")}</p>
-                </>
-              ) : (
-                <p className="mt-1 text-2xl font-bold gradient-text">{tServices("onRequest")}</p>
-              )}
+              {/* Parcours Upwork : prix de l'annonce Website Launch (lib/upwork.ts). */}
+              <div className="mt-1 flex items-baseline gap-1.5">
+                <span className="text-4xl font-bold gradient-text">
+                  {route === "direct" ? launchOption.price : upworkLaunchOption.price}
+                </span>
+                <span className="text-sm text-text-muted">{ROUTE_CURRENCY_SYMBOL[route]}</span>
+              </div>
+              <p className="mt-2 text-xs text-text-muted">{t("priceNote")}</p>
             </div>
 
             <div className="flex flex-col">
