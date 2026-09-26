@@ -163,7 +163,11 @@ export function ShowcaseGrid({ projects }: { projects: Project[] }) {
             <div className="rounded-2xl border border-dashed border-border p-6 sm:p-8 flex flex-col items-center justify-center gap-2 aspect-[16/10] text-center">
               <Clock className="w-5 h-5 text-text-muted" />
               <p className="text-sm font-medium text-text-muted">{t("nextProjectTitle")}</p>
-              <p className="text-xs text-text-muted/60">{t("nextProjectStatus")}</p>
+              {/* text-muted plein (plus de /60) : 12px graisse 400 = texte
+                  normal, seuil 4,5:1 — /60 ne faisait que 2,3:1 (clair) et
+                  3,0:1 (sombre). La hiérarchie avec le titre reste portée
+                  par la taille et la graisse. */}
+              <p className="text-xs text-text-muted">{t("nextProjectStatus")}</p>
             </div>
           </AnimateIn>
         )}
