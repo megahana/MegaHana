@@ -95,6 +95,15 @@ export function ContactForm({ initialSubjectOption, initialMessage }: ContactFor
     heading?.focus();
   }, []);
 
+  // Échec d'envoi : le bouton d'envoi, désactivé pendant l'envoi, avait perdu
+  // le focus (retombé en haut de page). Même principe que le succès : focus
+  // sur le bandeau d'erreur dès qu'il est monté (non interactif, tabIndex -1,
+  // marge de défilement sous le header fixe). Un nouvel échec après une
+  // nouvelle tentative remonte le bandeau, donc le focus y revient.
+  const focusErrorAlert = useCallback((alert: HTMLDivElement | null) => {
+    alert?.focus();
+  }, []);
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -264,7 +273,12 @@ export function ContactForm({ initialSubjectOption, initialMessage }: ContactFor
               <p className="text-sm text-text-muted">{t("requiredNote")}</p>
 
               {status === "error" && (
-                <div role="alert" className="rounded-xl border border-primary/30 bg-primary/5 p-4">
+                <div
+                  ref={focusErrorAlert}
+                  role="alert"
+                  tabIndex={-1}
+                  className="rounded-xl border border-primary/30 bg-primary/5 p-4 focus:outline-none scroll-mt-20 md:scroll-mt-24"
+                >
                   <p className="text-sm text-text-primary">{t("errorGeneral")}</p>
                   <a
                     href={`mailto:${CONTACT_FORM_EMAIL}`}

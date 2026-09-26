@@ -13,9 +13,12 @@ const inter = Inter({
   display: "swap",
 });
 
+// Style normal seulement : l'italique de Fraunces n'est utilisé nulle part
+// sur le site, mais next/font le préchargeait (≈45 ko sur le chemin critique
+// de chaque page).
 const fraunces = Fraunces({
   subsets: ["latin"],
-  style: ["normal", "italic"],
+  style: ["normal"],
   variable: "--font-display",
   display: "swap",
 });
