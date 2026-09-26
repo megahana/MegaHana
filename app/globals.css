@@ -227,8 +227,8 @@ h3,
    fin d'Intro (événement "mh:intro-done", cf. Intro.tsx) — jamais sur un
    délai fixe deviné : l'Intro peut être sautée, déjà jouée cette session, ou
    ne jamais s'afficher (reduced-motion). Un seul passage (pas de boucle),
-   cohérent avec les animations d'entrée framer-motion déjà sur ce H1 (elles
-   aussi ne jouent qu'une fois). */
+   cohérent avec l'apparition CSS du texte du hero (.mh-hero-item, qui ne
+   joue elle aussi qu'une fois). */
 @media (prefers-reduced-motion: no-preference) {
   .hero-gradient--play {
     animation: mh-hero-gradient 3.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s 1 both;
@@ -240,6 +240,34 @@ h3,
     background-position: 100% 50%;
   }
 }
+/* Apparition du texte du hero (badge, H1, sous-titre, atouts, CTA) —
+   amélioration progressive : le texte est VISIBLE PAR DÉFAUT dans le HTML/CSS
+   (jamais caché en attendant React ni aucun script). La courte révélation
+   (fondu + montée de 20px, 500ms, décalée de 0 à 400ms via --mh-hero-delay)
+   est 100 % CSS et ne s'active que :
+   - html[data-intro="skip"] : rechargement avec intro déjà vue (attribut posé
+     avant le premier paint par le script anti-flash, lib/intro.ts) ;
+   - .mh-hero--reveal : hero remonté par navigation interne (Hero.tsx).
+   Première visite (intro jouée) : pas de révélation — le texte est déjà là
+   sous l'overlay, et l'est toujours quand l'intro s'efface (comme avant).
+   Mouvement réduit : affichage direct. */
+@keyframes mh-hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html[data-intro="skip"] .mh-hero-item,
+  .mh-hero--reveal .mh-hero-item {
+    animation: mh-hero-in 500ms cubic-bezier(0.22, 1, 0.36, 1) var(--mh-hero-delay, 0ms) both;
+  }
+}
+
 /* Fallback : navigateur sans background-clip:text (rare) ou mode
    forced-colors (accessibilité Windows) — texte plein lisible plutôt qu'un
    texte transparent sur transparent (background-clip raté sans fallback). */

@@ -1,16 +1,36 @@
 "use client";
 
-import { useLayoutEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useLayoutEffect, useState, type CSSProperties } from "react";
 import { ArrowDown, ArrowRight, CheckCircle2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { cn } from "@/lib/utils";
 
+/**
+ * Apparition du texte du hero : 100 % CSS (.mh-hero-item, app/globals.css),
+ * texte visible par défaut dans le HTML — jamais caché en attendant React.
+ * La révélation courte ne joue qu'au rechargement avec intro déjà vue
+ * (html[data-intro="skip"], posé avant le premier paint) et au retour par
+ * navigation interne (.mh-hero--reveal ci-dessous).
+ */
+const itemDelay = (ms: number) => ({ "--mh-hero-delay": `${ms}ms` }) as CSSProperties;
+
+// Vrai après la première hydratation du hero dans cet onglet : un montage
+// ultérieur (retour à l'accueil par navigation interne, sans rechargement)
+// est un rendu 100 % client — le HTML serveur et l'anti-flash n'y
+// interviennent pas — et reçoit alors la classe de révélation dès son premier
+// rendu. À l'hydratation, la valeur est false comme au rendu serveur : pas de
+// mismatch.
+let heroHydratedOnce = false;
+
 export function Hero() {
   const t = useTranslations("Home.hero");
   const perks = t.raw("perks") as string[];
+  const [revealOnMount] = useState(() => heroHydratedOnce);
+  useEffect(() => {
+    heroHydratedOnce = true;
+  }, []);
 
   // Ne joue le dégradé animé du H1 qu'une fois l'Intro RÉELLEMENT terminée
   // (événement "mh:intro-done" émis par Intro.tsx à ses 3 sorties : fin
@@ -37,25 +57,23 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-0 lg:min-h-screen flex items-center pt-28 pb-12 sm:pt-24 lg:py-0 overflow-hidden">
+    <section
+      className={cn(
+        "relative min-h-0 lg:min-h-screen flex items-center pt-28 pb-12 sm:pt-24 lg:py-0 overflow-hidden",
+        revealOnMount && "mh-hero--reveal",
+      )}
+    >
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20">
         <div className="max-w-4xl mx-auto text-center">
           {/* Eyebrow */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-4 sm:mb-6"
-          >
+          <div className="mh-hero-item mb-4 sm:mb-6" style={itemDelay(0)}>
             <Badge variant="primary">{t("badge")}</Badge>
-          </motion.div>
+          </div>
 
           {/* Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-[1.9rem] sm:text-5xl md:text-6xl lg:text-7xl font-bold text-text-primary leading-[1.12] sm:leading-[1.1] tracking-tight"
+          <h1
+            style={itemDelay(100)}
+            className="mh-hero-item text-[1.9rem] sm:text-5xl md:text-6xl lg:text-7xl font-bold text-text-primary leading-[1.12] sm:leading-[1.1] tracking-tight"
           >
             {t("titleLead")}{" "}
             <span
@@ -63,24 +81,20 @@ export function Hero() {
             >
               {t("titleHighlight")}
             </span>
-          </motion.h1>
+          </h1>
 
           {/* Subheadline */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-5 sm:mt-6 text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed"
+          <p
+            style={itemDelay(200)}
+            className="mh-hero-item mt-5 sm:mt-6 text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed"
           >
             {t("subheadline")}
-          </motion.p>
+          </p>
 
           {/* Perks */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-wrap justify-center gap-4 mt-8"
+          <div
+            style={itemDelay(300)}
+            className="mh-hero-item flex flex-wrap justify-center gap-4 mt-8"
           >
             {perks.map((perk) => (
               <div key={perk} className="flex items-center gap-2 text-sm text-text-secondary">
@@ -88,14 +102,12 @@ export function Hero() {
                 {perk}
               </div>
             ))}
-          </motion.div>
+          </div>
 
           {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-3 justify-center mt-10"
+          <div
+            style={itemDelay(400)}
+            className="mh-hero-item flex flex-col sm:flex-row gap-3 justify-center mt-10"
           >
             <Button href="/services" size="lg">
               {t("ctaPrimary")}
@@ -104,7 +116,7 @@ export function Hero() {
             <Button href="/portfolio" size="lg" variant="secondary">
               {t("ctaSecondary")}
             </Button>
-          </motion.div>
+          </div>
         </div>
       </div>
 
