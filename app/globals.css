@@ -179,6 +179,34 @@ h3,
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
+   AnimateIn (components/ui/AnimateIn.tsx) — entrée courte au premier
+   affichage, 100 % CSS : le bloc est visible dans le HTML et le reste si le
+   JavaScript ne charge pas. Mêmes durée/courbe/décalage que la révélation
+   au scroll (framer-motion) qui prend le relais pour les blocs sous l'écran.
+   ═══ */
+/* Départ à 0.01 et non 0 : visuellement identique, mais le bloc est "peint"
+   dès le premier affichage. À 0, Chrome l'ignore comme candidat LCP, et la
+   suite de l'animation (opacité/transform, sur le compositeur, sans
+   repaint) ne le rattrape jamais : /services, /contact, /portfolio et
+   /about pouvaient finir sans LCP (connexion rapide ou polices en cache). */
+@keyframes mh-animate-in {
+  from {
+    opacity: 0.01;
+    transform: translate(var(--mh-animate-in-x, 0px), var(--mh-animate-in-y, 30px));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .mh-animate-in {
+    animation: mh-animate-in 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94)
+      var(--mh-animate-in-delay, 0s) both;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
    Hero (components/sections/home/Hero.tsx) ═══════════════════════════ */
 
 /* Dégradé animé du mot clé du H1 — classe ADDITIVE à .gradient-text (qui
@@ -831,26 +859,25 @@ h3,
    FADE_DURATION_MS dans Intro.tsx — CSS plat, pas moyen de la référencer
    depuis une constante JS. Si l'un change, changer l'autre. Les pétales,
    eux, sont animés en JS (attributs SVG), pas ici. ═══ */
+/* Masqué PAR DÉFAUT (amélioration progressive) : sans JavaScript, ou si le
+   code de l'intro ne vient pas, la page reste visible et utilisable. Seul
+   html[data-intro="play"] l'affiche — posé avant le premier paint par le
+   script inline (lib/intro.ts), qui porte aussi les garde-fous. */
 .mh-intro-overlay {
   position: fixed;
   inset: 0;
   z-index: 100;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   background: rgb(var(--bg));
   cursor: pointer;
 }
-.mh-intro-overlay--hidden {
-  display: none;
+html[data-intro="play"] .mh-intro-overlay {
+  display: flex;
 }
-/* Anti-flash : data-intro="skip" est posé sur <html> AVANT le premier paint
-   (script inline, lib/intro.ts) quand l'intro ne jouera pas — session déjà
-   vue ou mouvement réduit. Sans cette règle, le HTML serveur peignait
-   l'overlay (mot « megahana » + bouton « Passer l'intro ») jusqu'à
-   l'hydratation, Intro.tsx ne le masquant qu'après. */
-html[data-intro="skip"] .mh-intro-overlay {
-  display: none;
+.mh-intro-overlay--hidden {
+  display: none !important;
 }
 .mh-intro-overlay--fading {
   opacity: 0;

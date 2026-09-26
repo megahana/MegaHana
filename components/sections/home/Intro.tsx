@@ -11,7 +11,7 @@ import {
   PETAL_FILL_CLASS,
   SEPARATOR_WIDTH,
 } from "@/lib/logo-geometry";
-import { INTRO_SESSION_KEY } from "@/lib/intro";
+import { INTRO_ATTRIBUTE, INTRO_READY_ATTRIBUTE, INTRO_SESSION_KEY } from "@/lib/intro";
 import { BLOOM_TOTAL_MS, bloomState } from "@/lib/logo-bloom";
 
 /**
@@ -123,6 +123,10 @@ export function Intro() {
     // dans ce composant (overlay fixed, jamais d'`overflow:hidden` sur body).
     function finish() {
       overlay?.classList.add("mh-intro-overlay--hidden");
+      // État "terminée" sur <html> : l'overlay n'est affiché qu'en "play"
+      // (app/globals.css), et le garde-fou du script inline (lib/intro.ts)
+      // n'a plus rien à faire.
+      document.documentElement.setAttribute(INTRO_ATTRIBUTE, "done");
       // Hero.tsx écoute cet événement pour déclencher son dégradé animé
       // (une seule fois, jamais sur un délai deviné) — émis ici (fin
       // naturelle ou skip, finish() gère les deux) et aux deux autres
@@ -141,6 +145,13 @@ export function Intro() {
       skip();
     }
     skipButton.addEventListener("click", onSkipButtonClick);
+    // Échap passe l'intro (le script inline le gère déjà avant que ce code
+    // ne prenne la main).
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape" && document.documentElement.getAttribute(INTRO_ATTRIBUTE) === "play") {
+        skip();
+      }
+    }
 
     let played = false;
     try {
@@ -181,6 +192,33 @@ export function Intro() {
         skipButton.removeEventListener("click", onSkipButtonClick);
       };
     }
+
+    // Intro déjà écartée par le script inline pendant ce chargement (clic ou
+    // Échap avant que ce code ne soit prêt, ou garde-fou de délai) : ne pas la
+    // rejouer par-dessus une page que le visiteur a déjà reçue. Session
+    // marquée vue, comme après un skip.
+    if (document.documentElement.getAttribute(INTRO_ATTRIBUTE) === "done") {
+      overlay.classList.add("mh-intro-overlay--hidden");
+      try {
+        sessionStorage.setItem(INTRO_SESSION_KEY, "1");
+      } catch {
+        /* sessionStorage indisponible — pas bloquant. */
+      }
+      after(0, () => window.dispatchEvent(new Event("mh:intro-done")));
+      return () => {
+        timers.forEach(clearTimeout);
+        overlay.removeEventListener("click", skip);
+        skipButton.removeEventListener("click", onSkipButtonClick);
+      };
+    }
+
+    // Le code prend la main : l'overlay est affiché ("play" — déjà posé par
+    // le script inline au chargement de l'accueil, posé ici lors d'un retour
+    // par navigation interne) et le garde-fou de démarrage est levé
+    // (data-intro-ready ; le garde-fou de durée, lui, reste armé).
+    document.documentElement.setAttribute(INTRO_ATTRIBUTE, "play");
+    document.documentElement.setAttribute(INTRO_READY_ATTRIBUTE, "");
+    document.addEventListener("keydown", onKeyDown);
 
     // L'overlay est plein écran et bloque visuellement tout le reste (header
     // compris) : focus immédiat sur le skip, sinon un utilisateur clavier
@@ -232,6 +270,11 @@ export function Intro() {
       unsubscribe();
       overlay.removeEventListener("click", skip);
       skipButton.removeEventListener("click", onSkipButtonClick);
+      document.removeEventListener("keydown", onKeyDown);
+      // Pas de remise à "done" ici : en dev, StrictMode démonte/remonte cet
+      // effet, et la seconde passe verrait alors l'intro comme écartée. Si
+      // on quitte l'accueil en pleine intro, le garde-fou de durée du script
+      // inline (lib/intro.ts) repasse l'état à "done".
     };
   }, []);
 
