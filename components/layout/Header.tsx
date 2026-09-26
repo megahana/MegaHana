@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -10,6 +11,13 @@ import { Button } from "@/components/ui/Button";
 import { LogoLink } from "@/components/ui/LogoLink";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+
+// Lianes décoratives : chargées côté client seulement, hors du HTML initial
+// (invisibles au premier rendu — voir HeaderVines.tsx).
+const HeaderVines = dynamic(
+  () => import("@/components/layout/HeaderVines").then((m) => m.HeaderVines),
+  { ssr: false },
+);
 
 const navItems = [
   { href: "/", key: "home" },
@@ -104,6 +112,12 @@ export function Header() {
           </button>
         </div>
       </div>
+
+      {/* Lianes suspendues à la ligne basse du header, visibles avec le fond
+          et l'ombre, à partir de 1440px — voir HeaderVines. Jamais sur
+          l'accueil : sa galerie pleine largeur passe sous n'importe quelle
+          position (le composant n'y est même pas chargé). */}
+      {pathname !== "/" && <HeaderVines scrolled={scrolled} />}
 
       {/* Mobile menu */}
       <AnimatePresence>

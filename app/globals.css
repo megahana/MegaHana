@@ -1121,3 +1121,126 @@ html[data-intro="play"] .mh-intro-overlay {
   --case-problem: var(--sakura);
   --case-result: var(--gold);
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Ronces / lianes décoratives (components/ui/Vine.tsx, géométrie :
+   lib/vine-geometry.ts). En production : combo suspendu au header
+   (Header.tsx, tige à gauche + vrille à droite) ; autres pistes et
+   placement en marge encore au labo interne.
+
+   .mh-vine est un point d'ancrage de taille nulle (toujours absolu) ; le
+   point d'attache du dessin tombe sur ce point. Couleurs en CSS pur (pas
+   de classe utilitaire Tailwind : rien ne dépend du scan de `content`).
+
+   Fondu vers l'alpha (jamais vers --bg) : un seul asset pour les deux
+   thèmes, y compris au-dessus du header flouté. --vine-strength compense
+   un peu le surcroît de contraste des couleurs de marque sur fond charbon.
+
+   Vent : deux rotations imbriquées autour du point d'attache, périodes non
+   multiples — le mouvement ne se répète jamais à l'identique. Amplitude
+   calculée par Vine.tsx pour un déplacement du bout ≈3,5 px (+40 % de
+   rafale), quelle que soit la longueur ; angle total (les deux rotations
+   additionnées) borné à 4,5°. Tempo propre à chaque piste (tige
+   6,8 s / 11,3 s, vrille 8,3 s / 13,1 s) : deux pistes côte à côte ne
+   bougent jamais en cadence. Sinusoïde (in-out), jamais de rebond. Le
+   balancement tourne indépendamment du fondu (data-faded). Animé sur des
+   conteneurs HTML : le SVG est rasterisé une fois puis tourné par le
+   compositeur. Seule la guirlande anime aussi ses pétales (dans le SVG).
+   Mouvement réduit : élément immobile. ═══ */
+.mh-vine {
+  --vine-strength: 1;
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  transform: rotate(var(--vine-rotate, 0deg));
+  transform-origin: 0 0;
+  /* Même durée et même courbe que le fond/l'ombre du header
+     (duration-300, courbe par défaut de Tailwind) : apparition synchrone. */
+  transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dark .mh-vine {
+  --vine-strength: 0.85;
+}
+.mh-vine[data-faded] {
+  opacity: 0;
+}
+.mh-vine-sway,
+.mh-vine-gust {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+}
+.mh-vine[data-variant="stem"] {
+  --vine-sway-period: 6.8s;
+  --vine-gust-period: 11.3s;
+}
+.mh-vine[data-variant="tendril"] {
+  --vine-sway-period: 8.3s;
+  --vine-gust-period: 13.1s;
+}
+.mh-vine[data-sway] .mh-vine-sway {
+  animation: mh-vine-sway var(--vine-sway-period, 7s) cubic-bezier(0.37, 0, 0.63, 1)
+    var(--vine-phase, 0s) infinite alternate;
+}
+.mh-vine[data-sway] .mh-vine-gust {
+  animation: mh-vine-gust var(--vine-gust-period, 11.3s) cubic-bezier(0.37, 0, 0.63, 1)
+    var(--vine-phase, 0s) infinite alternate;
+}
+.mh-vine-svg {
+  position: absolute;
+  display: block;
+  overflow: visible;
+  opacity: var(--vine-strength);
+}
+/* Tige à pétales (T1) : masque linéaire depuis le point d'attache. */
+.mh-vine-svg[data-variant="stem"] {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 var(--vine-fade-end));
+  mask-image: linear-gradient(to bottom, transparent 0, #000 var(--vine-fade-end));
+}
+.mh-vine-sakura {
+  fill: rgb(var(--sakura));
+}
+.mh-vine-gold {
+  fill: rgb(var(--gold));
+}
+.mh-vine[data-sway] .mh-vine-flutter {
+  transform-box: view-box;
+  animation: mh-vine-flutter 5s cubic-bezier(0.37, 0, 0.63, 1) var(--vine-flutter-delay, 0s)
+    infinite alternate;
+}
+@keyframes mh-vine-sway {
+  from {
+    transform: rotate(calc(-1 * var(--vine-sway-amp, 2.2deg)));
+  }
+  to {
+    transform: rotate(var(--vine-sway-amp, 2.2deg));
+  }
+}
+@keyframes mh-vine-gust {
+  from {
+    transform: rotate(var(--vine-gust-amp, 1deg));
+  }
+  to {
+    transform: rotate(calc(-1 * var(--vine-gust-amp, 1deg)));
+  }
+}
+@keyframes mh-vine-flutter {
+  from {
+    transform: rotate(-4deg);
+  }
+  to {
+    transform: rotate(4deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mh-vine {
+    transition: none;
+  }
+  .mh-vine[data-sway] .mh-vine-sway,
+  .mh-vine[data-sway] .mh-vine-gust,
+  .mh-vine[data-sway] .mh-vine-flutter {
+    animation: none;
+  }
+}
