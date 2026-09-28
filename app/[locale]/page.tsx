@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import { setRequestLocale, getTranslations } from "next-intl/server";
+import { isHeroAutumn } from "@/lib/season";
 import { localizedMetadata } from "@/lib/site";
 import { Intro } from "@/components/sections/home/Intro";
 import { Hero } from "@/components/sections/home/Hero";
@@ -25,11 +27,16 @@ export async function generateMetadata({
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  // Rendu à chaque requête, explicitement : la saison du hero dépend de la
+  // date du jour. Déjà le cas via cookies() dans le layout (thème) ; ceci
+  // évite qu'une future page statique fige la saison au dernier build.
+  await connection();
+  const autumn = isHeroAutumn();
 
   return (
     <>
       <Intro />
-      <Hero />
+      <Hero autumn={autumn} />
       <Galerie />
       <ServicesPreview />
       <HowItWorks />

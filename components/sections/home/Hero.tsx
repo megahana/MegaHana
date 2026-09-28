@@ -25,7 +25,8 @@ const itemDelay = (ms: number) => ({ "--mh-hero-delay": `${ms}ms` }) as CSSPrope
 // mismatch.
 let heroHydratedOnce = false;
 
-export function Hero() {
+/** `autumn` : saison calculée côté serveur (lib/season.ts, app/[locale]/page.tsx). */
+export function Hero({ autumn }: { autumn: boolean }) {
   const t = useTranslations("Home.hero");
   const perks = t.raw("perks") as string[];
   const [revealOnMount] = useState(() => heroHydratedOnce);
@@ -68,7 +69,7 @@ export function Hero() {
       {/* Fond décoratif (pétale-fenêtre du logo), sous le contenu : premier
           enfant positionné, peint avant le bloc de texte. Son cycle démarre
           au même signal que le dégradé du H1. */}
-      <HeroSilhouette ready={heroReady} avoidRef={perksRef} />
+      <HeroSilhouette ready={heroReady} autumn={autumn} avoidRef={perksRef} />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20">
         <div className="max-w-4xl mx-auto text-center">
           {/* Eyebrow */}

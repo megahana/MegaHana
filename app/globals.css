@@ -1337,6 +1337,11 @@ html[data-intro="play"] .mh-intro-overlay {
 .mh-hs-fill-bg {
   fill: rgb(var(--bg));
 }
+/* Arches de la variation automne : l'opacité se cumule vers le bas (≈0,22 → 0,39 → 0,52). */
+.mh-hs-arch-gold {
+  fill: rgb(var(--gold));
+  fill-opacity: calc(0.22 * var(--hs-strength));
+}
 .mh-hs-pattern {
   opacity: calc(0.55 * var(--hs-strength));
 }

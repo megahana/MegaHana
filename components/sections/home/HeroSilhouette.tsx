@@ -35,7 +35,9 @@ import { buildVine } from "@/lib/vine-geometry";
  *   app/globals.css).
  *
  * Le cycle ne démarre qu'à la fin de l'Intro (`ready`, piloté par Hero.tsx
- * sur "mh:intro-done") ; avant, la première variation est déjà affichée.
+ * sur "mh:intro-done") ; avant, la première variation est déjà affichée. Il
+ * s'arrête (minuteur supprimé) quand le hero sort de l'écran ou que l'onglet
+ * est masqué, et reprend au retour (useCycleVisible).
  */
 
 /** Repère du dessin : rapport du hero desktop. */
@@ -63,10 +65,20 @@ const WINDOW_TOP = (() => {
  */
 const MIN_GAP_PX = 16;
 
-type VariationId = "degrade" | "contours" | "nervures" | "eclosion" | "ronces";
+type VariationId = "degrade" | "contours" | "nervures" | "eclosion" | "ronces" | "automne";
 /** Ordre du cycle desktop ; le mobile en prend les MOBILE_COUNT premières. */
 const SEQUENCE: readonly VariationId[] = ["degrade", "contours", "nervures", "eclosion", "ronces"];
 const MOBILE_COUNT = 3;
+/**
+ * Automne (1er septembre – 30 novembre, lib/season.ts) : « automne »
+ * remplace « degrade » en tête du cycle, le reste de SEQUENCE est inchangé.
+ * En tête, il est aussi la variation du mobile (MOBILE_COUNT premières) et
+ * celle, figée, du mouvement réduit.
+ */
+const AUTUMN_SEQUENCE: readonly VariationId[] = [
+  "automne",
+  ...SEQUENCE.filter((v) => v !== "degrade"),
+];
 const VARIATION_MS = 4000;
 const MOBILE_VARIATION_MS = 5000;
 const MOBILE_QUERY = "(max-width: 767px)";
@@ -81,6 +93,15 @@ const SIDE_PETALS: ReadonlyArray<{ petal: Petal; scale: number; x: number; y: nu
   { petal: PETALS[3], scale: 7, x: 190, y: 890 },
   { petal: PETALS[2], scale: 6.5, x: 1500, y: 960 },
 ];
+
+/** Arches de la variation automne : décalage du sommet sous la pointe, échelle par rapport à la fenêtre. */
+const AUTUMN_ARCHES = [
+  { top: 25, scale: 0.8 },
+  { top: 85, scale: 0.6 },
+  { top: 145, scale: 0.42 },
+] as const;
+/** Arches plus hautes que larges, relativement à la fenêtre. */
+const AUTUMN_ARCH_STRETCH = 1.25;
 
 /** Ronces « en réserve » (variation ronces), repère de la fenêtre. */
 const RESERVE_VINES = [
@@ -103,6 +124,34 @@ function useMediaQuery(query: string) {
     return () => list.removeEventListener("change", onChange);
   }, [query]);
   return matches;
+}
+
+/**
+ * Vrai tant que `targetRef` est au moins en partie à l'écran ET que l'onglet
+ * est visible. Écran : IntersectionObserver, même principe que la boucle de
+ * défilement de la galerie (useMobileMarqueeAutoScroll.ts) ; onglet :
+ * visibilitychange (un minuteur continue de tourner, ralenti, dans un onglet
+ * masqué). Vrai par défaut : le hero est à l'écran au chargement.
+ */
+function useCycleVisible(targetRef: RefObject<HTMLElement | null>) {
+  const [onScreen, setOnScreen] = useState(true);
+  const [pageVisible, setPageVisible] = useState(true);
+  useEffect(() => {
+    const target = targetRef.current;
+    if (!target) return;
+    const observer = new IntersectionObserver((entries) =>
+      setOnScreen(entries.some((e) => e.isIntersecting)),
+    );
+    observer.observe(target);
+    const onVisibility = () => setPageVisible(document.visibilityState === "visible");
+    onVisibility();
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, [targetRef]);
+  return onScreen && pageVisible;
 }
 
 /** Fleur du logo (géométrie partagée), centrée sur le point d'attache. */
@@ -195,12 +244,16 @@ function useWindowClearance(
 
 function SilhouetteLayer({
   active,
+  sequence,
+  layerRef,
   avoidRef,
 }: {
   active: VariationId;
+  /** Remplissages montés (SEQUENCE, ou AUTUMN_SEQUENCE en automne). */
+  sequence: readonly VariationId[];
+  layerRef: RefObject<HTMLDivElement | null>;
   avoidRef: RefObject<HTMLElement | null>;
 }) {
-  const layerRef = useRef<HTMLDivElement>(null);
   useWindowClearance(layerRef, avoidRef);
   const id = useId().replace(/[^a-zA-Z0-9]/g, "");
   const { x: cx, y: cy } = WINDOW_CENTER;
@@ -281,6 +334,25 @@ function SilhouetteLayer({
         <rect width={VIEW_W} height={VIEW_H} fill={`url(#${id}-flowers)`} />
       </>
     ),
+    automne: (
+      <g transform={tilt}>
+        {tint("mh-hs-tint-sakura")}
+        {/* Trois arches or imbriquées, de plus en plus petites et basses :
+            forme fermée, concentrique, plus dense vers le bas du champ.
+            Sommets à pointe + 25 / 85 / 145 : lisibles avant le fondu du bas.
+            Validé au labo interne (28/09, concept hero-saisons). */}
+        {AUTUMN_ARCHES.map(({ top, scale }) => (
+          <ellipse
+            key={top}
+            cx={cx}
+            cy={tip.y + top + ry * scale * AUTUMN_ARCH_STRETCH}
+            rx={rx * scale}
+            ry={ry * scale * AUTUMN_ARCH_STRETCH}
+            className="mh-hs-arch-gold"
+          />
+        ))}
+      </g>
+    ),
     ronces: (
       <>
         <rect width={VIEW_W} height={VIEW_H} className="mh-hs-tint-gold-strong" />
@@ -325,7 +397,7 @@ function SilhouetteLayer({
           />
         ))}
       </svg>
-      {SEQUENCE.map((v) => (
+      {sequence.map((v) => (
         <div key={v} className="mh-hs-variation" data-active={v === active ? "" : undefined}>
           <svg
             viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
@@ -343,8 +415,11 @@ function SilhouetteLayer({
 
 export function HeroSilhouette({
   ready,
+  autumn,
   avoidRef,
 }: {
+  /** Automne météorologique en cours (calculé côté serveur, lib/season.ts). */
+  autumn: boolean;
   ready: boolean;
   /** Ligne des atouts : la fenêtre reste toujours dessous (MIN_GAP_PX). */
   avoidRef: RefObject<HTMLElement | null>;
@@ -354,10 +429,15 @@ export function HeroSilhouette({
   const reducedMotion = useMediaQuery(REDUCED_MOTION_QUERY);
   const [paused, setPaused] = useState(false);
   const [index, setIndex] = useState(0);
-  const count = mobile ? MOBILE_COUNT : SEQUENCE.length;
+  const layerRef = useRef<HTMLDivElement>(null);
+  // Hors écran ou onglet masqué : le minuteur est réellement supprimé (et
+  // recréé au retour, variation suivante après une période pleine).
+  const visible = useCycleVisible(layerRef);
+  const sequence = autumn ? AUTUMN_SEQUENCE : SEQUENCE;
+  const count = mobile ? MOBILE_COUNT : sequence.length;
   const duration = mobile ? MOBILE_VARIATION_MS : VARIATION_MS;
-  const active = reducedMotion ? SEQUENCE[0] : SEQUENCE[index % count];
-  const cycling = ready && !reducedMotion && !paused;
+  const active = reducedMotion ? sequence[0] : sequence[index % count];
+  const cycling = ready && !reducedMotion && !paused && visible;
 
   useEffect(() => {
     if (!cycling) return;
@@ -367,7 +447,12 @@ export function HeroSilhouette({
 
   return (
     <>
-      <SilhouetteLayer active={active} avoidRef={avoidRef} />
+      <SilhouetteLayer
+        active={active}
+        sequence={sequence}
+        layerRef={layerRef}
+        avoidRef={avoidRef}
+      />
       {/* WCAG 2.2.2 : fond qui change seul pendant plus de 5 s → arrêt possible.
           Masqué en mouvement réduit (CSS : rien ne bouge alors). */}
       <button
