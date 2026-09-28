@@ -1256,3 +1256,161 @@ html[data-intro="play"] .mh-intro-overlay {
     animation: none;
   }
 }
+
+/* ═══ Fond du hero de l'accueil — « silhouette constante »
+   (components/sections/home/HeroSilhouette.tsx). Le grand pétale du logo
+   sert de fenêtre fixe ; seul son remplissage change (minuteur JS, fondu de
+   350 ms). Aucune animation CSS en boucle. Teintes --sakura / --gold
+   uniquement (le terracotta reste réservé aux éléments cliquables), un seul
+   jeu de tracés pour les deux thèmes : --hs-strength baisse les opacités en
+   sombre, où les couleurs de marque ressortent davantage sur le charbon. ═══ */
+.mh-hs-layer {
+  --hs-strength: 1;
+  /* Fondu du bas : l'arc et les fragments se dissolvent dans le fond au lieu
+     d'être tranchés net par l'overflow-hidden du hero à la jonction avec la
+     galerie. Longueur bornée (72px sur mobile, 160px en desktop) : en
+     pourcentage, le fondu effaçait presque tout l'arc visible sur petit
+     écran. Masque statique, aucune animation. */
+  --hs-fade: clamp(72px, 18vw, 160px);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - var(--hs-fade)), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - var(--hs-fade)), transparent);
+}
+.dark .mh-hs-layer {
+  --hs-strength: 0.75;
+}
+.mh-hs-defs {
+  position: absolute;
+}
+.mh-hs-variation {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  /* Décalage posé par HeroSilhouette.tsx pour rester sous la ligne des atouts. */
+  transform: translateY(var(--mh-hs-shift, 0px));
+  transition: opacity 350ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.mh-hs-variation[data-active] {
+  opacity: 1;
+}
+.mh-hs-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.mh-hs-stop-sakura {
+  stop-color: rgb(var(--sakura));
+  stop-opacity: calc(0.6 * var(--hs-strength));
+}
+.mh-hs-stop-gold {
+  stop-color: rgb(var(--gold));
+  stop-opacity: calc(0.55 * var(--hs-strength));
+}
+.mh-hs-tint-sakura {
+  fill: rgb(var(--sakura));
+  fill-opacity: calc(0.14 * var(--hs-strength));
+}
+.mh-hs-tint-gold {
+  fill: rgb(var(--gold));
+  fill-opacity: calc(0.12 * var(--hs-strength));
+}
+.mh-hs-tint-gold-strong {
+  fill: rgb(var(--gold));
+  fill-opacity: calc(0.5 * var(--hs-strength));
+}
+.mh-hs-fill-sakura {
+  fill: rgb(var(--sakura));
+}
+.mh-hs-fill-gold {
+  fill: rgb(var(--gold));
+}
+.mh-hs-fill-bg {
+  fill: rgb(var(--bg));
+}
+.mh-hs-pattern {
+  opacity: calc(0.55 * var(--hs-strength));
+}
+.mh-hs-stroke-gold {
+  fill: none;
+  stroke: rgb(var(--gold));
+  stroke-opacity: calc(0.7 * var(--hs-strength));
+  stroke-width: 2.5;
+  vector-effect: non-scaling-stroke;
+}
+.mh-hs-vein {
+  fill: none;
+  stroke: rgb(var(--sakura));
+  stroke-opacity: calc(0.75 * var(--hs-strength));
+  stroke-width: 3;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.mh-hs-vein--fine {
+  stroke-width: 1.75;
+}
+/* Fragments latéraux : desktop seulement (seuil lg du menu du header),
+   statiques. */
+.mh-hs-sides {
+  position: absolute;
+  inset: 0;
+  display: none;
+}
+@media (min-width: 1024px) {
+  .mh-hs-sides {
+    display: block;
+  }
+}
+.mh-hs-side {
+  stroke-width: 1.25;
+  vector-effect: non-scaling-stroke;
+}
+.mh-hs-side--sakura {
+  fill: rgb(var(--sakura));
+  fill-opacity: calc(0.07 * var(--hs-strength));
+  stroke: rgb(var(--sakura));
+  stroke-opacity: calc(0.45 * var(--hs-strength));
+}
+.mh-hs-side--gold {
+  fill: rgb(var(--gold));
+  fill-opacity: calc(0.08 * var(--hs-strength));
+  stroke: rgb(var(--gold));
+  stroke-opacity: calc(0.55 * var(--hs-strength));
+}
+/* Bouton pause du fond (WCAG 2.2.2), en bas à gauche du hero. */
+.mh-hs-pause {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  border: 1px solid rgb(var(--border));
+  background: rgb(var(--bg) / 0.8);
+  color: rgb(var(--text-2));
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.mh-hs-pause:hover {
+  color: rgb(var(--text));
+}
+.mh-hs-pause:focus-visible {
+  outline: 2px solid rgb(var(--accent-accessible));
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mh-hs-variation {
+    transition: none;
+  }
+  /* Rien ne bouge : pas de bouton pause. */
+  .mh-hs-pause {
+    display: none;
+  }
+}

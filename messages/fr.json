@@ -49,7 +49,9 @@
       ],
       "ctaPrimary": "Découvrir les offres",
       "ctaSecondary": "Voir le portfolio",
-      "scrollCue": "Explorer"
+      "scrollCue": "Explorer",
+      "motionPause": "Mettre en pause l'animation de fond",
+      "motionPlay": "Relancer l'animation de fond"
     },
     "galerie": {
       "eyebrow": "✦ La Galerie",

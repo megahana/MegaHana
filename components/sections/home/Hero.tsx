@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useState, type CSSProperties } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { ArrowDown, ArrowRight, CheckCircle2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { cn } from "@/lib/utils";
+import { HeroSilhouette } from "./HeroSilhouette";
 
 /**
  * Apparition du texte du hero : 100 % CSS (.mh-hero-item, app/globals.css),
@@ -48,6 +49,7 @@ export function Hero() {
   // s'exécute dans la même phase de commit synchrone que celui d'Intro, donc
   // forcément avant que le moindre setTimeout(0) ne puisse partir.
   const [heroReady, setHeroReady] = useState(false);
+  const perksRef = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
     function onIntroDone() {
       setHeroReady(true);
@@ -63,6 +65,10 @@ export function Hero() {
         revealOnMount && "mh-hero--reveal",
       )}
     >
+      {/* Fond décoratif (pétale-fenêtre du logo), sous le contenu : premier
+          enfant positionné, peint avant le bloc de texte. Son cycle démarre
+          au même signal que le dégradé du H1. */}
+      <HeroSilhouette ready={heroReady} avoidRef={perksRef} />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20">
         <div className="max-w-4xl mx-auto text-center">
           {/* Eyebrow */}
@@ -93,6 +99,7 @@ export function Hero() {
 
           {/* Perks */}
           <div
+            ref={perksRef}
             style={itemDelay(300)}
             className="mh-hero-item flex flex-wrap justify-center gap-4 mt-8"
           >

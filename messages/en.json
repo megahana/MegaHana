@@ -49,7 +49,9 @@
       ],
       "ctaPrimary": "Discover our services",
       "ctaSecondary": "View portfolio",
-      "scrollCue": "Explore"
+      "scrollCue": "Explore",
+      "motionPause": "Pause the background animation",
+      "motionPlay": "Resume the background animation"
     },
     "galerie": {
       "eyebrow": "✦ The Gallery",
