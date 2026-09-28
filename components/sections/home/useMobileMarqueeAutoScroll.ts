@@ -149,24 +149,41 @@ function startAutoScroll(stack: HTMLElement, isPaused: () => boolean): () => voi
   });
   rows.forEach((row) => resizeObserver.observe(row.viewport));
 
-  // Rien ne tourne quand la galerie n'est pas à l'écran.
+  const setAutoscroll = (row: RowState, value: "on" | "off") => {
+    // Écriture seulement au changement : un attribut réécrit à chaque image
+    // invalide les styles à chaque image, même à valeur identique.
+    if (row.viewport.dataset.autoscroll !== value) row.viewport.dataset.autoscroll = value;
+  };
+
+  // Rien ne tourne quand la galerie n'est pas à l'écran : la boucle s'arrête
+  // (plus aucune requestAnimationFrame) et ne repart qu'à son retour. Avant,
+  // elle se reprogrammait à chaque image même galerie hors écran — mesuré sur
+  // mobile (CPU ×4) : ≈150 ms/s de fil principal en permanence.
   const intersectionObserver = new IntersectionObserver((entries) => {
     visible = entries.some((e) => e.isIntersecting);
+    if (visible && !frame) {
+      last = 0;
+      frame = requestAnimationFrame(tick);
+    }
   });
   intersectionObserver.observe(stack);
 
   const tick = (now: number) => {
+    if (!visible) {
+      rows.forEach((row) => setAutoscroll(row, "off"));
+      frame = 0;
+      return;
+    }
     const dt = last ? Math.min((now - last) / 1000, MAX_FRAME_SECONDS) : 0;
     last = now;
     for (const row of rows) {
       const active =
-        visible &&
         !isPaused() &&
         !row.pointerDown &&
         !row.focused &&
         now >= row.holdUntil &&
         row.groupWidth > 0;
-      row.viewport.dataset.autoscroll = active ? "on" : "off";
+      setAutoscroll(row, active ? "on" : "off");
       if (!active) continue;
       const speed = row.groupWidth / MARQUEE_LOOP_SECONDS;
       row.position = wrap(

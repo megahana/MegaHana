@@ -319,6 +319,12 @@ export function Frame({
           opacity: 0.18;
           --petal-opacity: 0.18;
           transition: opacity 0.3s ease;
+        }
+        /* Respiration sur le <path> seulement (Bien-être) : la propriété d
+           n'existe pas sur <use> (7 autres secteurs) — l'animation y tournait
+           sans aucun effet visible, mais coûtait du fil principal à chaque
+           image (mesuré : 56 animations inutiles sur 64, ≈200 ms/s). */
+        path.mh-frame-petal-shape {
           animation: mh-frame-petal-breathe 5s ease-in-out infinite;
         }
         @keyframes mh-frame-petal-breathe {
@@ -335,7 +341,7 @@ export function Frame({
           }
         }
         @media (prefers-reduced-motion: reduce) {
-          .mh-frame-petal-shape {
+          path.mh-frame-petal-shape {
             animation: none;
           }
         }

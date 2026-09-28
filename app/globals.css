@@ -539,6 +539,13 @@ h3,
 .card.card--real .photo {
   opacity: 1;
 }
+/* Sous une photo, le pétale décoratif du cadre (Frame.tsx) est recouvert :
+   pas de respiration (animation de la propriété d, recalculée sur le fil
+   principal à chaque image). Les cartes « en travail » sans photo la
+   gardent. */
+.card.card--real .mh-frame-petal-shape {
+  animation: none;
+}
 .card.card--real .info-bottom {
   opacity: 1;
 }
