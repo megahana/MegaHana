@@ -20,7 +20,8 @@ import { buildVine, type VineHue, type VineTone, type VineVariant } from "@/lib/
  * - garland (guirlande) : opacité croissante pétale par pétale.
  *
  * Vent : keyframes CSS sur des conteneurs HTML (compositeur, aucun JS),
- * désactivé sous prefers-reduced-motion. Sans "use client" : utilisable
+ * désactivé sous prefers-reduced-motion, à l'arrêt tant que l'élément est
+ * estompé (`faded`). Sans "use client" : utilisable
  * depuis un Server Component (aucune fonction en props).
  */
 
@@ -60,7 +61,7 @@ export interface VineProps {
   sway?: boolean;
   /** Décalage de phase du balancement (s) — désynchronise plusieurs éléments. */
   phase?: number;
-  /** Estompé (ex. suspendu au header tant que celui-ci est transparent, en haut de page). */
+  /** Estompé (ex. suspendu au header tant que celui-ci est transparent, en haut de page) ; vent à l'arrêt. */
   faded?: boolean;
   className?: string;
 }

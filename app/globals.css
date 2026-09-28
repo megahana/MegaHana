@@ -1143,7 +1143,10 @@ html[data-intro="play"] .mh-intro-overlay {
    additionnées) borné à 4,5°. Tempo propre à chaque piste (tige
    6,8 s / 11,3 s, vrille 8,3 s / 13,1 s) : deux pistes côte à côte ne
    bougent jamais en cadence. Sinusoïde (in-out), jamais de rebond. Le
-   balancement tourne indépendamment du fondu (data-faded). Animé sur des
+   balancement est à l'arrêt tant que l'élément est estompé (data-faded) et
+   reprend là où il s'était arrêté dès le début du fondu d'apparition : une
+   animation invisible coûtait encore du fil principal (mesuré sur /services
+   à 1440px, CPU ×4 : ≈4 ms/s en haut de page, 0 sans lianes). Animé sur des
    conteneurs HTML : le SVG est rasterisé une fois puis tourné par le
    compositeur. Seule la guirlande anime aussi ses pétales (dans le SVG).
    Mouvement réduit : élément immobile. ═══ */
@@ -1209,6 +1212,15 @@ html[data-intro="play"] .mh-intro-overlay {
   transform-box: view-box;
   animation: mh-vine-flutter 5s cubic-bezier(0.37, 0, 0.63, 1) var(--vine-flutter-delay, 0s)
     infinite alternate;
+}
+/* Estompé (header transparent) : vent à l'arrêt. Placé après les règles
+   d'animation (même spécificité) pour l'emporter. Au masquage, l'arrêt est
+   immédiat, pendant le fondu de sortie de 300 ms (déplacement du bout
+   ≤ ≈1 px sur cette durée : imperceptible). */
+.mh-vine[data-faded] .mh-vine-sway,
+.mh-vine[data-faded] .mh-vine-gust,
+.mh-vine[data-faded] .mh-vine-flutter {
+  animation-play-state: paused;
 }
 @keyframes mh-vine-sway {
   from {
