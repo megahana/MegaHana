@@ -19,7 +19,17 @@
 // d'une nouvelle version d'eslint-config-next.
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
-import typescriptEslintPlugin from "@typescript-eslint/eslint-plugin";
+// Plugin @typescript-eslint pris dans le paquet "typescript-eslint" (dépendance
+// directe), et NON dans "@typescript-eslint/eslint-plugin" déclaré à part :
+// typescript-eslint fige en version EXACTE son plugin et son parser, et
+// eslint-config-next (typescript-eslint@^8.x) se range sur cette même copie.
+// Déclarer le plugin seul créait deux sources de version pour une famille qui
+// doit monter d'un bloc : Dependabot montait le plugin (peer
+// @typescript-eslint/parser ^même version) sans toucher au parser figé par
+// typescript-eslint → ERESOLVE à l'installation (PR npm-minor-patch, 09/2026).
+// eslint-config-next enregistre aussi "@typescript-eslint" : les deux
+// enregistrements doivent rester le même objet, ce qu'assure la copie unique.
+import tseslint from "typescript-eslint";
 import tailwindcss from "eslint-plugin-tailwindcss";
 
 // Chemin ABSOLU requis ici : eslint-plugin-tailwindcss résout la config Tailwind
@@ -36,7 +46,7 @@ export default defineConfig([
 
   {
     plugins: {
-      "@typescript-eslint": typescriptEslintPlugin,
+      "@typescript-eslint": tseslint.plugin,
       tailwindcss,
     },
 
