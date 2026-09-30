@@ -1266,8 +1266,9 @@ html[data-intro="play"] .mh-intro-overlay {
 
 /* ═══ Fond du hero de l'accueil — « silhouette constante »
    (components/sections/home/HeroSilhouette.tsx). Le grand pétale du logo
-   sert de fenêtre fixe ; seul son remplissage change (minuteur JS, fondu de
-   350 ms). Aucune animation CSS en boucle. Teintes --sakura / --gold
+   sert de fenêtre fixe ; seul son remplissage change (minuteur JS toutes les
+   6 s, révélation de 1 100 ms depuis la base). Aucune animation CSS en
+   boucle. Teintes --sakura / --gold
    uniquement (le terracotta reste réservé aux éléments cliquables), un seul
    jeu de tracés pour les deux thèmes : --hs-strength baisse les opacités en
    sombre, où les couleurs de marque ressortent davantage sur le charbon. ═══ */
@@ -1298,21 +1299,81 @@ html[data-intro="play"] .mh-intro-overlay {
   opacity: 0;
   /* Décalage posé par HeroSilhouette.tsx pour rester sous la ligne des atouts. */
   transform: translateY(var(--mh-hs-shift, 0px));
-  transition: opacity 350ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .mh-hs-variation[data-active] {
   opacity: 1;
+}
+/* Transition entre remplissages : révélation depuis la base de la fenêtre.
+   --mh-hs-rv : hauteur (depuis le bas du remplissage) jusqu'où le nouveau
+   est révélé ; front de transparence sur un tiers de la hauteur visible de
+   l'arc (--mh-hs-arc-h, mesurée par HeroSilhouette.tsx). Le remplissage est
+   décalé vers le bas de --mh-hs-shift par le garde-fou : le front part de là.
+   L'ancien (data-leaving, posé le temps de la révélation) porte le masque
+   inverse, synchronisé : il disparaît dans la même zone. Hors révélation,
+   aucun masque ni animation. Le fondu du bas (masque de .mh-hs-layer) est
+   indépendant. */
+@property --mh-hs-rv {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+.mh-hs-layer {
+  --mh-hs-band: calc(var(--mh-hs-arc-h, 280px) / 3);
+}
+.mh-hs-layer:has(.mh-hs-variation[data-leaving]) .mh-hs-variation[data-active] {
+  -webkit-mask-image: linear-gradient(
+    to top,
+    #000 calc(var(--mh-hs-rv) - var(--mh-hs-band)),
+    transparent var(--mh-hs-rv)
+  );
+  mask-image: linear-gradient(
+    to top,
+    #000 calc(var(--mh-hs-rv) - var(--mh-hs-band)),
+    transparent var(--mh-hs-rv)
+  );
+  animation: mh-hs-reveal 1100ms cubic-bezier(0.45, 0, 0.25, 1) both;
+}
+.mh-hs-variation[data-leaving] {
+  opacity: 1;
+  -webkit-mask-image: linear-gradient(
+    to top,
+    transparent calc(var(--mh-hs-rv) - var(--mh-hs-band)),
+    #000 var(--mh-hs-rv)
+  );
+  mask-image: linear-gradient(
+    to top,
+    transparent calc(var(--mh-hs-rv) - var(--mh-hs-band)),
+    #000 var(--mh-hs-rv)
+  );
+  animation: mh-hs-reveal 1100ms cubic-bezier(0.45, 0, 0.25, 1) both;
+}
+@keyframes mh-hs-reveal {
+  from {
+    --mh-hs-rv: var(--mh-hs-shift, 0px);
+  }
+  to {
+    --mh-hs-rv: calc(var(--mh-hs-shift, 0px) + var(--mh-hs-arc-h, 280px) * 4 / 3);
+  }
 }
 .mh-hs-svg {
   display: block;
   width: 100%;
   height: 100%;
 }
-.mh-hs-stop-sakura {
+/* Satin bicolore : deux plages mates, sans surbrillance. */
+.mh-hs-satin-sakura {
   stop-color: rgb(var(--sakura));
-  stop-opacity: calc(0.6 * var(--hs-strength));
+  stop-opacity: calc(0.5 * var(--hs-strength));
 }
-.mh-hs-stop-gold {
+.mh-hs-satin-sakura-mid {
+  stop-color: rgb(var(--sakura));
+  stop-opacity: calc(0.42 * var(--hs-strength));
+}
+.mh-hs-satin-gold-mid {
+  stop-color: rgb(var(--gold));
+  stop-opacity: calc(0.42 * var(--hs-strength));
+}
+.mh-hs-satin-gold {
   stop-color: rgb(var(--gold));
   stop-opacity: calc(0.55 * var(--hs-strength));
 }
@@ -1320,30 +1381,15 @@ html[data-intro="play"] .mh-intro-overlay {
   fill: rgb(var(--sakura));
   fill-opacity: calc(0.14 * var(--hs-strength));
 }
-.mh-hs-tint-gold {
-  fill: rgb(var(--gold));
-  fill-opacity: calc(0.12 * var(--hs-strength));
-}
-.mh-hs-tint-gold-strong {
-  fill: rgb(var(--gold));
-  fill-opacity: calc(0.5 * var(--hs-strength));
-}
-.mh-hs-fill-sakura {
+/* Voile continu des fibres et des pétales imbriqués : garde le poids de la fenêtre. */
+.mh-hs-veil {
   fill: rgb(var(--sakura));
-}
-.mh-hs-fill-gold {
-  fill: rgb(var(--gold));
-}
-.mh-hs-fill-bg {
-  fill: rgb(var(--bg));
+  fill-opacity: calc(0.2 * var(--hs-strength));
 }
 /* Arches de la variation automne : l'opacité se cumule vers le bas (≈0,22 → 0,39 → 0,52). */
 .mh-hs-arch-gold {
   fill: rgb(var(--gold));
   fill-opacity: calc(0.22 * var(--hs-strength));
-}
-.mh-hs-pattern {
-  opacity: calc(0.55 * var(--hs-strength));
 }
 .mh-hs-stroke-gold {
   fill: none;
@@ -1352,16 +1398,26 @@ html[data-intro="play"] .mh-intro-overlay {
   stroke-width: 2.5;
   vector-effect: non-scaling-stroke;
 }
-.mh-hs-vein {
+/* Fibres courbes : traits fins, proches de la luminosité du voile. */
+.mh-hs-fibre {
   fill: none;
   stroke: rgb(var(--sakura));
-  stroke-opacity: calc(0.75 * var(--hs-strength));
-  stroke-width: 3;
+  stroke-opacity: calc(0.55 * var(--hs-strength));
+  stroke-width: 1.75;
   stroke-linecap: round;
   vector-effect: non-scaling-stroke;
 }
-.mh-hs-vein--fine {
-  stroke-width: 1.75;
+.dark .mh-hs-fibre {
+  stroke-opacity: calc(0.4 * var(--hs-strength));
+}
+/* Pétales imbriqués : superpositions lisibles sans patchwork. */
+.mh-hs-imprint-sakura {
+  fill: rgb(var(--sakura));
+  fill-opacity: calc(0.22 * var(--hs-strength));
+}
+.mh-hs-imprint-gold {
+  fill: rgb(var(--gold));
+  fill-opacity: calc(0.28 * var(--hs-strength));
 }
 /* Fragments latéraux : desktop seulement (seuil lg du menu du header),
    statiques. */
@@ -1418,8 +1474,12 @@ html[data-intro="play"] .mh-intro-overlay {
   outline-offset: 2px;
 }
 @media (prefers-reduced-motion: reduce) {
+  /* Aucun cycle (JS) ; par sécurité, aucune révélation résiduelle non plus
+     (!important : l'emporte sur les sélecteurs plus précis de la révélation). */
   .mh-hs-variation {
-    transition: none;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    animation: none !important;
   }
   /* Rien ne bouge : pas de bouton pause. */
   .mh-hs-pause {
