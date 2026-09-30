@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { FaqList } from "@/components/sections/faq/FaqList";
+import { CtaBanner } from "@/components/sections/home/CtaBanner";
 import { localizedMetadata } from "@/lib/site";
 import { launchOption, megahanaHosting } from "@/lib/services-offers";
 
@@ -59,6 +60,8 @@ export default async function FaqPage({ params }: { params: Promise<{ locale: st
         />
         <FaqList items={items} />
       </section>
+
+      <CtaBanner />
     </div>
   );
 }
