@@ -30,11 +30,12 @@
       "next": "Suivant",
       "view": "Voir : {label}",
       "close": "Fermer"
-    }
+    },
+    "skipToContent": "Aller au contenu"
   },
   "Home": {
     "meta": {
-      "title": "Création de sites vitrines",
+      "title": "Megahana · Création de sites vitrines",
       "description": "Création de sites vitrines modernes, rapides et adaptés à l'identité des indépendants et petites entreprises."
     },
     "hero": {
@@ -350,6 +351,7 @@
             "megahana": "compte Megahana"
           }
         },
+        "soonNote": "L'hébergement par Megahana n'est pas encore proposé : pour l'instant, la mise en ligne se fait sur votre propre compte d'hébergement.",
         "upworkNote": "Sur Upwork, seule l'option « hébergement chez vous » est proposée."
       },
       "edits": "Modifications après livraison : {price} €/mois (tarif indicatif)."
@@ -492,7 +494,7 @@
   "Portfolio": {
     "meta": {
       "title": "Portfolio",
-      "description": "MegaReco : application web full-stack complète. Étude de cas : authentification, admin, profils, notation."
+      "description": "Portfolio Megahana : démos de sites vitrines par secteur (restaurant, artisans, architecte, musique…) et étude de cas MegaReco, application web full-stack."
     },
     "header": {
       "eyebrow": "Portfolio",
@@ -798,6 +800,7 @@
       "successTitle": "Merci pour votre message",
       "successText": "Votre demande a bien été transmise. Nous vous répondrons à l'adresse email indiquée.",
       "errorGeneral": "L'envoi n'a pas pu être confirmé. Votre message est conservé : réessayez ou écrivez-nous directement par email.",
+      "noscript": "Le formulaire a besoin de JavaScript pour envoyer votre message. Vous pouvez nous écrire directement :",
       "errorName": "Indiquez votre nom.",
       "errorEmail": "Indiquez une adresse email valide.",
       "errorMessage": "Écrivez votre message.",

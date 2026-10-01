@@ -33,7 +33,7 @@ type HostingColumn = "self" | "megahana";
 function ComingSoon() {
   const t = useTranslations("Services");
   return (
-    <span className="inline-flex items-center gap-1 rounded-full border border-border px-2 py-0.5 text-[11px] font-medium text-text-muted">
+    <span className="inline-flex items-center gap-1 rounded-full border border-border-light bg-surface-2 px-2 py-0.5 text-xs font-medium text-text-secondary">
       <Clock className="w-3 h-3" aria-hidden="true" />
       {t("soon")}
     </span>
@@ -71,7 +71,13 @@ function HostingComparison() {
         {/* < 640px : un bloc par option. */}
         <div className="space-y-3 sm:hidden">
           {columns.map(({ key, label, Icon, soon }) => (
-            <div key={key} className="rounded-xl border border-border p-4">
+            <div
+              key={key}
+              className={cn(
+                "rounded-xl border p-4",
+                soon ? "border-dashed border-border-light bg-surface-2/60" : "border-border",
+              )}
+            >
               <p className="mb-3 flex flex-wrap items-center gap-2 text-sm font-medium text-text-primary">
                 <Icon className="w-4 h-4 text-gold shrink-0" aria-hidden="true" />
                 {label}
@@ -83,8 +89,13 @@ function HostingComparison() {
                   const note = noteFor(row, key);
                   return (
                     <li key={row.key} className="flex items-start gap-2">
-                      <InclusionMark included={included} className="mt-0.5" />
-                      <span className={included ? "text-text-secondary" : "text-text-muted"}>
+                      <InclusionMark
+                        included={included}
+                        className={cn("mt-0.5", soon && "opacity-50")}
+                      />
+                      <span
+                        className={included && !soon ? "text-text-secondary" : "text-text-muted"}
+                      >
                         {t(`rows.${row.key}.label`)}
                         {note && <span className="text-text-muted"> — {note}</span>}
                       </span>
@@ -121,15 +132,22 @@ function HostingComparison() {
                   <th scope="row" className="p-3 font-normal text-text-secondary">
                     {t(`rows.${row.key}.label`)}
                   </th>
-                  {columns.map(({ key }) => {
+                  {columns.map(({ key, soon }) => {
                     const included = row[key];
                     const note = noteFor(row, key);
                     return (
-                      <td key={key} className="p-3 align-top">
+                      <td key={key} className={cn("p-3 align-top", soon && "bg-surface-2/60")}>
                         <span className="flex items-start gap-2">
-                          <InclusionMark included={included} className="mt-0.5" />
+                          <InclusionMark
+                            included={included}
+                            className={cn("mt-0.5", soon && "opacity-50")}
+                          />
                           {note && (
-                            <span className={included ? "text-text-secondary" : "text-text-muted"}>
+                            <span
+                              className={
+                                included && !soon ? "text-text-secondary" : "text-text-muted"
+                              }
+                            >
                               {note}
                             </span>
                           )}
@@ -143,7 +161,11 @@ function HostingComparison() {
           </table>
         </div>
 
-        <p className="mt-3 text-xs text-text-muted italic">{t("upworkNote")}</p>
+        <p className="mt-3 flex items-start gap-1.5 text-sm text-text-secondary">
+          <Clock className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+          {t("soonNote")}
+        </p>
+        <p className="mt-2 text-xs text-text-muted italic">{t("upworkNote")}</p>
       </div>
     </div>
   );

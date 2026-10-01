@@ -30,11 +30,12 @@
       "next": "Next",
       "view": "View: {label}",
       "close": "Close"
-    }
+    },
+    "skipToContent": "Skip to content"
   },
   "Home": {
     "meta": {
-      "title": "Modern showcase websites",
+      "title": "Megahana · Modern showcase websites",
       "description": "Modern, fast showcase websites tailored to the identity of freelancers and small businesses."
     },
     "hero": {
@@ -350,6 +351,7 @@
             "megahana": "Megahana account"
           }
         },
+        "soonNote": "Hosting by Megahana is not available yet: for now, the website is published on your own hosting account.",
         "upworkNote": "On Upwork, only the “your own hosting” option is available."
       },
       "edits": "Changes after delivery: €{price}/month (indicative price)."
@@ -492,7 +494,7 @@
   "Portfolio": {
     "meta": {
       "title": "Portfolio",
-      "description": "MegaReco: a complete full-stack web application. Case study: authentication, admin, profiles, ratings."
+      "description": "Megahana portfolio: showcase website demos by sector (restaurant, craftspeople, architect, music…) and the MegaReco case study, a full-stack web application."
     },
     "header": {
       "eyebrow": "Portfolio",
@@ -786,6 +788,7 @@
       "successTitle": "Thank you for your message",
       "successText": "Your enquiry has been submitted. We'll reply to the email address you provided.",
       "errorGeneral": "We couldn't confirm your submission. Your message has been kept: please try again or email us directly.",
+      "noscript": "The form needs JavaScript to send your message. You can email us directly:",
       "errorName": "Enter your name.",
       "errorEmail": "Enter a valid email address.",
       "errorMessage": "Enter your message.",

@@ -3,6 +3,8 @@
 import { useServerInsertedHTML } from "next/navigation";
 
 interface Props {
+  /** Nonce CSP de la requête (essai Report-Only, proxy.ts) ; absent hors essai. */
+  nonce?: string;
   themeScript: string;
   /** Masque l'overlay d'intro avant le premier paint quand elle ne jouera pas (lib/intro.ts). */
   introSkipScript: string;
@@ -20,11 +22,11 @@ interface Props {
  * pendant le rendu serveur, hors de l'arbre de composants React, ce qui fait
  * disparaître l'avertissement à la racine plutôt que de le masquer.
  */
-export function InsertedScripts({ themeScript, introSkipScript, jsonLd }: Props) {
+export function InsertedScripts({ nonce, themeScript, introSkipScript, jsonLd }: Props) {
   useServerInsertedHTML(() => (
     <>
-      <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      <script dangerouslySetInnerHTML={{ __html: introSkipScript }} />
+      <script nonce={nonce} dangerouslySetInnerHTML={{ __html: themeScript }} />
+      <script nonce={nonce} dangerouslySetInnerHTML={{ __html: introSkipScript }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
     </>
   ));

@@ -1264,6 +1264,32 @@ html[data-intro="play"] .mh-intro-overlay {
   }
 }
 
+/* Lien d'évitement « Aller au contenu » (layout) : hors écran jusqu'au focus
+   clavier, puis au-dessus du header fixe (z-50). */
+.mh-skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 60;
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: 1px solid rgb(var(--text) / 0.28);
+  background: rgb(var(--bg));
+  color: rgb(var(--text));
+  font-size: 0.875rem;
+  font-weight: 600;
+  transform: translateY(-200%);
+}
+.mh-skip-link:focus-visible {
+  transform: none;
+  outline: 2px solid rgb(var(--accent-light));
+  outline-offset: 2px;
+}
+/* Cible du lien d'évitement : focus programmatique, sans contour. */
+.mh-main:focus {
+  outline: none;
+}
+
 /* ═══ Bouton lecture/pause des animations automatiques (PlayPauseButton.tsx :
    fond du hero, défilement de la galerie). Même apparence aux deux endroits :
    cercle 44 px opaque dans la couleur du fond (Ivoire / Charbon), icône et

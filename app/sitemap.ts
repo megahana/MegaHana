@@ -22,9 +22,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     routing.locales.map((locale) => ({
       url: `${SITE_URL}/${locale}${path === home ? "" : path}`,
       alternates: {
-        languages: Object.fromEntries(
-          routing.locales.map((l) => [l, `${SITE_URL}/${l}${path === home ? "" : path}`]),
-        ),
+        // Même convention que le <head> (lib/site.ts) : x-default → version FR.
+        languages: {
+          ...Object.fromEntries(
+            routing.locales.map((l) => [l, `${SITE_URL}/${l}${path === home ? "" : path}`]),
+          ),
+          "x-default": `${SITE_URL}/${routing.defaultLocale}${path === home ? "" : path}`,
+        },
       },
     })),
   );

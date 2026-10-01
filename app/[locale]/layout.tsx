@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Fraunces, Inter, Inter_Tight } from "next/font/google";
 import { notFound } from "next/navigation";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { Analytics } from "@vercel/analytics/next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import "../globals.css";
 
 const inter = Inter({
@@ -78,6 +78,7 @@ export default async function LocaleLayout({
     notFound();
   }
   setRequestLocale(locale);
+  const tCommon = await getTranslations("Common");
 
   // Correction bug 14/09 (regression post-migration Next 16 du 09/2026 :
   // ce correctif etait reste dans un stash git jamais restaure apres la
@@ -92,6 +93,9 @@ export default async function LocaleLayout({
   // porte déjà la bonne classe, quelle que soit la navigation.
   const cookieStore = await cookies();
   const isDark = cookieStore.get("theme")?.value === "dark";
+  // Essai CSP Report-Only (proxy.ts, CSP_REPORT_ONLY_TRIAL=1) : nonce de la
+  // requête, posé sur les scripts inline du site. Absent hors essai.
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
 
   // JSON-LD Organization (données structurées, identiques sur tout le site).
   const organizationJsonLd = {
@@ -126,14 +130,22 @@ export default async function LocaleLayout({
     >
       <body className="bg-background text-text-primary antialiased">
         <InsertedScripts
+          nonce={nonce}
           themeScript={themeScript}
           introSkipScript={introSkipScript}
           jsonLd={JSON.stringify(organizationJsonLd)}
         />
         <NextIntlClientProvider>
           <MotionConfigProvider>
+            {/* Lien d'évitement (WCAG 2.4.1) : premier élément focusable de la
+                page, visible seulement au focus clavier (.mh-skip-link). */}
+            <a href="#contenu" className="mh-skip-link">
+              {tCommon("skipToContent")}
+            </a>
             <Header />
-            <main>{children}</main>
+            <main id="contenu" tabIndex={-1} className="mh-main">
+              {children}
+            </main>
             <Footer />
             <MobileCtaBanner />
           </MotionConfigProvider>

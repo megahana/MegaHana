@@ -328,8 +328,17 @@ export function ContactForm() {
             exit={{ opacity: 0 }}
             transition={{ duration: reduceMotion ? 0 : FORM_EXIT_MS / 1000, ease: "easeOut" }}
           >
+            {/* method="POST" explicite : sans JavaScript (désactivé, ou
+                hydratation en échec), un <form> sans method part en GET et
+                plaçait nom, email et message dans l'URL (historique, journaux
+                serveur). En POST vers la page elle-même (seule cible permise
+                par la CSP, form-action 'self'), rien ne sort du corps de la
+                requête ; la page est simplement rechargée. L'envoi réel passe
+                par fetch (handleSubmit annule toujours l'envoi natif) ; sans
+                JS, l'avis <noscript> ci-dessous renvoie vers l'email. */}
             <form
               ref={formRef}
+              method="POST"
               onSubmit={handleSubmit}
               onInput={(event) => {
                 onProgressInput(event);
@@ -339,9 +348,24 @@ export function ContactForm() {
               noValidate
               className="space-y-5"
             >
+              <noscript>
+                <p className="rounded-xl border border-border bg-surface-2 p-4 text-sm text-text-primary">
+                  {t("noscript")}{" "}
+                  <a
+                    href={`mailto:${CONTACT_FORM_EMAIL}`}
+                    className="font-medium text-primary-light underline"
+                  >
+                    {CONTACT_FORM_EMAIL}
+                  </a>
+                </p>
+              </noscript>
               {/* Honeypot anti-spam : caché visuellement ET hors du parcours clavier
-          (tabIndex={-1}, aria-hidden), en plus de la protection native
-          Web3Forms (hCaptcha/reCAPTCHA v3 côté service). */}
+          (tabIndex={-1}, aria-hidden). C'est la SEULE protection active côté
+          site : aucun hCaptcha, reCAPTCHA ni Turnstile n'est intégré (hCaptcha
+          serait disponible en plan gratuit Web3Forms, reCAPTCHA/Turnstile en
+          Pro). Côté service s'ajoutent les limites de Web3Forms (blocage
+          temporaire d'une IP trop active, réponse 429 → bandeau d'erreur
+          avec repli email ci-dessous). */}
               <div className="hidden" aria-hidden="true">
                 <label htmlFor="botcheck">{t("honeypotLabel")}</label>
                 <input type="text" id="botcheck" name="botcheck" tabIndex={-1} autoComplete="off" />
