@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type ReactNode, type RefObject } from "react";
-import { Pause, Play } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { PlayPauseButton } from "@/components/ui/PlayPauseButton";
 import { PETALS, type Petal } from "@/lib/logo-geometry";
 
 /**
@@ -472,21 +472,17 @@ export function HeroSilhouette({
         avoidRef={avoidRef}
       />
       {/* WCAG 2.2.2 : fond qui change seul pendant plus de 5 s → arrêt possible.
-          Masqué en mouvement réduit (CSS : rien ne bouge alors). */}
-      <button
-        type="button"
-        onClick={() => setPaused((p) => !p)}
-        aria-pressed={paused}
-        aria-label={t("motionPause")}
-        title={paused ? t("motionPlay") : t("motionPause")}
-        className="mh-hs-pause"
-      >
-        {paused ? (
-          <Play className="h-4 w-4" aria-hidden="true" />
-        ) : (
-          <Pause className="h-4 w-4" aria-hidden="true" />
-        )}
-      </button>
+          En bas à droite du hero, dans ses marges latérales (même verticale
+          que le bouton de la galerie). Masqué en mouvement réduit (CSS : rien
+          ne bouge alors). */}
+      <div className="mh-hs-pause px-4 sm:px-6 lg:px-8">
+        <PlayPauseButton
+          paused={paused}
+          onToggle={() => setPaused((p) => !p)}
+          pauseLabel={t("motionPause")}
+          resumeLabel={t("motionPlay")}
+        />
+      </div>
     </>
   );
 }

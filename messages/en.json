@@ -50,8 +50,8 @@
       "ctaPrimary": "Discover our services",
       "ctaSecondary": "View portfolio",
       "scrollCue": "Explore",
-      "motionPause": "Pause the background animation",
-      "motionPlay": "Resume the background animation"
+      "motionPause": "Pause the hero animation",
+      "motionPlay": "Resume the hero animation"
     },
     "galerie": {
       "eyebrow": "✦ The Gallery",
@@ -83,8 +83,8 @@
         "mode": "A pared-back look, true to the discipline of couture.",
         "bien-etre": "A calm space, in the image of a caring practice."
       },
-      "pauseScroll": "Pause scrolling",
-      "resumeScroll": "Resume scrolling",
+      "pauseScroll": "Pause the project scroll",
+      "resumeScroll": "Resume the project scroll",
       "cards": {
         "atelier-cendre-chene": {
           "descriptor": "Artisans · Showcase website",

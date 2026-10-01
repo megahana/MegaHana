@@ -1,8 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Pause, Play } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { PlayPauseButton } from "@/components/ui/PlayPauseButton";
 import { useMobileMarqueeAutoScroll } from "./useMobileMarqueeAutoScroll";
 
 /**
@@ -32,22 +32,19 @@ export function MarqueeControls({
 
   return (
     <>
-      <div className="px-4 sm:px-6 lg:px-8 mb-3 flex justify-end motion-reduce:hidden">
-        <button
-          type="button"
-          onClick={() => setPaused((p) => !p)}
-          aria-label={paused ? resumeLabel : pauseLabel}
-          className="inline-flex items-center justify-center w-9 h-9 rounded-full border border-border text-text-secondary hover:text-text-primary hover:border-border-light hover:bg-surface-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-        >
-          {paused ? (
-            <Play className="w-4 h-4" aria-hidden="true" />
-          ) : (
-            <Pause className="w-4 h-4" aria-hidden="true" />
-          )}
-        </button>
-      </div>
       <div ref={stackRef} className={cn("marquee-stack", paused && "paused")}>
         {children}
+      </div>
+      {/* Sous le bandeau, aligné à droite dans les marges de la section (même
+          verticale que le bouton du hero), hors des cartes et de leur
+          découpe. */}
+      <div className="px-4 sm:px-6 lg:px-8 mt-4 flex justify-end motion-reduce:hidden">
+        <PlayPauseButton
+          paused={paused}
+          onToggle={() => setPaused((p) => !p)}
+          pauseLabel={pauseLabel}
+          resumeLabel={resumeLabel}
+        />
       </div>
     </>
   );

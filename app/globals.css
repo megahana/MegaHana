@@ -1264,6 +1264,38 @@ html[data-intro="play"] .mh-intro-overlay {
   }
 }
 
+/* ═══ Bouton lecture/pause des animations automatiques (PlayPauseButton.tsx :
+   fond du hero, défilement de la galerie). Même apparence aux deux endroits :
+   cercle 44 px opaque dans la couleur du fond (Ivoire / Charbon), icône et
+   bordure atténuée dans la couleur du texte. Terracotta uniquement au survol
+   et au focus (élément cliquable) — jamais en fond permanent, pour ne pas
+   rivaliser avec les vrais CTA. Aucun agrandissement, halo ni pulsation. ═══ */
+.mh-play-pause {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  border: 1px solid rgb(var(--text) / 0.28);
+  background: rgb(var(--bg));
+  color: rgb(var(--text));
+  transition:
+    color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.mh-play-pause:hover {
+  color: rgb(var(--accent-light));
+  border-color: rgb(var(--accent-light));
+}
+/* --accent-light (et non --accent-accessible) : lisible dans les deux thèmes
+   (5,05:1 sur ivoire, 6,19:1 sur charbon ; --accent-accessible ne fait que
+   3,35:1 sur charbon). */
+.mh-play-pause:focus-visible {
+  outline: 2px solid rgb(var(--accent-light));
+  outline-offset: 2px;
+}
+
 /* ═══ Fond du hero de l'accueil — « silhouette constante »
    (components/sections/home/HeroSilhouette.tsx). Le grand pétale du logo
    sert de fenêtre fixe ; seul son remplissage change (minuteur JS toutes les
@@ -1447,31 +1479,20 @@ html[data-intro="play"] .mh-intro-overlay {
   stroke: rgb(var(--gold));
   stroke-opacity: calc(0.55 * var(--hs-strength));
 }
-/* Bouton pause du fond (WCAG 2.2.2), en bas à gauche du hero. */
+/* Emplacement du bouton pause du fond (WCAG 2.2.2) : bas à droite du hero,
+   dans ses marges latérales (padding de la section posé en classes), au-dessus
+   du contenu. La bande pleine largeur laisse passer les clics. */
 .mh-hs-pause {
   position: absolute;
+  inset-inline: 0;
   bottom: 16px;
-  left: 16px;
   z-index: 2;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 9999px;
-  border: 1px solid rgb(var(--border));
-  background: rgb(var(--bg) / 0.8);
-  color: rgb(var(--text-2));
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: none;
 }
-.mh-hs-pause:hover {
-  color: rgb(var(--text));
-}
-.mh-hs-pause:focus-visible {
-  outline: 2px solid rgb(var(--accent-accessible));
-  outline-offset: 2px;
+.mh-hs-pause .mh-play-pause {
+  pointer-events: auto;
 }
 @media (prefers-reduced-motion: reduce) {
   /* Aucun cycle (JS) ; par sécurité, aucune révélation résiduelle non plus

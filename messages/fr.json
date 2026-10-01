@@ -50,8 +50,8 @@
       "ctaPrimary": "Découvrir les offres",
       "ctaSecondary": "Voir le portfolio",
       "scrollCue": "Explorer",
-      "motionPause": "Mettre en pause l'animation de fond",
-      "motionPlay": "Relancer l'animation de fond"
+      "motionPause": "Mettre en pause l'animation du hero",
+      "motionPlay": "Reprendre l'animation du hero"
     },
     "galerie": {
       "eyebrow": "✦ La Galerie",
@@ -83,8 +83,8 @@
         "mode": "Une allure épurée, fidèle à l'exigence du geste couture.",
         "bien-etre": "Un espace apaisé, à l'image d'une pratique du soin."
       },
-      "pauseScroll": "Mettre en pause le défilement",
-      "resumeScroll": "Reprendre le défilement",
+      "pauseScroll": "Mettre en pause le défilement des projets",
+      "resumeScroll": "Reprendre le défilement des projets",
       "cards": {
         "atelier-cendre-chene": {
           "descriptor": "Artisans · Site vitrine",
