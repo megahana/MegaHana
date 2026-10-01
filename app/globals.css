@@ -1486,3 +1486,111 @@ html[data-intro="play"] .mh-intro-overlay {
     display: none;
   }
 }
+
+/* ─── Intro de /about (components/sections/about/AboutIntro.tsx) ─────
+   Deux photos superposées (scène de travail derrière en haut à droite,
+   portrait devant en bas à gauche) à côté du nom et du texte.
+   < 1024 px : une colonne (nom → photos → texte → liens), bornée à 42rem
+   dès 640 px. Dès 1024 px : photos à gauche, texte à droite, ensemble
+   470 + 64 + 570 = 1104 px centré dans le conteneur du site (même axe
+   central que la section suivante, pas le même bord gauche). Gabarit plein
+   dès 1168 px de fenêtre (100vw − 2 × 32 ≥ 1104) ; de 1024 à 1167 px, les
+   deux colonnes se réduisent en proportion 470 : 570 (au pire, à 1024 :
+   photos 405 px, texte 491 px). Mesures : labo, concept apropos-portrait. */
+.mh-about-intro {
+  display: grid;
+  grid-template-areas:
+    "head"
+    "duo"
+    "intro"
+    "links";
+  row-gap: 2rem;
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .mh-about-intro {
+    max-width: 42rem;
+    margin-inline: auto;
+  }
+}
+@media (min-width: 1024px) {
+  .mh-about-intro {
+    /* 470 + 64 + 570 px. */
+    max-width: 69rem;
+    margin-inline: auto;
+    grid-template-columns: minmax(0, 470fr) minmax(0, 570fr);
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+      "duo head"
+      "duo intro"
+      "duo links";
+    column-gap: 4rem;
+    row-gap: 1.75rem;
+    align-items: start;
+  }
+}
+.mh-about-head {
+  grid-area: head;
+}
+.mh-about-body {
+  grid-area: intro;
+}
+.mh-about-links {
+  grid-area: links;
+}
+.mh-about-duo-cell {
+  grid-area: duo;
+  display: flex;
+  justify-content: center;
+}
+@media (min-width: 1024px) {
+  .mh-about-duo-cell {
+    align-self: center;
+  }
+}
+
+/* Géométrie en px de référence (variables sans unité), convertie en % de
+   l'ensemble : exact à sa largeur maximale, réduit d'un bloc (proportions et
+   recouvrement compris) quand la colonne est plus étroite. Arrière 370 × 280,
+   portrait 270 × 340, décalage entre origines 100 / 100 → ensemble 470 × 440. */
+.mh-about-duo {
+  --bw: 370;
+  --bh: 280;
+  --pw: 270;
+  --ph: 340;
+  --ox: 100;
+  --oy: 100;
+  --w: calc(var(--ox) + var(--bw));
+  --h: calc(var(--oy) + var(--ph));
+  --r: 14px;
+  position: relative;
+  width: 100%;
+  max-width: calc(var(--w) * 1px);
+  aspect-ratio: var(--w) / var(--h);
+}
+.mh-about-photo {
+  position: absolute;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: var(--r);
+}
+.mh-about-back {
+  left: calc(var(--ox) / var(--w) * 100%);
+  top: 0;
+  width: calc(var(--bw) / var(--w) * 100%);
+  height: calc(var(--bh) / var(--h) * 100%);
+  border: 1px solid rgb(var(--border));
+}
+/* Premier plan : séparation fine dans la couleur du fond (Ivoire en clair,
+   Charbon en sombre) + ombre douce Charbon en clair ; en sombre, pas d'ombre
+   noire (invisible sur charbon) mais un filet Ivoire discret. */
+.mh-about-front {
+  left: 0;
+  top: calc(var(--oy) / var(--h) * 100%);
+  width: calc(var(--pw) / var(--w) * 100%);
+  height: calc(var(--ph) / var(--h) * 100%);
+  border: 3px solid rgb(var(--bg));
+  box-shadow: 0 16px 36px -16px rgb(var(--text) / 0.38);
+}
+.dark .mh-about-front {
+  box-shadow: 0 0 0 1px rgb(var(--text) / 0.18);
+}

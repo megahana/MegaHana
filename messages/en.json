@@ -708,10 +708,15 @@
     },
     "eyebrow": "About",
     "role": "Independent web developer, founder of Megahana.",
-    "linkedinPerso": "Personal LinkedIn",
+    "linkedinPerso": "My LinkedIn",
+    "linkedinPersoLabel": "My LinkedIn — Ahmed Omerovic's profile (opens in a new tab)",
+    "linkedinStudio": "Studio LinkedIn",
+    "linkedinStudioLabel": "Studio LinkedIn — Megahana page (opens in a new tab)",
+    "photoPortraitAlt": "Portrait of Ahmed Omerovic outdoors, mountains in the background",
+    "photoWorkAlt": "Ahmed in profile at a desk by a window, chin resting on one hand, focused on the screen",
     "intro": [
-      "I'm an independent web developer, founder of Megahana. The name comes from a simple idea: every site is a petal, and every client their own color — not a template with a new coat of paint, but a direction built around your business, your tone, your audience.",
-      "My goal is simple: to design clear websites, tailored to your identity, and easy to use on both desktop and mobile.",
+      "I built Megahana around a simple idea: every site is a petal, and every client their own color. Not a template with a new coat of paint, but a direction built around your business, your tone, your audience.",
+      "My goal: to design clear websites, tailored to your identity, and easy to use on both desktop and mobile.",
       "I place great importance on code quality, performance and user experience."
     ],
     "whyMe": {
