@@ -6,11 +6,29 @@ import { Button } from "@/components/ui/Button";
 
 export function ServicesPreview() {
   const t = useTranslations("Home.offers");
+  const tPackages = useTranslations("Services.packages");
 
+  // Nom de référence = celui de /services, des annonces Upwork et du devis
+  // (Starter / Standard / Advanced) ; le type de site suit en sous-titre.
   const formules = [
-    { icon: Layout, name: "Landing Page", description: t("landingDescription") },
-    { icon: Briefcase, name: "Business Website", description: t("businessDescription") },
-    { icon: Languages, name: "Bilingual Business Website", description: t("bilingualDescription") },
+    {
+      icon: Layout,
+      name: tPackages("starter.name"),
+      kind: t("landingLabel"),
+      description: t("landingDescription"),
+    },
+    {
+      icon: Briefcase,
+      name: tPackages("standard.name"),
+      kind: t("businessLabel"),
+      description: t("businessDescription"),
+    },
+    {
+      icon: Languages,
+      name: tPackages("advanced.name"),
+      kind: t("bilingualLabel"),
+      description: t("bilingualDescription"),
+    },
   ];
 
   return (
@@ -32,7 +50,10 @@ export function ServicesPreview() {
                 <div className="w-10 h-10 rounded-xl bg-surface-2 border border-border flex items-center justify-center">
                   <f.icon className="w-5 h-5 text-primary-light" />
                 </div>
-                <h3 className="font-semibold text-text-primary">{f.name}</h3>
+                <div>
+                  <h3 className="font-semibold text-text-primary">{f.name}</h3>
+                  <p className="text-sm text-text-muted">{f.kind}</p>
+                </div>
                 <p className="text-sm text-text-secondary leading-relaxed">{f.description}</p>
               </div>
             </div>

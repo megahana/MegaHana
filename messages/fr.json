@@ -156,10 +156,13 @@
       "eyebrow": "Offres",
       "titleLead": "Des formules pour",
       "titleHighlight": "votre site vitrine",
-      "description": "Choisissez une landing page, un site professionnel ou un site bilingue selon vos besoins.",
+      "description": "Choisissez un site d'une page, un site professionnel ou un site bilingue selon vos besoins.",
       "landingDescription": "Une page unique pour présenter votre activité.",
+      "landingLabel": "Site d'une page",
       "businessDescription": "Un site professionnel jusqu'à 4 pages.",
+      "businessLabel": "Site professionnel",
       "bilingualDescription": "Un site bilingue jusqu'à 6 pages.",
+      "bilingualLabel": "Site professionnel bilingue",
       "cta": "Voir les formules"
     },
     "portfolio": {
@@ -183,8 +186,8 @@
           "description": "Consultez les trois formules et choisissez celle qui correspond au nombre de pages et aux langues nécessaires."
         },
         {
-          "title": "Commande sur Upwork",
-          "description": "Commandez la formule adaptée directement sur Upwork ; le périmètre est confirmé au démarrage."
+          "title": "Validation du périmètre",
+          "description": "Le périmètre est confirmé avant le démarrage, selon le mode de commande que vous préférez : en direct, par un devis en euros, ou sur Upwork, en dollars, avec le paiement géré par la plateforme."
         },
         {
           "title": "Création",
@@ -803,8 +806,8 @@
     },
     "emailAltLabel": "Vous préférez votre messagerie ?",
     "upwork": {
-      "title": "Votre formule est déjà choisie ?",
-      "text": "Retrouvez les formules et passez votre commande sur Upwork.",
+      "title": "Vous préférez passer par Upwork ?",
+      "text": "Les mêmes formules sont aussi disponibles sur Upwork, en dollars, avec le paiement géré par la plateforme. Le formulaire de cette page reste la voie directe, en euros.",
       "cta": "Voir les formules sur Upwork"
     },
     "linkedinText": "Pour suivre le studio ou échanger sur un partenariat.",

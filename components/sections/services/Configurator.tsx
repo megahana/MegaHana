@@ -26,9 +26,10 @@ import { upworkLaunchOption, upworkPackageFor } from "@/lib/upwork";
  *   (USD, annonces). Changer de parcours ne décoche jamais la mise en ligne :
  *   sur Upwork elle passe visiblement à son annonce séparée (180 $, jamais
  *   additionnée au prix de la formule).
- * - Parcours direct : le CTA transmet la sélection à /contact en query
- *   params (tier/launch), lue côté serveur par ContactPage
- *   (app/[locale]/contact/page.tsx) pour pré-remplir sujet et message.
+ * - Parcours direct : le CTA écrit la sélection dans le brouillon de
+ *   l'onglet (lib/contact-draft.ts, sessionStorage, jamais l'URL), repris
+ *   par ContactForm pour pré-remplir sujet et message dans la langue de la
+ *   page — y compris après un changement de langue.
  * - Zone live (toujours montée, vide avant la première sélection) : annonce
  *   le montant à chaque changement, sans voler le focus.
  */

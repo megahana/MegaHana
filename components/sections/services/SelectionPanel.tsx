@@ -14,6 +14,7 @@ import {
   type TierId,
 } from "@/lib/services-offers";
 import { UPWORK_LAUNCH_URL, upworkLaunchOption, upworkPackageFor } from "@/lib/upwork";
+import { startQuoteDraft } from "@/lib/contact-draft";
 
 /**
  * Panneau flottant "Votre sélection" de /services (remplace l'ancien
@@ -23,7 +24,8 @@ import { UPWORK_LAUNCH_URL, upworkLaunchOption, upworkPackageFor } from "@/lib/u
  *
  * Deux parcours, jamais mélangés dans un même montant :
  * - direct : formule + mise en ligne en EUR, "Total estimé", CTA devis
- *   (sélection transmise à /contact en query params, lue par ContactPage) ;
+ *   (sélection écrite dans le brouillon de l'onglet, lib/contact-draft.ts,
+ *   reprise par ContactForm — jamais dans l'URL) ;
  * - upwork : prix USD de la formule seule + CTA vers son annonce ; si la
  *   mise en ligne est cochée, ligne à son prix d'annonce (180 $) + mention
  *   "disponible séparément" + CTA séparé vers l'annonce Upwork "Website
@@ -176,7 +178,8 @@ export function SelectionPanel({
             {/* Parcours direct : un seul CTA, la mise en ligne est dans la demande de devis. */}
             {isDirect && selectedTier && (
               <Button
-                href={`/contact?tier=${selectedTier}&launch=${launchEnabled ? 1 : 0}#discuss`}
+                href="/contact#discuss"
+                onClick={() => startQuoteDraft(selectedTier, launchEnabled)}
                 variant="primary"
                 size="md"
                 className="mt-4 w-full"

@@ -13,6 +13,8 @@ import { cn } from "@/lib/utils";
 import { CONTACT_FORM_EMAIL } from "@/lib/site";
 import { BLOOM_EASE } from "@/lib/logo-bloom";
 import { isContactFieldValid } from "@/lib/contact-validation";
+import { clearContactDraft, readContactDraft, writeContactDraft } from "@/lib/contact-draft";
+import { directOffers, launchOption } from "@/lib/services-offers";
 
 const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
 
@@ -45,17 +47,25 @@ const SUCCESS_ENTER_MS = 300;
 const SUCCESS_ENTER_OFFSET_PX = 8;
 const SUCCESS_FLOWER_SIZE_PX = 40;
 
-interface ContactFormProps {
-  /** Pré-sélection du sujet (ex. venant du configurateur /services). */
-  initialSubjectOption?: SubjectOption;
-  /** Texte initial du message (ex. récapitulatif du configurateur /services).
-   *  Formulaire non contrôlé : valeur initiale uniquement (defaultValue),
-   *  jamais resynchronisée après le premier rendu. */
-  initialMessage?: string;
+/** Champs non contrôlés restaurés depuis le brouillon (lib/contact-draft.ts). */
+const DRAFT_FIELDS = ["name", "email", "subjectOption", "message"] as const;
+
+function isSubjectOption(value: unknown): value is SubjectOption {
+  return typeof value === "string" && (SUBJECT_OPTIONS as readonly string[]).includes(value);
 }
 
-export function ContactForm({ initialSubjectOption, initialMessage }: ContactFormProps = {}) {
+/**
+ * Formulaire de contact. Pré-remplissage et brouillon : lib/contact-draft.ts
+ * (sessionStorage, jamais l'URL). Au montage, le formulaire (champs non
+ * contrôlés) reprend le brouillon de l'onglet : sélection faite sur
+ * /services (sujet « formule » + message récapitulatif rédigé dans la
+ * langue de la page) et saisie en cours — y compris après un changement de
+ * langue, qui remonte la page. Chaque saisie met le brouillon à jour.
+ */
+export function ContactForm() {
   const t = useTranslations("Contact.form");
+  const tPrefill = useTranslations("Contact.form.prefill");
+  const tPackages = useTranslations("Services.packages");
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<FieldErrors>({});
   const isSubmitting = status === "submitting";
@@ -84,8 +94,71 @@ export function ContactForm({ initialSubjectOption, initialMessage }: ContactFor
   } = useRequiredFieldsProgress({
     name: false,
     email: false,
-    message: isContactFieldValid("message", initialMessage ?? ""),
+    message: false,
   });
+
+  // Reprise du brouillon de l'onglet (une fois, au montage).
+  useEffect(() => {
+    const form = formRef.current;
+    const draft = readContactDraft();
+    if (!form || !draft) return;
+    const prefill = draft.tier
+      ? draft.launch
+        ? tPrefill("withLaunch", {
+            tier: tPackages(`${draft.tier}.name`),
+            price: directOffers[draft.tier].price,
+            launchPrice: launchOption.price,
+          })
+        : tPrefill("withoutLaunch", {
+            tier: tPackages(`${draft.tier}.name`),
+            price: directOffers[draft.tier].price,
+          })
+      : undefined;
+    let message = draft.message;
+    if (prefill !== undefined) {
+      if (message === undefined) message = prefill;
+      else if (draft.prefill !== undefined && message.startsWith(draft.prefill))
+        message = prefill + message.slice(draft.prefill.length);
+    }
+    const subjectOption = isSubjectOption(draft.subjectOption)
+      ? draft.subjectOption
+      : draft.tier
+        ? "package"
+        : "";
+    const values = {
+      name: draft.name ?? "",
+      email: draft.email ?? "",
+      subjectOption,
+      message: message ?? "",
+    };
+    for (const field of DRAFT_FIELDS) {
+      const el = form.elements.namedItem(field);
+      if (
+        el instanceof HTMLInputElement ||
+        el instanceof HTMLTextAreaElement ||
+        el instanceof HTMLSelectElement
+      )
+        el.value = values[field];
+    }
+    writeContactDraft({ message: values.message, prefill, subjectOption });
+    syncProgress();
+    // Une seule reprise, au montage : les traductions ne changent pas sans
+    // remonter le composant (la langue fait partie de l'URL).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Chaque saisie (champ ou sujet) met le brouillon à jour.
+  const saveDraft = useCallback(() => {
+    const form = formRef.current;
+    if (!form) return;
+    const data = new FormData(form);
+    writeContactDraft({
+      name: String(data.get("name") ?? ""),
+      email: String(data.get("email") ?? ""),
+      subjectOption: String(data.get("subjectOption") ?? ""),
+      message: String(data.get("message") ?? ""),
+    });
+  }, [formRef]);
 
   // Le bouton d'envoi (qui avait le focus) disparaît avec le formulaire au
   // succès : sans ça, le focus retombait en haut de page. On le pose sur le
@@ -184,6 +257,7 @@ export function ContactForm({ initialSubjectOption, initialMessage }: ContactFor
       if (response.ok && json.success) {
         setStatus("success");
         form.reset();
+        clearContactDraft();
       } else {
         setStatus("error");
       }
@@ -257,7 +331,10 @@ export function ContactForm({ initialSubjectOption, initialMessage }: ContactFor
             <form
               ref={formRef}
               onSubmit={handleSubmit}
-              onInput={onProgressInput}
+              onInput={(event) => {
+                onProgressInput(event);
+                saveDraft();
+              }}
               onBlur={onProgressBlur}
               noValidate
               className="space-y-5"
@@ -353,7 +430,7 @@ export function ContactForm({ initialSubjectOption, initialMessage }: ContactFor
                 <select
                   id="contact-subject"
                   name="subjectOption"
-                  defaultValue={initialSubjectOption ?? ""}
+                  defaultValue=""
                   className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm text-text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                 >
                   <option value="">{t("subjectPlaceholder")}</option>
@@ -376,7 +453,6 @@ export function ContactForm({ initialSubjectOption, initialMessage }: ContactFor
                   id="contact-message"
                   name="message"
                   rows={5}
-                  defaultValue={initialMessage}
                   placeholder={t("messagePlaceholder")}
                   aria-invalid={!!errors.message || undefined}
                   aria-describedby={errors.message ? "contact-message-error" : undefined}

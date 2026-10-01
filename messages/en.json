@@ -156,10 +156,13 @@
       "eyebrow": "Offers",
       "titleLead": "Packages for",
       "titleHighlight": "your showcase website",
-      "description": "Choose a landing page, a professional website or a bilingual website depending on your needs.",
+      "description": "Choose a one-page website, a business website or a bilingual website depending on your needs.",
       "landingDescription": "A single page to present your business.",
+      "landingLabel": "One-page website",
       "businessDescription": "A professional website with up to 4 pages.",
+      "businessLabel": "Business website",
       "bilingualDescription": "A bilingual website with up to 6 pages.",
+      "bilingualLabel": "Bilingual business website",
       "cta": "View packages"
     },
     "portfolio": {
@@ -183,8 +186,8 @@
           "description": "Review the three packages and pick the one that matches the number of pages and languages you need."
         },
         {
-          "title": "Order on Upwork",
-          "description": "Order the package that fits directly on Upwork; the scope is confirmed at the start."
+          "title": "Confirm the scope",
+          "description": "The scope is confirmed before work starts, whichever way you prefer to order: directly, through a quote in euros, or on Upwork, in US dollars, with payment handled by the platform."
         },
         {
           "title": "Build",
@@ -791,8 +794,8 @@
     },
     "emailAltLabel": "Prefer to use your email app?",
     "upwork": {
-      "title": "Already chosen your package?",
-      "text": "View the packages and place your order on Upwork.",
+      "title": "Prefer to go through Upwork?",
+      "text": "The same packages are also available on Upwork, in US dollars, with payment handled by the platform. The form on this page remains the direct route, in euros.",
       "cta": "View packages on Upwork"
     },
     "linkedinText": "Follow the studio or connect about a partnership.",

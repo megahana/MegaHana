@@ -84,7 +84,7 @@ export function Button({
     }
     // Liens internes → Link next-intl (préfixe la locale automatiquement).
     return (
-      <Link href={href} className={classes} aria-label={ariaLabel}>
+      <Link href={href} onClick={onClick} className={classes} aria-label={ariaLabel}>
         {children}
       </Link>
     );
