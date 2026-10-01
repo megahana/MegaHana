@@ -4,12 +4,19 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 /**
  * En-têtes de sécurité HTTP (securityheaders.com / MDN Observatory, 26/09).
- * Posés ici via headers(), PAS via un middleware à base de nonce : ce site
- * est très majoritairement statique (build 100% de routes générées) et sans
- * zone connectée — un nonce forcerait un rendu dynamique partout (perte du
- * cache CDN/génération statique) pour un gain non justifié par le profil du
- * site. Approche officielle Next.js "sans nonce", documentée comme
- * nécessitant 'unsafe-inline' sur script-src/style-src.
+ * Posés ici via headers(), sans nonce : approche officielle Next.js "sans
+ * nonce", documentée comme nécessitant 'unsafe-inline' sur
+ * script-src/style-src.
+ *
+ * Rendu des pages (mis à jour le 01/10) : contrairement à ce qu'indiquait
+ * ce commentaire à l'origine, les pages [locale] ne sont PAS statiques —
+ * toutes sont rendues à la demande (ƒ au build), parce que le layout lit le
+ * cookie du thème avec cookies() (et l'accueil appelle aussi connection()
+ * pour la saison du hero). Next leur envoie donc
+ * Cache-Control: private, no-cache, no-store. Conséquence pour la CSP : un
+ * nonce par requête ne coûterait aucune génération statique — étude et
+ * essai en Report-Only dans proxy.ts (CSP_REPORT_ONLY_TRIAL=1, désactivé
+ * par défaut), activation réelle non décidée.
  *
  * 'unsafe-inline' sur script-src : pas qu'une concession générique Next.js —
  * ce projet a un vrai script inline exécutable (anti-flash thème dark/light,
@@ -25,8 +32,12 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
  *   compris lib/data.ts et tout contenu dynamique) : aucun <Image> du site
  *   ne les référence, ce sont uniquement des liens <a href> externes
  *   ("voir le site"). Retirés ici et de remotePatterns ci-dessous.
- * - Pas de @vercel/analytics / @vercel/speed-insights (absents de
- *   package.json) : aucun domaine Vercel Analytics à ajouter.
+ * - @vercel/analytics est installé et chargé (<Analytics />, layout, en
+ *   production uniquement) : script servi par le site lui-même
+ *   (/_vercel/insights/script.js) et mesures envoyées au même domaine —
+ *   couverts par 'self', aucun domaine à ajouter. Le script externe
+ *   va.vercel-scripts.com n'est utilisé qu'en développement, où le composant
+ *   n'est pas rendu. Pas de @vercel/speed-insights.
  * - Polices via next/font/google (Fraunces/Inter/Inter_Tight) : servies en
  *   local (/_next/static/media/*.woff2) au build, aucune requête vers
  *   fonts.googleapis.com/fonts.gstatic.com au runtime — font-src 'self' seul
