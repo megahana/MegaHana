@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
@@ -69,6 +69,8 @@ export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<FieldErrors>({});
   const isSubmitting = status === "submitting";
+  // Verrou anti double envoi, lu dans handleSubmit (voir plus bas).
+  const submittingRef = useRef(false);
 
   // Mouvement réduit : garde-fou "mounted" (même pattern que ThemeToggle.tsx) —
   // useReducedMotion() vaut null côté serveur mais sa vraie valeur dès le
@@ -189,6 +191,10 @@ export function ContactForm() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    // Envoi déjà en cours : le bouton garde le focus (aria-disabled, pas
+    // disabled — QA-015), un second clic ou Entrée ne doit rien renvoyer.
+    // Ref et non l'état : immédiate, même avant le rendu suivant.
+    if (submittingRef.current) return;
 
     const form = event.currentTarget;
     const data = new FormData(form);
@@ -228,6 +234,7 @@ export function ContactForm() {
 
     setErrors({});
     setStatus("submitting");
+    submittingRef.current = true;
 
     // Objet de l'email reçu par Megahana — construit à partir du sujet choisi
     // (donnée structurelle, pas besoin de traduction propre : l'email arrive
@@ -290,6 +297,8 @@ export function ContactForm() {
       // Échec réseau : le contenu saisi reste dans le formulaire (pas de
       // form.reset()), l'erreur générale + le repli email s'affichent.
       setStatus("error");
+    } finally {
+      submittingRef.current = false;
     }
   }
 

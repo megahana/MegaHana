@@ -12,12 +12,14 @@ interface ButtonProps {
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
-  /** Action en cours (ex. envoi du formulaire de contact) : bouton inactif
-   *  (pas de double envoi) mais PAS estompé — à la différence de `disabled`,
-   *  qui signifie "indisponible" (ex. CTA du configurateur tant qu'aucune
-   *  formule n'est choisie) et garde son opacité réduite. Pleine opacité :
-   *  le libellé (ex. « Envoi en cours… ») garde son contraste AA.
-   *  aria-busy en plus. */
+  /** Action en cours (ex. envoi du formulaire de contact) : bouton signalé
+   *  inactif (aria-disabled + aria-busy) mais PAS estompé — à la différence
+   *  de `disabled`, qui signifie "indisponible" (ex. CTA du configurateur
+   *  tant qu'aucune formule n'est choisie) et garde son opacité réduite.
+   *  Pleine opacité : le libellé (ex. « Envoi en cours… ») garde son
+   *  contraste AA. Pas l'attribut `disabled` (QA-015) : un bouton désactivé
+   *  perd le focus, qui retombait sur <body> pendant toute l'attente réseau.
+   *  Le double envoi est empêché par l'appelant (ContactForm.handleSubmit). */
   loading?: boolean;
   className?: string;
   external?: boolean;
@@ -61,7 +63,9 @@ export function Button({
     variants[variant],
     sizes[size],
     // Placé après : tailwind-merge remplace l'opacité/le curseur "indisponible".
-    loading && "disabled:opacity-100 disabled:cursor-progress",
+    // Envoi en cours : pas d'agrandissement au survol (le bouton n'est plus
+    // `disabled`, donc disabled:hover:scale-100 ne s'applique pas).
+    loading && "cursor-progress hover:scale-100",
     className,
   );
 
@@ -94,7 +98,8 @@ export function Button({
     <motion.button
       type={type}
       onClick={onClick}
-      disabled={disabled || loading}
+      disabled={disabled}
+      aria-disabled={loading || undefined}
       aria-busy={loading || undefined}
       className={classes}
       aria-label={ariaLabel}

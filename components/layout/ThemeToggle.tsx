@@ -106,7 +106,11 @@ export function ThemeToggle({ className }: { className?: string }) {
     <button
       type="button"
       onClick={toggle}
+      // QA-010 : bouton à bascule (« Thème sombre », enfoncé = sombre actif).
+      // Après montage seulement, comme l'icône : le serveur ne connaît pas
+      // l'état réel avant le script anti-flash.
       aria-label={t("theme")}
+      aria-pressed={mounted ? isDark : undefined}
       className={cn(
         "p-2 rounded-lg text-text-secondary hover:text-text-primary hover:bg-surface-2/60 transition-colors",
         className,
