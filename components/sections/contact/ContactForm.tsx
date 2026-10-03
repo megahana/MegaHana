@@ -237,6 +237,16 @@ export function ContactForm() {
       package: "Package enquiry",
       other: "Partnership or other enquiry",
     };
+    // Formule du brouillon de l'onglet (lib/contact-draft.ts), en clair pour
+    // l'email reçu par Megahana — en français, langue de lecture de Megahana
+    // quelle que soit la langue du visiteur.
+    const draft = readContactDraft();
+    const selectedPackage = draft?.tier
+      ? draft.launch
+        ? `${tPackages(`${draft.tier}.name`)} (${directOffers[draft.tier].price} €) + mise en ligne (${launchOption.price} €), total ${directOffers[draft.tier].price + launchOption.price} €`
+        : `${tPackages(`${draft.tier}.name`)} (${directOffers[draft.tier].price} €), sans mise en ligne`
+      : undefined;
+
     const emailSubject = subjectOption
       ? `Megahana contact — ${subjectLabels[subjectOption]}`
       : "Megahana contact";
@@ -260,6 +270,10 @@ export function ContactForm() {
           // sans dépendre de l'objet.
           subject: emailSubject,
           ...(subjectOption ? { enquiry_type: subjectLabels[subjectOption] } : {}),
+          // QA-014 : formule réellement demandée (dernier « Demander mon
+          // devis » sur /services), indépendante du message, que le visiteur
+          // peut avoir réécrit (QA-001). Champ absent sans sélection.
+          ...(selectedPackage ? { selected_package: selectedPackage } : {}),
         }),
       });
 

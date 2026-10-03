@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { PackageCards } from "@/components/sections/services/PackageCards";
 import { LaunchOption } from "@/components/sections/services/LaunchOption";
@@ -13,6 +13,7 @@ import {
   type TierId,
 } from "@/lib/services-offers";
 import { upworkLaunchOption, upworkPackageFor } from "@/lib/upwork";
+import { readServicesSelection, writeServicesSelection } from "@/lib/services-selection";
 
 /**
  * Configurateur de /services : état partagé entre PackageCards (radios des
@@ -41,13 +42,41 @@ export function Configurator() {
   const [route, setRoute] = useState<OrderRoute>("direct");
   const [hasInteracted, setHasInteracted] = useState(false);
 
+  // QA-003 : reprise de la sélection de l'onglet (changement de langue,
+  // retour arrière, rechargement). Après montage seulement : le rendu
+  // serveur et l'hydratation partent toujours de « rien de coché ».
+  useEffect(() => {
+    const saved = readServicesSelection();
+    if (!saved) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- valeur connue côté client seulement (sessionStorage)
+    setSelectedTier(saved.tier);
+    setLaunchEnabled(saved.launch);
+    setRoute(saved.route);
+    setHasInteracted(saved.tier !== null || saved.launch);
+  }, []);
+
+  // Enregistrée à chaque choix du visiteur (gestionnaires d'événements,
+  // jamais au montage : sans interaction, rien n'est écrit).
+  const save = (next: Partial<{ tier: TierId | null; launch: boolean; route: OrderRoute }>) =>
+    writeServicesSelection({
+      tier: next.tier !== undefined ? next.tier : selectedTier,
+      launch: next.launch ?? launchEnabled,
+      route: next.route ?? route,
+    });
+
   const selectTier = (tier: TierId) => {
     setSelectedTier(tier);
     setHasInteracted(true);
+    save({ tier });
   };
   const toggleLaunch = () => {
-    setLaunchEnabled((v) => !v);
+    setLaunchEnabled(!launchEnabled);
     setHasInteracted(true);
+    save({ launch: !launchEnabled });
+  };
+  const changeRoute = (next: OrderRoute) => {
+    setRoute(next);
+    save({ route: next });
   };
 
   // Texte annoncé : une seule grille par parcours, jamais de somme mélangée.
@@ -77,7 +106,7 @@ export function Configurator() {
         selectedTier={selectedTier}
         onSelectTier={selectTier}
         route={route}
-        onRouteChange={setRoute}
+        onRouteChange={changeRoute}
       />
       <LaunchOption enabled={launchEnabled} onToggle={toggleLaunch} route={route} />
 
