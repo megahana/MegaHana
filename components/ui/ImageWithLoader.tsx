@@ -133,6 +133,7 @@ function LoadingImage({
 }: ImageProps & { containerClassName?: string }) {
   const t = useTranslations("Common.image");
   const imageRef = useRef<HTMLImageElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const [status, setStatus] = useState<Status>("loading");
   const [enhanced, setEnhanced] = useState(false);
@@ -166,11 +167,35 @@ function LoadingImage({
     };
   }, []);
 
+  // Respiration en pause hors écran (coût continu de /portfolio : les
+  // images en loading="lazy" ne se chargent qu'à l'approche de l'écran, et
+  // leur chargeur respirait en boucle hors écran tout ce temps — ≈ 930 ms/s
+  // de fil principal sous CPU ×4). Attribut data-offscreen posé directement
+  // sur le conteneur (aucun re-rendu React), lu par globals.css. Seulement
+  // pendant l'attente : une fois l'image chargée (ou en erreur), la règle
+  // existante coupe déjà l'animation et l'observateur est libéré.
+  useEffect(() => {
+    if (status !== "loading") return;
+    const container = containerRef.current;
+    if (!container || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver(
+      ([entry]) => container.toggleAttribute("data-offscreen", !entry.isIntersecting),
+      // Petite marge : la respiration a déjà repris quand le chargeur arrive.
+      { rootMargin: "64px 0px" },
+    );
+    observer.observe(container);
+    return () => {
+      observer.disconnect();
+      container.removeAttribute("data-offscreen");
+    };
+  }, [status]);
+
   const state = enhanced ? status : "idle";
   const pending = state === "loading";
 
   return (
     <div
+      ref={containerRef}
       className={cn(
         "mh-image-loader relative isolate",
         imageProps.fill ? "h-full w-full" : "inline-block align-top",

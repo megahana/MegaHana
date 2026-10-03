@@ -1082,6 +1082,12 @@ html[data-intro="play"] .mh-intro-overlay {
 .mh-image-loader:not([data-state="loading"]) .mh-image-loader-petal {
   animation-play-state: paused;
 }
+/* Ni hors écran (data-offscreen, posé par ImageWithLoader.tsx via
+   IntersectionObserver) : pause, reprise au même point dès le retour à
+   l'écran. Sans effet en mouvement réduit (animation déjà à none). */
+.mh-image-loader[data-offscreen] .mh-image-loader-petal {
+  animation-play-state: paused;
+}
 
 @keyframes mh-image-loader-fade-in {
   to {
