@@ -71,6 +71,10 @@ const contentSecurityPolicy = [
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // SEC-006 : pas d'en-tête X-Powered-By: Next.js. Réduction de surface
+  // marginale (la version reste lisible côté client via window.next), mais
+  // sans aucun coût.
+  poweredByHeader: false,
   // Anciennes URLs non préfixées → version française (308 permanent).
   // Exécuté avant le middleware next-intl, donc toujours vers /fr (pas de boucle).
   async redirects() {
@@ -95,7 +99,9 @@ const nextConfig = {
           { key: "X-Content-Type-Options", value: "nosniff" },
           // Filet pour les navigateurs qui ignorent frame-ancestors (CSP) —
           // corrige aussi directement le signal manquant sur securityheaders.com.
-          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          // SEC-005 : DENY, aligné sur frame-ancestors 'none' (aucun cadre,
+          // pas même same-origin : le site n'utilise aucun <iframe>).
+          { key: "X-Frame-Options", value: "DENY" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           // Le site n'utilise aucune de ces fonctionnalités : désactivation
           // par défaut plutôt qu'absence de politique.
