@@ -344,7 +344,7 @@
           },
           "noSubscription": {
             "label": "No Megahana subscription",
-            "megahana": "then €{price}/month (indicative)"
+            "megahana": "then {price} €/month (indicative)"
           },
           "ownAccount": {
             "label": "Hosting account in your name",
@@ -354,7 +354,7 @@
         "soonNote": "Hosting by Megahana is not available yet: for now, the website is published on your own hosting account.",
         "upworkNote": "On Upwork, only the “your own hosting” option is available."
       },
-      "edits": "Changes after delivery: €{price}/month (indicative price)."
+      "edits": "Changes after delivery: {price} €/month (indicative price)."
     },
     "process": {
       "eyebrow": "The process",
@@ -455,7 +455,7 @@
       },
       {
         "question": "Are the domain name and hosting included?",
-        "answer": "Not in the packages. Domain, professional email and external subscription fees remain your responsibility, and the domain stays in your name. For hosting, the website launch option offers two choices: host the website on your own account (the host's subscription then remains your responsibility), or let Megahana host it, with {months} months of hosting included, then a subscription of €{price}/month (indicative price, coming soon). On Upwork, only hosting on your own account is available."
+        "answer": "Not in the packages. Domain, professional email and external subscription fees remain your responsibility, and the domain stays in your name. For hosting, the website launch option offers two choices: host the website on your own account (the host's subscription then remains your responsibility), or let Megahana host it, with {months} months of hosting included, then a subscription of {price} €/month (indicative price, coming soon). On Upwork, only hosting on your own account is available."
       },
       {
         "question": "Is website launch included?",

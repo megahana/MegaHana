@@ -122,6 +122,22 @@ export function Intro() {
     // navigateur le place. Ne touche pas au scroll : rien ne le verrouille
     // dans ce composant (overlay fixed, jamais d'`overflow:hidden` sur body).
     function finish() {
+      // QA-008 : le focus était sur le bouton « Passer l'intro » (overlay
+      // masqué) ; resté là, le Tab suivant repartait de la position de
+      // l'overlay dans la page (bouton pause du hero), en sautant le lien
+      // d'évitement et la navigation. On ramène le point de départ du
+      // parcours clavier en tête de document, sans focus visible : focus
+      // programmatique sur <body> (rendu focusable le temps de l'appel) ;
+      // le Tab suivant atteint alors « Aller au contenu », comme à un
+      // chargement normal. Seulement si le focus était encore dans l'intro.
+      const focused = document.activeElement;
+      if (focused === skipButton || focused === document.body || !focused) {
+        const body = document.body;
+        const hadTabIndex = body.hasAttribute("tabindex");
+        if (!hadTabIndex) body.setAttribute("tabindex", "-1");
+        body.focus({ preventScroll: true });
+        if (!hadTabIndex) body.removeAttribute("tabindex");
+      }
       overlay?.classList.add("mh-intro-overlay--hidden");
       // État "terminée" sur <html> : l'overlay n'est affiché qu'en "play"
       // (app/globals.css), et le garde-fou du script inline (lib/intro.ts)

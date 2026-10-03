@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
@@ -31,6 +31,8 @@ const navItems = [
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
   const t = useTranslations("Navigation");
 
@@ -48,6 +50,41 @@ export function Header() {
     setMobileOpen(false);
   }, [pathname]);
 
+  // Menu mobile ouvert (QA-006) : Échap le ferme et rend le focus au bouton
+  // qui l'a ouvert ; Tab / Maj+Tab bouclent sur les éléments VISIBLES du
+  // header (logo, bouton, liens du panneau) — le panneau recouvre le haut de
+  // la page, le focus ne doit jamais atteindre un élément caché dessous.
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileOpen(false);
+        menuButtonRef.current?.focus();
+        return;
+      }
+      if (event.key !== "Tab" || !headerRef.current) return;
+      const focusables = [
+        ...headerRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      ].filter((el) => el.getClientRects().length > 0);
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const current = document.activeElement as HTMLElement | null;
+      const inside = !!current && focusables.includes(current);
+      if (event.shiftKey && (current === first || !inside)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (current === last || !inside)) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [mobileOpen]);
+
   return (
     // Séparation au scroll : ombre douce seule, plus de border-b. L'ancienne
     // bordure n'existait qu'en état "scrolled" : au repos, sa couleur retombait
@@ -56,6 +93,7 @@ export function Header() {
     // — d'où une ligne presque blanche d'1px pendant ≈200ms en thème sombre.
     // Transition limitée au fond et à l'ombre (plus de transition-all).
     <header
+      ref={headerRef}
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-[background-color,box-shadow] duration-300",
         scrolled
@@ -103,6 +141,7 @@ export function Header() {
 
           {/* Mobile menu button */}
           <button
+            ref={menuButtonRef}
             className="lg:hidden p-2 text-text-secondary hover:text-text-primary transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? t("closeMenu") : t("openMenu")}

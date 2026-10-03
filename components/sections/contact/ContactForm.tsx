@@ -97,6 +97,16 @@ export function ContactForm() {
     message: false,
   });
 
+  // Envoi refusé par la validation (QA-007) : focus sur le premier champ en
+  // erreur, APRÈS le rendu qui pose aria-invalid et le message lié
+  // (aria-describedby) — le lecteur d'écran annonce alors le champ, son
+  // état invalide et l'erreur, au lieu de rester muet sur le bouton.
+  const [invalidAttempt, setInvalidAttempt] = useState(0);
+  useEffect(() => {
+    if (invalidAttempt === 0) return;
+    formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+  }, [invalidAttempt, formRef]);
+
   // Reprise du brouillon de l'onglet (une fois, au montage).
   useEffect(() => {
     const form = formRef.current;
@@ -212,6 +222,7 @@ export function ContactForm() {
       // associés aux champs concernés (aria-describedby ci-dessous).
       setErrors(nextErrors);
       setStatus("invalid");
+      setInvalidAttempt((n) => n + 1);
       return;
     }
 

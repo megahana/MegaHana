@@ -73,16 +73,33 @@ export function writeContactDraft(patch: ContactDraft) {
 }
 
 /**
- * Nouvelle demande de devis depuis /services : remplace la sélection et
- * repart d'un message vierge (il sera pré-rempli à l'arrivée sur /contact),
- * en gardant les coordonnées éventuellement déjà saisies dans l'onglet.
+ * Nouvelle demande de devis depuis /services : remplace la sélection, en
+ * gardant les coordonnées éventuellement déjà saisies dans l'onglet.
+ *
+ * Message (QA-001) : s'il est encore exactement le dernier pré-remplissage
+ * automatique, il repart de zéro (pré-rempli pour la nouvelle formule à
+ * l'arrivée sur /contact). Si le visiteur l'a modifié, il est conservé tel
+ * quel, avec ce pré-remplissage de référence : ContactForm ne remplace alors
+ * que le début resté intact (texte ajouté à la suite gardé), et ne touche à
+ * rien si le visiteur a retouché le texte pré-rempli lui-même.
  */
 export function startQuoteDraft(tier: TierId, launch: boolean) {
   const previous = readContactDraft();
+  // Message vidé par le visiteur : rien à protéger, nouveau pré-remplissage.
+  const edited =
+    previous?.message !== undefined &&
+    previous.message.trim() !== "" &&
+    previous.message !== previous.prefill;
   try {
     window.sessionStorage.setItem(
       STORAGE_KEY,
-      JSON.stringify({ tier, launch, name: previous?.name, email: previous?.email }),
+      JSON.stringify({
+        tier,
+        launch,
+        name: previous?.name,
+        email: previous?.email,
+        ...(edited ? { message: previous.message, prefill: previous.prefill } : {}),
+      }),
     );
   } catch {
     /* stockage indisponible : le formulaire s'ouvrira sans pré-remplissage */
