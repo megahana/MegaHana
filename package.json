@@ -19,7 +19,7 @@
     "@vercel/analytics": "^2.0.1",
     "clsx": "^2.1.1",
     "framer-motion": "^13.4.4",
-    "lucide-react": "^0.400.0",
+    "lucide-react": "^1.51.0",
     "next": "16.3.8",
     "next-intl": "^4.14.7",
     "react": "19.3.0",
